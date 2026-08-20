@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "nbrain-a654f",
     "public": ".",
     "ignore": [
       "firebase.json",
