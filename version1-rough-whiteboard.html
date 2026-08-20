@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NBrain — الإصدار 1: الوايت بورد الكلاسيكي والرسم اليدوي (Rough.js & Hand Drawing)</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  
+  <!-- GSAP 3 & Rough.js & Rough Notation via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://unpkg.com/roughjs@latest/bundled/rough.js"></script>
+  <script src="https://unpkg.com/rough-notation/lib/rough-notation.iife.js"></script>
+
+  <style>
+    :root {
+      --bg-dark: hsl(222, 47%, 9%);
+      --bg-card: hsl(222, 40%, 14%);
+      --border-color: hsl(220, 25%, 22%);
+      --text-main: hsl(210, 40%, 98%);
+      --text-muted: hsl(215, 20%, 65%);
+      --primary: hsl(217, 91%, 60%);
+      --primary-glow: hsla(217, 91%, 60%, 0.4);
+      --accent: hsl(160, 84%, 45%);
+      --wb-paper: hsl(45, 25%, 98%);
+      --wb-dot: hsla(220, 20%, 80%, 0.5);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 16px;
+    }
+
+    .top-nav {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      padding: 12px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+    }
+
+    .style-badge {
+      background: hsla(38, 95%, 50%, 0.15);
+      color: hsl(38, 95%, 50%);
+      border: 1px solid hsla(38, 95%, 50%, 0.3);
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .player-wrap {
+      width: 100%;
+      max-width: 1200px;
+      background: #000;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 2px solid var(--border-color);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      position: relative;
+    }
+
+    .canvas-viewport {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: var(--wb-paper);
+      position: relative;
+      cursor: pointer;
+    }
+
+    #wbCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .hand-marker {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      pointer-events: none;
+      z-index: 100;
+      filter: drop-shadow(4px 12px 14px rgba(0,0,0,0.35));
+      transform: translate(-12px, -65px);
+      transition: opacity 0.2s;
+    }
+
+    .controls-panel {
+      background: hsl(222, 45%, 11%);
+      border-top: 1px solid var(--border-color);
+      padding: 14px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .timeline-bar {
+      width: 100%;
+      height: 6px;
+      background: hsl(220, 25%, 20%);
+      border-radius: 6px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .timeline-fill {
+      height: 100%;
+      background: linear-gradient(90deg, hsl(38, 95%, 50%), var(--primary));
+      border-radius: 6px;
+      width: 0%;
+    }
+
+    .ctrl-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 9999px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .btn-export {
+      background: linear-gradient(135deg, hsl(350, 85%, 55%), hsl(15, 90%, 55%));
+      color: #fff;
+      box-shadow: 0 4px 15px hsla(350, 85%, 55%, 0.4);
+    }
+    .btn-export:hover { transform: translateY(-2px); }
+
+    .btn-secondary {
+      background: hsl(220, 30%, 18%);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-nav">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <span class="style-badge">الإصدار 1: Rough Hand-Drawn Whiteboard</span>
+      <h2 style="font-size: 1.1rem; font-weight: 800;">الوايت بورد الكلاسيكي مع رسم القلم الفلوماستر (Rough.js)</h2>
+    </div>
+    <div style="display: flex; gap: 10px;">
+      <button class="btn btn-secondary" id="audioBtn">🔊 تفعيل صوت القلم</button>
+      <button class="btn btn-export" id="exportBtn">🔴 تسجيل MP4 بدقة 1080p</button>
+    </div>
+  </div>
+
+  <div class="player-wrap">
+    <div class="canvas-viewport" id="viewport">
+      <canvas id="wbCanvas" width="1920" height="1080"></canvas>
+      <!-- Stylus / Marker Hand SVG -->
+      <svg class="hand-marker" id="hand" viewBox="0 0 100 100">
+        <path d="M25,85 L85,25 L75,15 L15,75 Z" fill="#2c3e50" stroke="#1a252f" stroke-width="2"/>
+        <path d="M85,25 L92,18 L82,8 L75,15 Z" fill="#e74c3c"/>
+        <polygon points="15,75 8,92 25,85" fill="#f39c12"/>
+        <polygon points="8,92 12,85 15,88" fill="#111"/>
+      </svg>
+    </div>
+
+    <div class="controls-panel">
+      <div class="timeline-bar" id="timeline">
+        <div class="timeline-fill" id="progress"></div>
+      </div>
+      <div class="ctrl-row">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <button class="btn btn-secondary" id="playBtn">تشغيل / إيقاف</button>
+          <button class="btn btn-secondary" id="replayBtn">إعادة</button>
+          <span id="timeText" style="font-family: 'JetBrains Mono'; font-size: 0.85rem; color: var(--text-muted);">00:00 / 00:30</span>
+        </div>
+        <span id="sceneText" style="font-weight: 700; color: var(--primary);">المشهد 1: الهوية وحلول NBrain</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('wbCanvas');
+    const ctx = canvas.getContext('2d');
+    const rc = rough.canvas(canvas);
+    const hand = document.getElementById('hand');
+    const playBtn = document.getElementById('playBtn');
+    const replayBtn = document.getElementById('replayBtn');
+    const progress = document.getElementById('progress');
+    const timeText = document.getElementById('timeText');
+    const sceneText = document.getElementById('sceneText');
+    const audioBtn = document.getElementById('audioBtn');
+    const exportBtn = document.getElementById('exportBtn');
+
+    const TOTAL_TIME = 30;
+    let t = 0;
+    let isPlaying = true;
+    let lastTime = 0;
+    let audioOn = false;
+    let audioCtx = null;
+
+    // Logo image
+    const logo = new Image();
+    logo.src = 'logo-emblem.png';
+
+    function loop(ts) {
+      if (!lastTime) lastTime = ts;
+      const dt = (ts - lastTime) / 1000;
+      lastTime = ts;
+
+      if (isPlaying) {
+        t += dt;
+        if (t >= TOTAL_TIME) { t = TOTAL_TIME; isPlaying = false; }
+      }
+
+      render(t);
+      updateUI();
+      requestAnimationFrame(loop);
+    }
+
+    function render(time) {
+      // 1. Draw Textured Paper Background
+      ctx.fillStyle = '#faf9f6';
+      ctx.fillRect(0, 0, 1920, 1080);
+
+      // Grid Dots
+      ctx.fillStyle = '#e2e8f0';
+      for (let x = 30; x < 1920; x += 40) {
+        for (let y = 30; y < 1080; y += 40) {
+          ctx.beginPath(); ctx.arc(x, y, 1.5, 0, Math.PI*2); ctx.fill();
+        }
+      }
+
+      const sceneIndex = Math.min(Math.floor(time / 5), 5);
+      const sceneProgress = (time % 5) / 5;
+      let penPos = { x: 960, y: 540 };
+
+      // Render Active Scene with Rough.js
+      if (sceneIndex === 0) {
+        sceneText.textContent = "01 / المنظومة الرقمية الشاملة 360°";
+        penPos = drawScene1(sceneProgress);
+      } else if (sceneIndex === 1) {
+        sceneText.textContent = "02 / منصات الويب السريعة (React 19 & Next.js)";
+        penPos = drawScene2(sceneProgress);
+      } else if (sceneIndex === 2) {
+        sceneText.textContent = "03 / تطبيقات Google Play المعتمدة (Android 15 / 16KB)";
+        penPos = drawScene3(sceneProgress);
+      } else if (sceneIndex === 3) {
+        sceneText.textContent = "04 / شات بوتس المبيعات الذكية (Gemini AI)";
+        penPos = drawScene4(sceneProgress);
+      } else if (sceneIndex === 4) {
+        sceneText.textContent = "05 / الرؤية الحاسوبية وتتبع الكاميرات (YOLO)";
+        penPos = drawScene5(sceneProgress);
+      } else if (sceneIndex === 5) {
+        sceneText.textContent = "06 / تواصل مباشرة مع المؤسس م. نديم بدر (nbra.in)";
+        penPos = drawScene6(sceneProgress);
+      }
+
+      // Update Hand Marker Position
+      if (penPos && isPlaying && time < TOTAL_TIME) {
+        hand.style.opacity = '1';
+        const rect = canvas.getBoundingClientRect();
+        hand.style.left = (penPos.x * (rect.width / 1920)) + 'px';
+        hand.style.top = (penPos.y * (rect.height / 1080)) + 'px';
+      } else {
+        hand.style.opacity = '0';
+      }
+    }
+
+    // SCENE 1
+    function drawScene1(p) {
+      drawRoughHeader('منظومة NBrain للحلول البرمجية والذكاء الاصطناعي', 960, 200, p);
+      
+      // Rough sketch card in center
+      rc.rectangle(660, 300, 600, 500, {
+        roughness: 1.8,
+        stroke: '#1e3a8a',
+        strokeWidth: 3,
+        fill: 'rgba(37, 99, 235, 0.05)',
+        fillStyle: 'cross-hatch'
+      });
+
+      if (p > 0.3 && logo.complete) {
+        ctx.save();
+        ctx.globalAlpha = Math.min(1, (p - 0.3) * 3);
+        ctx.drawImage(logo, 860, 340, 200, 200);
+        ctx.restore();
+      }
+
+      if (p > 0.5) {
+        drawText('نبني منصتك الرقمية المتكاملة بأحدث معايير 2026', 960, 600, '#0f172a', '800 34px Cairo', (p - 0.5) * 3);
+        drawText('مواقع ويب • تطبيقات موبايل 16KB • شات بوتس مبيعات • رؤية حاسوبية', 960, 660, '#2563eb', '700 24px Cairo', (p - 0.5) * 3);
+        drawText('بقيادة المهندس نديم بدر — nbra.in', 960, 720, '#64748b', '700 22px Cairo', (p - 0.6) * 3);
+      }
+
+      return { x: 660 + 600 * p, y: 300 + 500 * p };
+    }
+
+    // SCENE 2: Web
+    function drawScene2(p) {
+      drawRoughHeader('01. منصات وتطبيقات الويب السريعة (Ultra-Fast Web)', 960, 180, p);
+
+      // Laptop frame with roughjs
+      rc.rectangle(510, 280, 900, 480, { roughness: 1.5, stroke: '#0f172a', strokeWidth: 4 });
+      rc.line(450, 760, 1470, 760, { roughness: 2, stroke: '#334155', strokeWidth: 6 });
+
+      if (p > 0.3) {
+        rc.rectangle(550, 320, 240, 400, { roughness: 1.2, stroke: '#2563eb', fill: 'rgba(37, 99, 235, 0.1)', fillStyle: 'dots' });
+        rc.rectangle(820, 320, 550, 180, { roughness: 1.2, stroke: '#10b981', fill: 'rgba(16, 185, 129, 0.1)', fillStyle: 'hachure' });
+      }
+
+      if (p > 0.6) {
+        drawText('⚡ سرعة فائقة 99+ Core Web Vitals  •  🔒 حماية Cloudflare  •  📱 متجاوب 100%', 960, 840, '#0f172a', '800 28px Cairo', (p - 0.6) * 3);
+      }
+
+      return { x: 510 + 900 * p, y: 280 + 480 * p };
+    }
+
+    // SCENE 3: Mobile
+    function drawScene3(p) {
+      drawRoughHeader('02. تطبيقات Google Play الرسمية (Android 15 / 16KB)', 960, 180, p);
+
+      rc.rectangle(760, 260, 400, 600, { roughness: 1.6, stroke: '#0f172a', strokeWidth: 4 });
+
+      if (p > 0.3) {
+        rc.rectangle(800, 320, 320, 200, { roughness: 1.3, stroke: '#2563eb', fill: 'rgba(37,99,235,0.08)' });
+        rc.rectangle(800, 550, 320, 80, { roughness: 1.3, stroke: '#10b981', fill: 'rgba(16,185,129,0.1)' });
+      }
+
+      if (p > 0.5) {
+        rc.circle(1280, 420, 160, { roughness: 2, stroke: '#10b981', strokeWidth: 3, fill: 'rgba(16,185,129,0.1)' });
+        drawText('Android 15', 1280, 405, '#10b981', '800 22px Cairo', 1);
+        drawText('16KB Aligned', 1280, 435, '#10b981', '700 18px "JetBrains Mono"', 1);
+      }
+
+      if (p > 0.7) {
+        drawText('ممتثل بالكامل لشروط Google Play لعام 2026 دون رفض أو كراش', 960, 910, '#0f172a', '800 28px Cairo', (p - 0.7) * 3);
+      }
+
+      return { x: 760 + 400 * p, y: 260 + 600 * p };
+    }
+
+    // SCENE 4: AI Bots
+    function drawScene4(p) {
+      drawRoughHeader('03. شات بوتس المبيعات والترشيحات الذكية (Gemini AI)', 960, 180, p);
+
+      rc.rectangle(560, 270, 800, 520, { roughness: 1.4, stroke: '#1e293b', strokeWidth: 3 });
+
+      if (p > 0.3) {
+        rc.rectangle(600, 320, 500, 90, { roughness: 1.2, stroke: '#64748b', fill: '#f1f5f9' });
+        drawText('مرحباً! ميزانيتي 5,000 جنيه، إيه أفضل باقة ليا؟', 850, 365, '#0f172a', '700 22px Cairo', (p - 0.3) * 3);
+      }
+      if (p > 0.6) {
+        rc.rectangle(820, 460, 500, 100, { roughness: 1.2, stroke: '#2563eb', fill: 'rgba(37,99,235,0.1)' });
+        drawText('✨ بناءً على ميزانيتك، باقة الانطلاق السريع بخصم 15% هي الأنسب!', 1070, 510, '#1e3a8a', '700 20px Cairo', (p - 0.6) * 3);
+      }
+
+      if (p > 0.8) {
+        drawText('يعمل 24/7 لزيادة مبيعاتك وربط العملاء بالدفع والواتساب مباشرة', 960, 850, '#0f172a', '800 28px Cairo', (p - 0.8) * 3);
+      }
+
+      return { x: 560 + 800 * p, y: 270 + 520 * p };
+    }
+
+    // SCENE 5: Computer Vision
+    function drawScene5(p) {
+      drawRoughHeader('04. الرؤية الحاسوبية وتتبع الكاميرات (YOLOv12x & MediaPipe)', 960, 180, p);
+
+      rc.rectangle(560, 270, 800, 480, { roughness: 1.5, stroke: '#0f172a', strokeWidth: 4 });
+
+      if (p > 0.3) {
+        rc.rectangle(640, 360, 260, 280, { roughness: 2, stroke: '#ef4444', strokeWidth: 3 });
+        drawText('Vehicle: 98.4%', 770, 340, '#ef4444', '700 18px "JetBrains Mono"', 1);
+      }
+      if (p > 0.5) {
+        rc.rectangle(980, 400, 260, 240, { roughness: 2, stroke: '#10b981', strokeWidth: 3 });
+        drawText('Driver Alert: Normal', 1110, 380, '#10b981', '700 18px "JetBrains Mono"', 1);
+      }
+
+      if (p > 0.7) {
+        drawText('كشف النعاس والتشتت • تتبع المركبات وحركة المرور • الواقع المعزز والألعاب', 960, 830, '#0f172a', '800 28px Cairo', (p - 0.7) * 3);
+      }
+
+      return { x: 560 + 800 * p, y: 270 + 480 * p };
+    }
+
+    // SCENE 6: Outro
+    function drawScene6(p) {
+      drawRoughHeader('ابدأ مشروعك الرقمي اليوم مع NBrain 🚀', 960, 200, p);
+
+      rc.rectangle(610, 300, 700, 460, {
+        roughness: 1.8,
+        stroke: '#10b981',
+        strokeWidth: 4,
+        fill: 'rgba(16,185,129,0.05)',
+        fillStyle: 'cross-hatch'
+      });
+
+      if (p > 0.3) {
+        drawText('🌐 الموقع الرسمي:', 960, 390, '#64748b', '700 26px Cairo', (p - 0.3) * 3);
+        drawText('https://nbra.in', 960, 450, '#2563eb', '900 46px "JetBrains Mono"', (p - 0.3) * 3);
+      }
+      if (p > 0.6) {
+        drawText('💬 واتساب للتواصل المباشر:', 960, 560, '#64748b', '700 26px Cairo', (p - 0.6) * 3);
+        drawText('+20 122 277 7345', 960, 620, '#10b981', '900 44px "JetBrains Mono"', (p - 0.6) * 3);
+      }
+
+      return { x: 610 + 700 * p, y: 300 + 460 * p };
+    }
+
+    function drawRoughHeader(text, x, y, p) {
+      drawText(text, x, y, '#0f172a', '900 44px Cairo', p * 2);
+      if (p > 0.2) {
+        // Rough underline
+        rc.line(x - 400, y + 35, x + 400, y + 35, { roughness: 2, stroke: '#2563eb', strokeWidth: 3 });
+      }
+    }
+
+    function drawText(text, x, y, color, font, p) {
+      if (p <= 0) return;
+      ctx.save();
+      ctx.font = font;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.globalAlpha = Math.min(1, p);
+      ctx.fillStyle = color;
+      ctx.fillText(text, x, y);
+      ctx.restore();
+    }
+
+    function updateUI() {
+      progress.style.width = (t / TOTAL_TIME * 100) + '%';
+      const m = String(Math.floor(t / 60)).padStart(2, '0');
+      const s = String(Math.floor(t % 60)).padStart(2, '0');
+      timeText.textContent = `${m}:${s} / 00:30`;
+    }
+
+    playBtn.addEventListener('click', () => { isPlaying = !isPlaying; if (isPlaying && t >= TOTAL_TIME) t = 0; });
+    replayBtn.addEventListener('click', () => { t = 0; isPlaying = true; });
+
+    // Procedural Marker Sound Effect
+    function playScribble() {
+      if (!audioOn) return;
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+
+      const bufferSize = audioCtx.sampleRate * 0.05;
+      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      const output = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        output[i] = (Math.random() * 2 - 1) * 0.03; // Soft paper friction
+      }
+      const whiteNoise = audioCtx.createBufferSource();
+      whiteNoise.buffer = buffer;
+      whiteNoise.connect(audioCtx.destination);
+      whiteNoise.start();
+    }
+
+    setInterval(() => { if (isPlaying && audioOn) playScribble(); }, 250);
+
+    audioBtn.addEventListener('click', () => {
+      audioOn = !audioOn;
+      audioBtn.textContent = audioOn ? '🔊 صوت القلم مفعل' : '🔇 تفعيل صوت القلم';
+    });
+
+    // 1-Click Video Recording & Export
+    exportBtn.addEventListener('click', () => {
+      exportBtn.textContent = '⏳ جارٍ تسجيل 1080p...';
+      const stream = canvas.captureStream(60);
+      const recorder = new MediaRecorder(stream, { mimeType: 'video/webm;codecs=vp9', videoBitsPerSecond: 8000000 });
+      const chunks = [];
+      recorder.ondataavailable = e => chunks.push(e.data);
+      recorder.onstop = () => {
+        const blob = new Blob(chunks, { type: 'video/webm' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'NBrain-Rough-Whiteboard-1080p.webm';
+        a.click();
+        exportBtn.textContent = '🔴 تسجيل MP4 بدقة 1080p';
+      };
+      t = 0; isPlaying = true; recorder.start();
+      const chk = setInterval(() => {
+        if (t >= TOTAL_TIME) { clearInterval(chk); recorder.stop(); }
+      }, 200);
+    });
+
+    requestAnimationFrame(loop);
+  </script>
+</body>
+</html>

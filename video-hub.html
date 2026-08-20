@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NBrain — استوديو الفيديوهات الشامل (3 نماذج احترافية للاختيار)</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: hsl(222, 47%, 8%);
+      --bg-card: hsl(222, 40%, 12%);
+      --border-color: hsl(220, 25%, 22%);
+      --text-main: hsl(210, 40%, 98%);
+      --text-muted: hsl(215, 20%, 65%);
+      --primary: hsl(217, 91%, 60%);
+      --primary-glow: hsla(217, 91%, 60%, 0.4);
+      --accent: hsl(160, 84%, 45%);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px;
+    }
+
+    .hub-header {
+      width: 100%;
+      max-width: 1280px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .hub-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      background: hsla(217, 91%, 60%, 0.15);
+      color: var(--primary);
+      border: 1px solid hsla(217, 91%, 60%, 0.3);
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .hub-title {
+      font-size: 2rem;
+      font-weight: 900;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #fff 40%, var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hub-subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Style Switcher Tabs */
+    .style-tabs {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .style-tab-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 24px;
+      background: var(--bg-card);
+      border: 2px solid var(--border-color);
+      border-radius: 14px;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .style-tab-btn:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .style-tab-btn.active {
+      border-color: var(--primary);
+      background: hsla(217, 91%, 60%, 0.15);
+      color: #fff;
+      box-shadow: 0 0 20px var(--primary-glow);
+    }
+
+    /* Live Player Frame */
+    .player-frame-container {
+      width: 100%;
+      max-width: 1280px;
+      aspect-ratio: 16 / 9.6;
+      background: #000;
+      border: 2px solid var(--border-color);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 25px 70px rgba(0,0,0,0.8);
+      margin-bottom: 30px;
+    }
+
+    #playerIframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* 3 Comparative Cards */
+    .comparison-grid {
+      width: 100%;
+      max-width: 1280px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .comp-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s;
+    }
+
+    .comp-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    .comp-tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .comp-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .comp-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .comp-features {
+      list-style: none;
+      margin-bottom: 24px;
+    }
+
+    .comp-features li {
+      font-size: 0.84rem;
+      color: #e2e8f0;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-card {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      font-weight: 700;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+      font-size: 0.88rem;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+    .btn-primary:hover { background: hsl(217, 91%, 50%); }
+
+    @media (max-width: 900px) {
+      .comparison-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hub-header">
+    <span class="hub-badge">🎬 NBrain Multi-Style Video Production Hub</span>
+    <h1 class="hub-title">3 نماذج وأنماط مختلفة لفيديو خدمات NBrain</h1>
+    <p class="hub-subtitle">اختر النموذج الأنسب لك، جربه مباشرة بالأسفل، وسجل نسختك بضغطة زر واحدة بدقة 1080p Full HD (60 FPS).</p>
+  </header>
+
+  <!-- Style Tabs -->
+  <div class="style-tabs">
+    <button class="style-tab-btn active" data-src="version1-rough-whiteboard.html">
+      <span>🎨 النموذج 1: الوايت بورد والرسم اليدوي (Rough.js)</span>
+    </button>
+    <button class="style-tab-btn" data-src="version2-kinetic-motion.html">
+      <span>⚡ النموذج 2: الموشن جرافيكس العصري (Cyber Kinetic)</span>
+    </button>
+    <button class="style-tab-btn" data-src="version3-product-explainer.html">
+      <span>📱 النموذج 3: استعراض المنتجات والأجهزة (3D Mockup)</span>
+    </button>
+  </div>
+
+  <!-- Live Active Player Viewport -->
+  <div class="player-frame-container">
+    <iframe id="playerIframe" src="version1-rough-whiteboard.html"></iframe>
+  </div>
+
+  <!-- 3 Comparative Cards -->
+  <div class="comparison-grid">
+    <!-- Card 1 -->
+    <div class="comp-card">
+      <div>
+        <span class="comp-tag" style="background: hsla(38, 95%, 50%, 0.15); color: hsl(38, 95%, 50%);">Doodly / Rough Style</span>
+        <h3 class="comp-title">الوايت بورد الكلاسيكي والرسم اليدوي</h3>
+        <p class="comp-desc">يعتمد على أسلوب اللوحة البيضاء وقلم الفلوماستر (Marker) مع خربشات وتأثيرات Rough.js وصوت احتكاك القلم بالورق.</p>
+        <ul class="comp-features">
+          <li>✓ رسم الـ SVG باليد الفيكتور</li>
+          <li>✓ تظليل ودوائر خربشة Rough Notation</li>
+          <li>✓ مناسب جداً للشرح والتبسيط</li>
+        </ul>
+      </div>
+      <a href="version1-rough-whiteboard.html" target="_blank" class="btn-card btn-primary">فتح النموذج 1 في نافذة كاملة ↗</a>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="comp-card">
+      <div>
+        <span class="comp-tag" style="background: hsla(190, 100%, 50%, 0.15); color: hsl(190, 100%, 50%);">Apple / Dark Cyber Style</span>
+        <h3 class="comp-title">الموشن جرافيكس العصري السينمائي</h3>
+        <p class="comp-desc">يعتمد على النيون والـ Glassmorphism الداكن مع بطاقات ثلاثية الأبعاد ونصوص حركية (Kinetic Typography) سريعة ومبهرة.</p>
+        <ul class="comp-features">
+          <li>✓ خلفية نيون وشبكة ذكاء اصطناعي تفاعلية</li>
+          <li>✓ بطاقات زجاجية ثلاثية الأبعاد بوهج نيون</li>
+          <li>✓ إيقاعات إلكترونية رقمية عصرية</li>
+        </ul>
+      </div>
+      <a href="version2-kinetic-motion.html" target="_blank" class="btn-card btn-primary">فتح النموذج 2 في نافذة كاملة ↗</a>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="comp-card">
+      <div>
+        <span class="comp-tag" style="background: hsla(160, 84%, 45%, 0.15); color: hsl(160, 84%, 45%);">SaaS / 3D Mockup Style</span>
+        <h3 class="comp-title">استعراض الأجهزة والمنتجات الحية</h3>
+        <p class="comp-desc">يعتمد على مجسمات لابتوب Macbook وهاتف iPhone حية تعرض محاكاة للشات بوت والكود ولوحة التحكم وموافقة Google Play.</p>
+        <ul class="comp-features">
+          <li>✓ مجسمات أجهزة لابتوب وموبايل حية</li>
+          <li>✓ محاكاة كتابة كود ومحادثة ذكاء اصطناعي</li>
+          <li>✓ أسلوب مؤسسي فاخر جداً (Tech Studio)</li>
+        </ul>
+      </div>
+      <a href="version3-product-explainer.html" target="_blank" class="btn-card btn-primary">فتح النموذج 3 في نافذة كاملة ↗</a>
+    </div>
+  </div>
+
+  <script>
+    const iframe = document.getElementById('playerIframe');
+    const tabBtns = document.querySelectorAll('.style-tab-btn');
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const src = btn.getAttribute('data-src');
+        iframe.src = src;
+      });
+    });
+  </script>
+</body>
+</html>
