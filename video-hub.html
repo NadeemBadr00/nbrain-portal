@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NBrain — استوديو الفيديوهات الشامل (3 نماذج احترافية للاختيار)</title>
+  <title>NBrain — استوديو الفيديوهات والسلايدات الشامل (4 نماذج احترافية للاختيار)</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -84,12 +84,12 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 12px 24px;
+      padding: 12px 20px;
       background: var(--bg-card);
       border: 2px solid var(--border-color);
       border-radius: 14px;
       color: var(--text-main);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       font-weight: 700;
       cursor: pointer;
       font-family: inherit;
@@ -128,13 +128,13 @@
       display: block;
     }
 
-    /* 3 Comparative Cards */
+    /* 4 Comparative Cards */
     .comparison-grid {
       width: 100%;
       max-width: 1280px;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
       margin-bottom: 40px;
     }
 
@@ -142,7 +142,7 @@
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: 16px;
-      padding: 24px 20px;
+      padding: 20px 16px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -165,30 +165,30 @@
     }
 
     .comp-title {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: 800;
       margin-bottom: 8px;
     }
 
     .comp-desc {
-      font-size: 0.88rem;
+      font-size: 0.84rem;
       color: var(--text-muted);
       line-height: 1.6;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .comp-features {
       list-style: none;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
     .comp-features li {
-      font-size: 0.84rem;
+      font-size: 0.8rem;
       color: #e2e8f0;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     .btn-card {
@@ -199,7 +199,7 @@
       text-align: center;
       text-decoration: none;
       display: block;
-      font-size: 0.88rem;
+      font-size: 0.84rem;
       transition: all 0.2s;
     }
 
@@ -209,7 +209,10 @@
     }
     .btn-primary:hover { background: hsl(217, 91%, 50%); }
 
-    @media (max-width: 900px) {
+    @media (max-width: 1100px) {
+      .comparison-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
       .comparison-grid { grid-template-columns: 1fr; }
     }
   </style>
@@ -217,74 +220,92 @@
 <body>
 
   <header class="hub-header">
-    <span class="hub-badge">🎬 NBrain Multi-Style Video Production Hub</span>
-    <h1 class="hub-title">3 نماذج وأنماط مختلفة لفيديو خدمات NBrain</h1>
-    <p class="hub-subtitle">اختر النموذج الأنسب لك، جربه مباشرة بالأسفل، وسجل نسختك بضغطة زر واحدة بدقة 1080p Full HD (60 FPS).</p>
+    <span class="hub-badge">🎬 NBrain Multi-Format Production Hub</span>
+    <h1 class="hub-title">استوديو العروض التقديمية والفيديوهات (4 نماذج للاختيار)</h1>
+    <p class="hub-subtitle">اختر بين السلايدات البيضاء الفاخرة (Apple Keynote Style) أو الوايت بورد أو الموشن جرافيكس، مع ميزة التسجيل بدقة 1080p Full HD.</p>
   </header>
 
   <!-- Style Tabs -->
   <div class="style-tabs">
-    <button class="style-tab-btn active" data-src="version1-rough-whiteboard.html">
-      <span>🎨 النموذج 1: الوايت بورد والرسم اليدوي (Rough.js)</span>
+    <button class="style-tab-btn active" data-src="slides-keynote.html">
+      <span>👑 النموذج الموصى به: السلايدات البيضاء الفاخرة (Keynote Deck)</span>
+    </button>
+    <button class="style-tab-btn" data-src="version1-rough-whiteboard.html">
+      <span>🎨 النموذج 2: الوايت بورد والرسم اليدوي (Rough.js)</span>
     </button>
     <button class="style-tab-btn" data-src="version2-kinetic-motion.html">
-      <span>⚡ النموذج 2: الموشن جرافيكس العصري (Cyber Kinetic)</span>
+      <span>⚡ النموذج 3: الموشن جرافيكس العصري (Cyber Kinetic)</span>
     </button>
     <button class="style-tab-btn" data-src="version3-product-explainer.html">
-      <span>📱 النموذج 3: استعراض المنتجات والأجهزة (3D Mockup)</span>
+      <span>📱 النموذج 4: استعراض المنتجات والأجهزة (3D Mockup)</span>
     </button>
   </div>
 
   <!-- Live Active Player Viewport -->
   <div class="player-frame-container">
-    <iframe id="playerIframe" src="version1-rough-whiteboard.html"></iframe>
+    <iframe id="playerIframe" src="slides-keynote.html"></iframe>
   </div>
 
-  <!-- 3 Comparative Cards -->
+  <!-- 4 Comparative Cards -->
   <div class="comparison-grid">
-    <!-- Card 1 -->
+    <!-- Card 1 (Keynote Slides) -->
+    <div class="comp-card" style="border: 2px solid var(--primary); background: hsla(217, 91%, 60%, 0.08);">
+      <div>
+        <span class="comp-tag" style="background: var(--primary); color: #fff;">(الأكثر طلباً) Keynote Pitch Deck</span>
+        <h3 class="comp-title">السلايدات البيضاء الفاخرة (Apple Style)</h3>
+        <p class="comp-desc">خلفية بيضاء نقية، كروت وبطاقات منسقة بأعلى دقة، خطوط واضحة جداً، وعرض تلقائي للسلايدات مع مؤقت زمني.</p>
+        <ul class="comp-features">
+          <li>✓ تصميم ناصع البياض فائق النقاء</li>
+          <li>✓ تقسيم احترافي للأعمدة والبطاقات</li>
+          <li>✓ تشغيل تلقائي ومثالي كفيديو ترويجي</li>
+        </ul>
+      </div>
+      <a href="slides-keynote.html" target="_blank" class="btn-card btn-primary">فتح السلايدات في نافذة كاملة ↗</a>
+    </div>
+
+    <!-- Card 2 (Rough Whiteboard) -->
     <div class="comp-card">
       <div>
         <span class="comp-tag" style="background: hsla(38, 95%, 50%, 0.15); color: hsl(38, 95%, 50%);">Doodly / Rough Style</span>
-        <h3 class="comp-title">الوايت بورد الكلاسيكي والرسم اليدوي</h3>
-        <p class="comp-desc">يعتمد على أسلوب اللوحة البيضاء وقلم الفلوماستر (Marker) مع خربشات وتأثيرات Rough.js وصوت احتكاك القلم بالورق.</p>
+        <h3 class="comp-title">الوايت بورد والرسم اليدوي</h3>
+        <p class="comp-desc">أسلوب اللوحة البيضاء وقلم الفلوماستر مع خربشات وتأثيرات Rough.js وصوت احتكاك القلم الطبيعي.</p>
         <ul class="comp-features">
           <li>✓ رسم الـ SVG باليد الفيكتور</li>
           <li>✓ تظليل ودوائر خربشة Rough Notation</li>
           <li>✓ مناسب جداً للشرح والتبسيط</li>
         </ul>
       </div>
-      <a href="version1-rough-whiteboard.html" target="_blank" class="btn-card btn-primary">فتح النموذج 1 في نافذة كاملة ↗</a>
+      <a href="version1-rough-whiteboard.html" target="_blank" class="btn-card btn-primary">فتح النموذج 2 في نافذة كاملة ↗</a>
     </div>
 
-    <!-- Card 2 -->
+    <!-- Card 3 (Cyber Kinetic) -->
     <div class="comp-card">
       <div>
-        <span class="comp-tag" style="background: hsla(190, 100%, 50%, 0.15); color: hsl(190, 100%, 50%);">Apple / Dark Cyber Style</span>
-        <h3 class="comp-title">الموشن جرافيكس العصري السينمائي</h3>
-        <p class="comp-desc">يعتمد على النيون والـ Glassmorphism الداكن مع بطاقات ثلاثية الأبعاد ونصوص حركية (Kinetic Typography) سريعة ومبهرة.</p>
+        <span class="comp-tag" style="background: hsla(190, 100%, 50%, 0.15); color: hsl(190, 100%, 50%);">Apple Dark / Cyber</span>
+        <h3 class="comp-title">الموشن جرافيكس العصري</h3>
+        <p class="comp-desc">يعتمد على النيون والـ Glassmorphism الداكن مع بطاقات ثلاثية الأبعاد ونصوص حركية (Kinetic) سريعة.</p>
         <ul class="comp-features">
           <li>✓ خلفية نيون وشبكة ذكاء اصطناعي تفاعلية</li>
           <li>✓ بطاقات زجاجية ثلاثية الأبعاد بوهج نيون</li>
           <li>✓ إيقاعات إلكترونية رقمية عصرية</li>
         </ul>
       </div>
-      <a href="version2-kinetic-motion.html" target="_blank" class="btn-card btn-primary">فتح النموذج 2 في نافذة كاملة ↗</a>
+      <a href="version2-kinetic-motion.html" target="_blank" class="btn-card btn-primary">فتح النموذج 3 في نافذة كاملة ↗</a>
     </div>
 
-    <!-- Card 3 -->
+    <!-- Card 4 (Product Mockup) -->
     <div class="comp-card">
       <div>
-        <span class="comp-tag" style="background: hsla(160, 84%, 45%, 0.15); color: hsl(160, 84%, 45%);">SaaS / 3D Mockup Style</span>
-        <h3 class="comp-title">استعراض الأجهزة والمنتجات الحية</h3>
-        <p class="comp-desc">يعتمد على مجسمات لابتوب Macbook وهاتف iPhone حية تعرض محاكاة للشات بوت والكود ولوحة التحكم وموافقة Google Play.</p>
+        <span class="comp-tag" style="background: hsla(160, 84%, 45%, 0.15); color: hsl(160, 84%, 45%);">SaaS / 3D Mockup</span>
+        <h3 class="comp-title">استعراض الأجهزة الحية</h3>
+        <p class="comp-desc">يعتمد على مجسمات لابتوب Macbook وهاتف iPhone حية تعرض محاكاة للشات بوت والكود ولوحة التحكم.</p>
         <ul class="comp-features">
           <li>✓ مجسمات أجهزة لابتوب وموبايل حية</li>
           <li>✓ محاكاة كتابة كود ومحادثة ذكاء اصطناعي</li>
-          <li>✓ أسلوب مؤسسي فاخر جداً (Tech Studio)</li>
+          <li>✓ أسلوب مؤسسي فاخر جداً</li>
         </ul>
       </div>
-      <a href="version3-product-explainer.html" target="_blank" class="btn-card btn-primary">فتح النموذج 3 في نافذة كاملة ↗</a>
+      <a href="version3-product-explainer.html" target="_blank" class="btn-card btn-primary">فتح النموذج 4 في نافذة كاملة ↗</a>
     </div>
   </div>
 

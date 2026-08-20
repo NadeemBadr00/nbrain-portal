@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NBrain — العرض التقديمي وسلايدات الخدمات الاحترافية (Keynote Slides 360°)</title>
+  
+  <!-- Fonts: Cairo, Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-page: #f8fafc;
+      --slide-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-light: #94a3b8;
+      --primary: #2563eb;
+      --primary-soft: #eff6ff;
+      --primary-border: #bfdbfe;
+      --emerald: #059669;
+      --emerald-soft: #ecfdf5;
+      --amber: #d97706;
+      --amber-soft: #fffbeb;
+      --purple: #7c3aed;
+      --purple-soft: #f5f3ff;
+      --border: #e2e8f0;
+      --shadow-sm: 0 2px 4px rgba(0,0,0,0.04);
+      --shadow-md: 0 10px 25px -5px rgba(0,0,0,0.06), 0 8px 10px -6px rgba(0,0,0,0.04);
+      --shadow-lg: 0 25px 50px -12px rgba(0,0,0,0.12);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px;
+    }
+
+    /* Top Studio Header */
+    .deck-header {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding: 14px 24px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .brand-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      border: 1px solid #dbeafe;
+      background: #0f172a;
+      padding: 2px;
+    }
+
+    .brand-info h1 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.2;
+    }
+
+    .brand-info p {
+      font-size: 0.78rem;
+      color: var(--primary);
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border-radius: 9999px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-secondary {
+      background: #f1f5f9;
+      color: var(--text-main);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { background: #e2e8f0; }
+
+    .btn-export {
+      background: linear-gradient(135deg, #ef4444, #f97316);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(239, 68, 68, 0.3);
+    }
+    .btn-export:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4); }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+    .btn-primary:hover { background: #1d4ed8; }
+
+    /* Main Keynote Slide Stage */
+    .stage-wrapper {
+      width: 100%;
+      max-width: 1200px;
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* 16:9 Presentation Viewport */
+    .slide-viewport {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      position: relative;
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 50px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      opacity: 0;
+      visibility: hidden;
+      transform: scale(0.98);
+      transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1);
+    }
+
+    /* Slide Header Components */
+    .slide-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      width: fit-content;
+    }
+
+    .slide-title {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--text-main);
+      line-height: 1.25;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+
+    .slide-desc {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 900px;
+      line-height: 1.6;
+    }
+
+    /* Slide Cards Grid Layouts */
+    .slide-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    .slide-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .deck-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 24px 20px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .deck-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .deck-card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 16px;
+    }
+
+    .deck-card-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .deck-card-text {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .deck-pill {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-top: 14px;
+      width: fit-content;
+    }
+
+    /* Slide Footer Watermark */
+    .slide-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+      font-size: 0.82rem;
+      color: var(--text-light);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Bottom Control Bar */
+    .deck-controls {
+      background: #f8fafc;
+      border-top: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .timeline-bar-wrap {
+      width: 100%;
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 6px;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .timeline-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary), var(--emerald));
+      transition: width 0.1s linear;
+    }
+
+    .controls-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slide-dots {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dot-btn {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #cbd5e1;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .dot-btn.active {
+      background: var(--primary);
+      width: 28px;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 900px) {
+      .slide { padding: 30px 24px; }
+      .slide-title { font-size: 1.5rem; }
+      .slide-grid-3, .slide-grid-2 { grid-template-columns: 1fr; gap: 12px; }
+      .deck-card { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="deck-header">
+    <div class="brand-area">
+      <img src="logo-emblem.png" alt="NBrain Logo" class="brand-logo" onerror="this.src='https://nbra.in/logo-emblem.png'">
+      <div class="brand-info">
+        <h1>NBrain Services Keynote Deck</h1>
+        <p>Enterprise Software Architecture & Custom AI Systems • nbra.in</p>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button class="btn btn-secondary" id="autoPlayBtn">
+        <span id="autoPlayIcon">⏸️</span>
+        <span id="autoPlayText">إيقاف العرض التلقائي</span>
+      </button>
+      <button class="btn btn-export" id="exportVideoBtn">
+        <span>🔴 تسجيل فيديو MP4 (1080p)</span>
+      </button>
+      <a href="https://nbra.in" target="_blank" class="btn btn-primary">
+        <span>زيارة الموقع الرئيسي 🌐</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Presentation Stage Wrapper -->
+  <main class="stage-wrapper" id="stage">
+    
+    <div class="slide-viewport">
+      
+      <!-- SLIDE 1: Title & Overview -->
+      <div class="slide active" data-slide="0">
+        <div>
+          <span class="slide-tag" style="background: var(--primary-soft); color: var(--primary); border: 1px solid var(--primary-border);">
+            ✨ استوديو البرمجيات والذكاء الاصطناعي 2026
+          </span>
+          <h2 class="slide-title">منظومة NBrain للبرمجيات والذكاء الاصطناعي</h2>
+          <p class="slide-desc">نبني لك منصتك الرقمية المتكاملة 360° من الألف للياء: مواقع ويب فائقة السرعة، تطبيقات Google Play معتمدة (16KB Aligned)، شات بوتس مبيعات، ورؤية حاسوبية.</p>
+        </div>
+
+        <div class="slide-grid-3">
+          <div class="deck-card">
+            <div class="deck-card-icon" style="background: #eff6ff; color: #2563eb;">🌐</div>
+            <h3 class="deck-card-title">مواقع ويب سريعة</h3>
+            <p class="deck-card-text">React 19, Next.js 15, Vite, ولوحات تحكم إدارية حديثة بنظام الألوان HSL.</p>
+            <span class="deck-pill" style="background: #eff6ff; color: #2563eb;">Core Web Vitals 99+</span>
+          </div>
+
+          <div class="deck-card">
+            <div class="deck-card-icon" style="background: #ecfdf5; color: #059669;">📱</div>
+            <h3 class="deck-card-title">تطبيقات Google Play</h3>
+            <p class="deck-card-text">Flutter 3.29 ممتثل بالكامل لمعيار (16KB Page Aligned) لأجهزة Android 15.</p>
+            <span class="deck-pill" style="background: #ecfdf5; color: #059669;">Google Play 2026 Ready</span>
+          </div>
+
+          <div class="deck-card">
+            <div class="deck-card-icon" style="background: #f5f3ff; color: #7c3aed;">🤖</div>
+            <h3 class="deck-card-title">شات بوتس AI مبيعات</h3>
+            <p class="deck-card-text">نماذج Gemini RAG لترشيح المنتجات بميزانية العميل وزيادة مبيعاتك 24/7.</p>
+            <span class="deck-pill" style="background: #f5f3ff; color: #7c3aed;">WhatsApp Automated Checkout</span>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>بقيادة المهندس نديم بدر (Chief Software Architect)</span>
+          <span>SLIDE 01 / 07</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 2: Web Applications -->
+      <div class="slide" data-slide="1">
+        <div>
+          <span class="slide-tag" style="background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe;">
+            🌐 01. منصات الويب الحديثة
+          </span>
+          <h2 class="slide-title">تطوير منصات ومواقع ويب سريعة وآمنة</h2>
+          <p class="slide-desc">نصمم ونبني واجهات المستخدم ولوحات التحكم المتطورة بأحدث أطر العمل العالمية مع حماية سيبرانية شاملة.</p>
+        </div>
+
+        <div class="slide-grid-3">
+          <div class="deck-card">
+            <div class="deck-card-icon" style="background: #eff6ff; color: #2563eb;">⚡</div>
+            <h3 class="deck-card-title">سرعة تحميل لحظية</h3>
+            <p class="deck-card-text">أداء 99+ على Google PageSpeed وتحسين كامل للـ SEO والأرشفة الدولية.</p>
+            <span class="deck-pill" style="background: #eff6ff; color: #2563eb;">Zero Lag SPA</span>
+          </div>
+
+          <div class="deck-card">
+            <div class="deck-card-icon" style="background: #ecfdf5; color: #059669;">🔒</div>
+            <h3 class="deck-card-title">تأمين سيبراني Cloudflare</h3>
+            <p class="deck-card-text">حماية من هجمات الحرمان من الخدمة (DDoS Shield) وتشفير البيانات وقواعد البيانات.</p>
+            <span class="deck-pill" style="background: #ecfdf5; color: #059669;">Enterprise Security</span>
+          </div>
+
+          <div class="deck-card">
+            <div class="deck-card-icon" style="background: #fffbeb; color: #d97706;">📊</div>
+            <h3 class="deck-card-title">لوحات تحكم تفاعلية</h3>
+            <p class="deck-card-text">إدارة المنتجات، الطلبات، والتقارير المالية لحظياً بنظام Nile ERP 3-Column.</p>
+            <span class="deck-pill" style="background: #fffbeb; color: #d97706;">Live Dashboard</span>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Tech Stack: React 19 • Next.js 15 • Python FastAPI • PostgreSQL</span>
+          <span>SLIDE 02 / 07</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 3: Mobile Apps Google Play -->
+      <div class="slide" data-slide="2">
+        <div>
+          <span class="slide-tag" style="background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0;">
+            📱 02. تطبيقات الموبايل الرسمية
+          </span>
+          <h2 class="slide-title">تطبيقات معتمدة على متجر Google Play</h2>
+          <p class="slide-desc">برمجة تطبيقات Native و Flutter 3.29 ممتثلة تماماً لأحدث معايير الأمان والمعمارية لعام 2026 دون رفض.</p>
+        </div>
+
+        <div class="slide-grid-2">
+          <div class="deck-card" style="background: #f8fafc;">
+            <div class="deck-card-icon" style="background: #ecfdf5; color: #059669;">🛡️</div>
+            <h3 class="deck-card-title">معمارية 16KB Page Alignment</h3>
+            <p class="deck-card-text" style="font-size: 0.95rem;">
+              توافق كامل مع متطلبات أجهزة <strong>Android 15 (Target SDK 35)</strong> مع NDK r28، مما يضمن سرعة تشغيل فائقة واستهلاكاً مثالياً للبطارية والذاكرة وخلو التطبيق من الـ Crashes.
+            </p>
+            <span class="deck-pill" style="background: #ecfdf5; color: #059669;">Google Play Standard 2026</span>
+          </div>
+
+          <div class="deck-card" style="background: #f8fafc;">
+            <div class="deck-card-icon" style="background: #eff6ff; color: #2563eb;">🚀</div>
+            <h3 class="deck-card-title">تجربة مستخدم بصرية راقية</h3>
+            <p class="deck-card-text" style="font-size: 0.95rem;">
+              واجهات متجاوبة، دعم الـ Dark/Light Mode تلقائياً، إشعارات فورية (Push Notifications)، وإمكانية العمل في وضع عدم الاتصال (Offline-First Cache).
+            </p>
+            <span class="deck-pill" style="background: #eff6ff; color: #2563eb;">Cross-Platform iOS & Android</span>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>مثال معتمد: تطبيق SmartDocs Reader على Google Play (26K سطر برمجي)</span>
+          <span>SLIDE 03 / 07</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 4: AI Sales Bots -->
+      <div class="slide" data-slide="3">
+        <div>
+          <span class="slide-tag" style="background: #f5f3ff; color: #7c3aed; border: 1px solid #ddd6fe;">
+            🤖 03. شات بوتس المبيعات والذكاء الاصطناعي
+          </span>
+          <h2 class="slide-title">مساعد ذكي للبيع والترشيحات لزيادة أرباحك</h2>
+          <p class="slide-desc">شات بوت مدرب بنماذج Gemini AI يربط متجرك بالعملاء ويرشح المنتجات حسب ميزانيتهم بدقة متناهية.</p>
+        </div>
+
+        <div class="slide-grid-3">
+          <div class="deck-card">
+            <div class="deck-card-icon" style="background: #f5f3ff; color: #7c3aed;">🧠</div>
+            <h3 class="deck-card-title">RAG & تدريب مخصص</h3>
+            <p class="deck-card-text">يتعلم البوت كتالوج منتجاتك وأسعارك وخصوماتك لحظياً ويرد بإجابات دقيقة واحترافية.</p>
+            <span class="deck-pill" style="background: #f5f3ff; color: #7c3aed;">Gemini AI 2.0</span>
+          </div>
+
+          <div class="deck-card">
+            <div class="deck-card-icon" style="background: #ecfdf5; color: #059669;">💰</div>
+            <h3 class="deck-card-title">ترشيح ذكي بالميزانية</h3>
+            <p class="deck-card-text">العميل يكتب ميزانيته، والبوت يقترح له أنسب السلع أو الخدمات لإتمام عملية الشراء فوراً.</p>
+            <span class="deck-pill" style="background: #ecfdf5; color: #059669;">Budget-Based Matching</span>
+          </div>
+
+          <div class="deck-card">
+            <div class="deck-card-icon" style="background: #eff6ff; color: #2563eb;">📲</div>
+            <h3 class="deck-card-title">إتمام الطلب عبر واتساب</h3>
+            <p class="deck-card-text">تجهيز ملخص الطلب ورابط الدفع وتحويل المشتري لمحادثة الواتساب الخاصة بك بضغطة زر.</p>
+            <span class="deck-pill" style="background: #eff6ff; color: #2563eb;">Instant Checkout</span>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>دعم فني وتدريب للموظفين على إدارة وتحديث معلومات المساعد</span>
+          <span>SLIDE 04 / 07</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 5: Computer Vision -->
+      <div class="slide" data-slide="4">
+        <div>
+          <span class="slide-tag" style="background: #fef2f2; color: #dc2626; border: 1px solid #fecaca;">
+            👁️ 04. الرؤية الحاسوبية وتتبع الكاميرات
+          </span>
+          <h2 class="slide-title">أنظمة رؤية حاسوبية وذكاء بصري عميق</h2>
+          <p class="slide-desc">تطوير نماذج YOLOv12x و MediaPipe لكشف الأشياء، تتبع السائقين، والواقع المعزز بدقة تفوق 98%.</p>
+        </div>
+
+        <div class="slide-grid-3">
+          <div class="deck-card">
+            <div class="deck-card-icon" style="background: #fef2f2; color: #dc2626;">🚗</div>
+            <h3 class="deck-card-title">تتبع المركبات والمرور</h3>
+            <p class="deck-card-text">كشف السير العكسي، عد السيارات، وتحليل الكثافة المرورية بدقة في الوقت الحقيقي.</p>
+            <span class="deck-pill" style="background: #fef2f2; color: #dc2626;">YOLOv12x Edge Vision</span>
+          </div>
+
+          <div class="deck-card">
+            <div class="deck-card-icon" style="background: #ecfdf5; color: #059669;">😴</div>
+            <h3 class="deck-card-title">كشف النعاس والتشتت</h3>
+            <p class="deck-card-text">تحليل حركة عيون السائق ووجهه عبر MediaPipe لإطلاق تنبيهات أمان فورية.</p>
+            <span class="deck-pill" style="background: #ecfdf5; color: #059669;">Driver Safety AI</span>
+          </div>
+
+          <div class="deck-card">
+            <div class="deck-card-icon" style="background: #eff6ff; color: #2563eb;">🎮</div>
+            <h3 class="deck-card-title">الواقع المعزز بدون لمس</h3>
+            <p class="deck-card-text">ألعاب وتطبيقات تفاعلية يتم التحكم فيها بإيماءات اليد والقفز وحركة الجسم.</p>
+            <span class="deck-pill" style="background: #eff6ff; color: #2563eb;">Touchless AR Games</span>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>PyTorch • OpenCV • MediaPipe • Real-Time Edge Processing</span>
+          <span>SLIDE 05 / 07</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 6: VIP 360 Bundle -->
+      <div class="slide" data-slide="5">
+        <div>
+          <span class="slide-tag" style="background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe;">
+            👑 05. الباقة الشاملة VIP (All-In-One 360°)
+          </span>
+          <h2 class="slide-title">منظومة رقمية كاملة من الألف للياء</h2>
+          <p class="slide-desc">الحل المتكامل لرواد الأعمال والمتاجر: استلم مشروعك جاهزاً مع كافة الضمانات والكود المصدري.</p>
+        </div>
+
+        <div class="slide-grid-2">
+          <div class="deck-card">
+            <h3 class="deck-card-title" style="color: #2563eb;">💎 مكونات الباقة الشاملة VIP:</h3>
+            <ul style="list-style: none; margin-top: 10px; font-size: 0.92rem; color: #334155; line-height: 2;">
+              <li>✓ موقع ويب متطور وسريع (SPA / لوحة تحكم)</li>
+              <li>✓ تطبيق موبايل رسمي معتمد على Google Play (16KB)</li>
+              <li>✓ شات بوت مبيعات ذكي مدرب على منتجاتك 24/7</li>
+              <li>✓ فيديو إعلاني ترويجي سينمائي بالذكاء الاصطناعي 4K</li>
+              <li>✓ دومين احترافي واستضافة سحابية فائقة السرعة مجاناً</li>
+            </ul>
+          </div>
+
+          <div class="deck-card" style="background: #ecfdf5; border-color: #a7f3d0;">
+            <h3 class="deck-card-title" style="color: #059669;">🛡️ الضمانات الهندسية (SLAs):</h3>
+            <ul style="list-style: none; margin-top: 10px; font-size: 0.92rem; color: #065f46; line-height: 2;">
+              <li>🔑 <strong>تسليم الكود المصدري كاملاً:</strong> 100% ملكك على GitHub.</li>
+              <li>⚡ <strong>سرعة التسليم:</strong> إطلاق الـ MVP في غضون 7–14 يوماً.</li>
+              <li>🛠️ <strong>ضمان وصيانة مجانية:</strong> 30 يوماً بعد الإطلاق.</li>
+              <li>💳 <strong>سداد مرن:</strong> دفعات مرحلية حسب تسليم كل مرحلة.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>شروط تعاقد موثقة وضمان استقرار النظام بنسبة 99.9% Uptime</span>
+          <span>SLIDE 06 / 07</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 7: Call to Action -->
+      <div class="slide" data-slide="6">
+        <div>
+          <span class="slide-tag" style="background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0;">
+            🚀 ابدأ مشروعك اليوم
+          </span>
+          <h2 class="slide-title">جاهز لبناء منصتك الرقمية بأحدث المعايير؟</h2>
+          <p class="slide-desc">تواصل مباشرة مع المهندس نديم بدر لبدء جلسة الاستشارة الفنية وتحديد خطة التنفيذ المخصصة لمشروعك.</p>
+        </div>
+
+        <div class="slide-grid-2" style="margin-top: 20px;">
+          <div class="deck-card" style="text-align: center; padding: 30px 20px;">
+            <span style="font-size: 2.4rem; display: block; margin-bottom: 10px;">🌐</span>
+            <h3 style="font-size: 1.1rem; color: #64748b; margin-bottom: 4px;">بوابة NBrain الرسمية</h3>
+            <a href="https://nbra.in" target="_blank" style="font-size: 1.6rem; font-family: 'JetBrains Mono'; font-weight: 800; color: #2563eb; text-decoration: none;">https://nbra.in</a>
+            <p style="font-size: 0.85rem; color: #94a3b8; margin-top: 8px;">استعرض 28 ديمو حي وحاسبة الأسعار والـ ROI</p>
+          </div>
+
+          <div class="deck-card" style="text-align: center; padding: 30px 20px; background: #ecfdf5; border-color: #a7f3d0;">
+            <span style="font-size: 2.4rem; display: block; margin-bottom: 10px;">💬</span>
+            <h3 style="font-size: 1.1rem; color: #065f46; margin-bottom: 4px;">محادثة مباشرة عبر واتساب</h3>
+            <a href="https://wa.me/201222777345" target="_blank" style="font-size: 1.6rem; font-family: 'JetBrains Mono'; font-weight: 800; color: #059669; text-decoration: none;">+20 122 277 7345</a>
+            <p style="font-size: 0.85rem; color: #047857; margin-top: 8px;">رد سريع ومناقشة تفاصيل المتطلبات فوراً</p>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>المهندس نديم بدر — Chief Software Architect & Founder</span>
+          <span>SLIDE 07 / 07</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Controls & Timeline -->
+    <div class="deck-controls">
+      <div class="timeline-bar-wrap" id="timelineWrap">
+        <div class="timeline-bar-fill" id="timelineFill"></div>
+      </div>
+
+      <div class="controls-row">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <button class="btn btn-secondary" id="prevBtn">السابق ◀</button>
+          <button class="btn btn-primary" id="nextBtn">التالي ▶</button>
+          <span id="slideCounterText" style="font-family: 'JetBrains Mono'; font-weight: 700; font-size: 0.9rem; color: #64748b; margin-right: 8px;">
+            01 / 07
+          </span>
+        </div>
+
+        <div class="slide-dots" id="dotsContainer">
+          <button class="dot-btn active" data-index="0"></button>
+          <button class="dot-btn" data-index="1"></button>
+          <button class="dot-btn" data-index="2"></button>
+          <button class="dot-btn" data-index="3"></button>
+          <button class="dot-btn" data-index="4"></button>
+          <button class="dot-btn" data-index="5"></button>
+          <button class="dot-btn" data-index="6"></button>
+        </div>
+
+        <span style="font-size: 0.82rem; color: #94a3b8; font-family: 'JetBrains Mono';">
+          استخدم الأسهم ⬅ ➡ للتنقل
+        </span>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    /**
+     * NBrain Keynote Presentation Engine
+     */
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot-btn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const autoPlayBtn = document.getElementById('autoPlayBtn');
+    const autoPlayIcon = document.getElementById('autoPlayIcon');
+    const autoPlayText = document.getElementById('autoPlayText');
+    const slideCounterText = document.getElementById('slideCounterText');
+    const timelineFill = document.getElementById('timelineFill');
+    const exportVideoBtn = document.getElementById('exportVideoBtn');
+
+    let currentSlide = 0;
+    const TOTAL_SLIDES = slides.length;
+    const SLIDE_DURATION = 5000; // 5 seconds per slide
+    let isAutoPlaying = true;
+    let autoPlayTimer = null;
+    let progressTimer = null;
+    let slideStartTime = Date.now();
+
+    function showSlide(index) {
+      currentSlide = (index + TOTAL_SLIDES) % TOTAL_SLIDES;
+
+      slides.forEach((s, idx) => {
+        s.classList.toggle('active', idx === currentSlide);
+      });
+
+      dots.forEach((d, idx) => {
+        d.classList.toggle('active', idx === currentSlide);
+      });
+
+      slideCounterText.textContent = `0${currentSlide + 1} / 0${TOTAL_SLIDES}`;
+      resetSlideTimer();
+    }
+
+    function resetSlideTimer() {
+      slideStartTime = Date.now();
+      if (progressTimer) clearInterval(progressTimer);
+      if (autoPlayTimer) clearTimeout(autoPlayTimer);
+
+      if (isAutoPlaying) {
+        progressTimer = setInterval(() => {
+          const elapsed = Date.now() - slideStartTime;
+          const pct = Math.min(100, (elapsed / SLIDE_DURATION) * 100);
+          timelineFill.style.width = pct + '%';
+        }, 50);
+
+        autoPlayTimer = setTimeout(() => {
+          showSlide(currentSlide + 1);
+        }, SLIDE_DURATION);
+      } else {
+        timelineFill.style.width = '0%';
+      }
+    }
+
+    function toggleAutoPlay() {
+      isAutoPlaying = !isAutoPlaying;
+      autoPlayIcon.textContent = isAutoPlaying ? '⏸️' : '▶️';
+      autoPlayText.textContent = isAutoPlaying ? 'إيقاف العرض التلقائي' : 'تشغيل العرض التلقائي';
+      resetSlideTimer();
+    }
+
+    prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
+    nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
+    autoPlayBtn.addEventListener('click', toggleAutoPlay);
+
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const idx = parseInt(dot.getAttribute('data-index'));
+        showSlide(idx);
+      });
+    });
+
+    // Keyboard Shortcuts
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft' || e.key === 'PageDown') {
+        showSlide(currentSlide + 1);
+      } else if (e.key === 'ArrowRight' || e.key === 'PageUp') {
+        showSlide(currentSlide - 1);
+      } else if (e.code === 'Space') {
+        e.preventDefault();
+        toggleAutoPlay();
+      }
+    });
+
+    // 1-Click Video Recording of the Keynote Slides
+    exportVideoBtn.addEventListener('click', async () => {
+      exportVideoBtn.textContent = '⏳ جارٍ تسجيل السلايدات...';
+      const stage = document.getElementById('stage');
+
+      // Create high-res canvas recorder
+      const canvas = document.createElement('canvas');
+      canvas.width = 1920;
+      canvas.height = 1080;
+      const ctx = canvas.getContext('2d');
+
+      const stream = canvas.captureStream(60);
+      const recorder = new MediaRecorder(stream, { mimeType: 'video/webm;codecs=vp9', videoBitsPerSecond: 8000000 });
+      const chunks = [];
+      recorder.ondataavailable = e => chunks.push(e.data);
+
+      recorder.onstop = () => {
+        const blob = new Blob(chunks, { type: 'video/webm' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'NBrain-Keynote-Deck-1080p.webm';
+        a.click();
+        exportVideoBtn.textContent = '🔴 تسجيل فيديو MP4 (1080p)';
+      };
+
+      recorder.start();
+      isAutoPlaying = true;
+      showSlide(0);
+
+      const recordTotalDuration = TOTAL_SLIDES * SLIDE_DURATION;
+      const startTime = Date.now();
+
+      const recordLoop = () => {
+        const elapsed = Date.now() - startTime;
+        // Render current slide snapshot
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, 1920, 1080);
+
+        // Header
+        ctx.fillStyle = '#0f172a';
+        ctx.font = '900 48px Cairo';
+        ctx.textAlign = 'right';
+        ctx.fillText(slides[currentSlide].querySelector('.slide-title').textContent, 1820, 140);
+
+        ctx.fillStyle = '#64748b';
+        ctx.font = '600 28px Cairo';
+        ctx.fillText(slides[currentSlide].querySelector('.slide-desc').textContent, 1820, 200);
+
+        // Watermark
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '700 24px "JetBrains Mono"';
+        ctx.textAlign = 'left';
+        ctx.fillText(`NBRAIN KEYNOTE • SLIDE 0${currentSlide + 1} / 0${TOTAL_SLIDES} • nbra.in`, 100, 1020);
+
+        if (elapsed < recordTotalDuration) {
+          requestAnimationFrame(recordLoop);
+        } else {
+          recorder.stop();
+        }
+      };
+
+      requestAnimationFrame(recordLoop);
+    });
+
+    // Start on load
+    showSlide(0);
+  </script>
+</body>
+</html>
