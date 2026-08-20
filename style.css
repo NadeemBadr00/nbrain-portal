@@ -191,8 +191,8 @@ button {
 }
 
 .logo-icon {
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   background: linear-gradient(135deg, var(--console-primary-container), var(--console-primary));
   border-radius: var(--radius-md);
   display: flex;
@@ -201,6 +201,20 @@ button {
   color: #fff;
   flex-shrink: 0;
   box-shadow: 0 0 16px var(--console-primary-glow);
+  overflow: hidden;
+}
+
+.logo-icon--image {
+  background: hsl(222, 47%, 8%);
+  box-shadow: 0 0 18px var(--console-primary-glow);
+  border: 1px solid var(--console-border-subtle);
+}
+
+.brand-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: calc(var(--radius-md) - 1px);
 }
 
 .logo-icon svg {
