@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NBrain Ecosystem (nbra.in) — بوابة الخدمات والحلول البرمجية والذكاء الاصطناعي</title>
+  <meta name="description" content="منظومة NBrain العالمية لتقديم حلول البرمجيات والذكاء الاصطناعي: مواقع ويب متطورة، تطبيقات Google Play (16KB Page Aligned)، شات بوتس مبيعات، رؤية حاسوبية، ونماذج تعاقد مرنة.">
+  
+  <!-- Fonts: Cairo (Arabic) + Inter (UI) + JetBrains Mono (Code/Tech) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="console-shell" id="consoleShell">
+    
+    <!-- 1. Left Large Sidebar (Collapsible: 252px -> 68px) -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <div class="logo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <div class="logo-text">
+            <span class="app-name">NBrain AI</span>
+            <span class="app-domain">nbra.in</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-search">
+        <div class="search-input-wrapper">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" id="sidebarSearch" placeholder="بحث في الخدمات والأقسام...">
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">المنظومة والخدمات</div>
+        <a href="#overview" class="nav-link active" data-tab="overview">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          <span>نظرة عامة (Overview)</span>
+        </a>
+
+        <a href="#packages" class="nav-link" data-tab="packages">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+          <span>الباقات والمنظومة الشاملة VIP</span>
+        </a>
+
+        <a href="#industries" class="nav-link" data-tab="industries">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7h-7L10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2z"/></svg>
+          <span>حلول القطاعات (Industries)</span>
+        </a>
+
+        <a href="#models" class="nav-link" data-tab="models">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>نماذج التعاقد (Engagement)</span>
+        </a>
+
+        <a href="#workflow" class="nav-link" data-tab="workflow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>دورة حياة المشروع (Workflow)</span>
+        </a>
+
+        <a href="#techstack" class="nav-link" data-tab="techstack">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          <span>مصفوفة التقنيات (Tech Stack)</span>
+        </a>
+
+        <div class="nav-section-title">التجارب التفاعلية</div>
+        <a href="#demos" class="nav-link" data-tab="demos">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          <span>الفيديوهات والديمو الحية</span>
+        </a>
+
+        <a href="#ai-demo" class="nav-link" data-tab="ai-demo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+          <span>محاكي المساعد والترشيح الذكي</span>
+        </a>
+
+        <a href="#roi-calc" class="nav-link" data-tab="roi-calc">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <span>حاسبة الـ ROI والعائد المالي</span>
+        </a>
+
+        <a href="#customizer" class="nav-link" data-tab="customizer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 15h0M2 9.5h20"/></svg>
+          <span>حاسبة ومخصص الباقات</span>
+        </a>
+
+        <div class="nav-section-title">المصداقية والمعايير</div>
+        <a href="#portfolio" class="nav-link" data-tab="portfolio">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+          <span>سابقة الأعمال والابتكارات</span>
+        </a>
+
+        <a href="#guarantees" class="nav-link" data-tab="guarantees">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>الضمانات الهندسية (SLAs)</span>
+        </a>
+
+        <a href="#faq" class="nav-link" data-tab="faq">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+          <span>الأسئلة الشائعة (FAQ)</span>
+        </a>
+
+        <a href="#founder" class="nav-link" data-tab="founder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <span>عن المهندس نديم بدر</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="plan-badge">
+          <span class="badge-dot"></span>
+          <span class="badge-text">NBrain VIP 2026</span>
+        </div>
+        <button class="icon-button" id="collapseBtn" aria-label="طي/فتح القائمة الجانبية" title="طي/توسيع السايدبار">
+          <svg class="collapse-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- 2. Main Center Workspace -->
+    <main class="workspace">
+      <!-- Breadcrumb bar -->
+      <div class="workspace-breadcrumb" id="breadcrumbBar">
+        <nav class="breadcrumb">
+          <a href="#" class="breadcrumb__link">منظومة NBrain</a>
+          <svg class="breadcrumb__separator" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+          <a href="#" class="breadcrumb__link">بوابة الخدمات والحلول البرمجية المتقدمة</a>
+          <svg class="breadcrumb__separator" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+          <span class="breadcrumb__current" id="breadcrumbCurrent">نظرة عامة والمنظومة</span>
+        </nav>
+      </div>
+
+      <!-- Sticky Header -->
+      <header class="workspace-header" id="workspaceHeader">
+        <div class="header-content">
+          <div class="header-titles">
+            <h1 class="page-title">
+              منظومة NBrain للبرمجيات والذكاء الاصطناعي
+              <span class="subtitle-counter" id="servicesCounter">12 قسم و 8 ديمو تفاعلية</span>
+            </h1>
+            <p class="page-subtitle">استوديو تطوير البرمجيات وحلول الـ AI المخصصة: مواقع ويب، تطبيقات Google Play (16KB Aligned)، شات بوتس مبيعات، ورؤية حاسوبية.</p>
+          </div>
+          
+          <div class="header-cta-group">
+            <button class="btn btn-secondary" id="openRfpModalBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              <span>طلب عرض سعر مخصص (RFP)</span>
+            </button>
+            <a href="https://wa.me/201222777345?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%85%D9%87%D9%86%D8%AF%D8%B3%20%D9%86%D8%AF%D9%8A%D9%85%D8%8C%20%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AE%D8%AF%D9%85%D8%A7%D8%AA%20NBrain" target="_blank" class="btn btn-primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+              <span>تواصل عبر واتساب فوراً</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="tabs" id="workspaceTabs">
+          <button class="tab active" data-target="overview">نظرة عامة</button>
+          <button class="tab" data-target="packages">الباقات الشاملة VIP</button>
+          <button class="tab" data-target="industries">حلول القطاعات</button>
+          <button class="tab" data-target="models">نماذج التعاقد</button>
+          <button class="tab" data-target="workflow">منهجية العمل</button>
+          <button class="tab" data-target="techstack">مصفوفة التقنيات</button>
+          <button class="tab" data-target="demos">الفيديوهات والديمو</button>
+          <button class="tab" data-target="ai-demo">المساعد الذكي</button>
+          <button class="tab" data-target="roi-calc">حاسبة العائد ROI</button>
+          <button class="tab" data-target="customizer">حاسبة الباقات</button>
+          <button class="tab" data-target="portfolio">سابقة الأعمال</button>
+          <button class="tab" data-target="guarantees">الضمانات SLAs</button>
+          <button class="tab" data-target="faq">الأسئلة الشائعة</button>
+          <button class="tab" data-target="founder">المؤسس</button>
+        </div>
+      </header>
+
+      <!-- Workspace Dynamic Content Area -->
+      <div class="workspace-content" id="workspaceContent">
+        
+        <!-- SECTION 1: Overview & Hero Banner -->
+        <section class="content-section" id="section-overview">
+          <div class="hero-banner">
+            <div class="hero-badge">
+              <span class="hero-badge__dot"></span>
+              <span>المنظومة الهندسية الأولى لدمج البرمجيات المتقدمة بالذكاء الاصطناعي العميق</span>
+            </div>
+            <h2 class="hero-headline">
+              نبني لك <span class="text-gradient">منصتك الرقمية المتكاملة 360°</span> بأحدث معايير 2026
+            </h2>
+            <p class="hero-subtext">
+              من موقع ويب متطور وتطبيق موبايل رسمي على Google Play متوافق مع معمارية (16KB Page Alignment)، إلى شات بوت بيع وترشيحات ذكي، تأمين سيبراني شامل، وفيديو إعلاني سينمائي لمشروعك بالـ AI.
+            </p>
+
+            <div class="metrics-grid">
+              <div class="metric-box">
+                <div class="metric-box__val">100%</div>
+                <div class="metric-box__title">جاهزية Google Play (Android 15)</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-box__val">16KB</div>
+                <div class="metric-box__title">Page Alignment & NDK r28</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-box__val">Gemini AI</div>
+                <div class="metric-box__title">مساعدات وترشيحات ذكية للعملاء</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-box__val">Zero-Trust</div>
+                <div class="metric-box__title">تأمين سيبراني ودروع حماية شاملة</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: Packages & VIP Bundle -->
+        <section class="content-section" id="section-packages">
+          <div class="section-title-wrap">
+            <span class="section-tag">الباقات المتكاملة</span>
+            <h2 class="section-heading">باقات جاهزة تمنحك منظومة رقمية كاملة من الألف للياء</h2>
+          </div>
+
+          <div class="packages-grid">
+            <!-- Package 1 -->
+            <div class="package-card">
+              <div class="package-card__header">
+                <span class="tag-badge">الأساسية</span>
+                <h3 class="package-card__title">باقة الانطلاق السريع (Web & AI)</h3>
+                <p class="package-card__desc">مثالية للمشاريع الناشئة والخدمات التي تحتاج موقعاً سريعاً مع شات بوت ذكي.</p>
+              </div>
+              <ul class="package-card__list">
+                <li><span class="check-icon">✓</span> موقع ويب تعريفي / خدمات متجاوب بالكامل</li>
+                <li><span class="check-icon">✓</span> شات بوت ذكي للرد على استفسارات العملاء 24/7</li>
+                <li><span class="check-icon">✓</span> حجز اسم الدومين واستضافة سحابية فائقة السرعة</li>
+                <li><span class="check-icon">✓</span> شهادة أمان SSL وحماية Cloudflare الأساسية</li>
+                <li><span class="check-icon">✓</span> نموذج تواصل مباشر وربط واتساب فوري</li>
+                <li><span class="check-icon">✓</span> تهيئة SEO أولية لمحركات البحث</li>
+              </ul>
+              <div class="package-card__footer">
+                <button class="btn btn-secondary switch-to-tab" data-tab-target="customizer">تخصيص هذه الباقة</button>
+              </div>
+            </div>
+
+            <!-- Package 2: VIP Bundle (Featured) -->
+            <div class="package-card package-card--vip">
+              <div class="vip-ribbon">الباقة الشاملة الأكثر تميزاً 🔥</div>
+              <div class="package-card__header">
+                <span class="tag-badge tag-badge--vip">VIP Enterprise Bundle</span>
+                <h3 class="package-card__title">الباقة المتكاملة الشاملة (All-In-One 360°)</h3>
+                <p class="package-card__desc">الحل الأقوى لرواد الأعمال والمتاجر والشركات: منظومة رقمية وتسويقية متكاملة من الألف للياء.</p>
+              </div>
+              <ul class="package-card__list">
+                <li><span class="check-icon">✓</span> <strong>موقع ويب كامل وحديث</strong> (SPA سريع أو لوحة تحكم متطورة)</li>
+                <li><span class="check-icon">✓</span> <strong>تطبيق موبايل على Google Play</strong> (Android 15 + 16KB Page Aligned)</li>
+                <li><span class="check-icon">✓</span> <strong>مساعد ذكي للبيع والترشيحات</strong> (مثل محرك ترشيح المنتجات بالميزانية)</li>
+                <li><span class="check-icon">✓</span> <strong>تأمين سيبراني شامل</strong> (DDoS Shield, Firewall, Data Encryption)</li>
+                <li><span class="check-icon">✓</span> <strong>فيديو إعلاني ترويجي بالذكاء الاصطناعي</strong> عالي الدقة لمنصتك</li>
+                <li><span class="check-icon">✓</span> <strong>دومين احترافي + استضافة سحابية</strong> مهيأة بالكامل مجاناً</li>
+                <li><span class="check-icon">✓</span> <strong>لوحة إدارة المحتوى والطلبات</strong> مع إحصائيات حية</li>
+                <li><span class="check-icon">✓</span> <strong>دعم فني وصيانة متميزة</strong> بعد التسليم لضمان الاستقرار</li>
+              </ul>
+              <div class="package-card__footer">
+                <a href="https://wa.me/201222777345?text=%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%AD%D8%AC%D8%B2%20%D8%A7%D9%84%D8%A8%D8%A7%D9%82%D8%A9%20%D8%A7%D9%84%D8%B4%D8%A7%D9%85%D9%84%D8%A9%20VIP%20%D9%85%D9%86%20NBrain" target="_blank" class="btn btn-primary btn-block">احجز الباقة الشاملة VIP الآن</a>
+              </div>
+            </div>
+
+            <!-- Package 3 -->
+            <div class="package-card">
+              <div class="package-card__header">
+                <span class="tag-badge">التخصيص المتقدم</span>
+                <h3 class="package-card__title">باقة أدوات المتصفح والـ Vision</h3>
+                <p class="package-card__desc">مخصصة للشركات والمنصات التي تحتاج حلول أتمتة وإضافات متصفح أو أنظمة رؤية حاسوبية خاصة.</p>
+              </div>
+              <ul class="package-card__list">
+                <li><span class="check-icon">✓</span> إضافة متصفح Chrome & Edge متوافقة مع Manifest V3</li>
+                <li><span class="check-icon">✓</span> أنظمة أتمتة أو محركات تحميل وتجميع بيانات ذكية</li>
+                <li><span class="check-icon">✓</span> أو نظام رؤية حاسوبية مخصص (تتبع، كشف، كاميرات)</li>
+                <li><span class="check-icon">✓</span> ربط الـ API بالخوادم والأنظمة المركزية</li>
+                <li><span class="check-icon">✓</span> دليل تشغيل وفيديو توضيحي لطريقة الاستخدام</li>
+                <li><span class="check-icon">✓</span> نشر الإضافة على Chrome Web Store</li>
+              </ul>
+              <div class="package-card__footer">
+                <button class="btn btn-secondary switch-to-tab" data-tab-target="customizer">خصص باقتك</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 3: Industry Solutions Matrix -->
+        <section class="content-section" id="section-industries">
+          <div class="section-title-wrap">
+            <span class="section-tag">مصفوفة الحلول القطاعية (Industry Matrix)</span>
+            <h2 class="section-heading">حلول برمجية وذكية مفصلة خصيصاً لكل قطاع ومجال</h2>
+            <p class="section-subtext">نصمم ونبني المنظومة التي تحل تحديات مجالك بدقة وتمنحك ميزة تنافسية كبرى أمام منافسيك.</p>
+          </div>
+
+          <div class="industry-grid">
+            <div class="industry-card">
+              <div class="industry-card__icon">🛒</div>
+              <h3 class="industry-card__title">قطاع التجارة والمتاجر (E-Commerce)</h3>
+              <p class="industry-card__desc">متجر إلكتروني فائق السرعة + تطبيق موبايل على Google Play + شات بوت مبيعات ذكي يرشح المنتجات بميزانية العميل + ربط الدفع والواتساب.</p>
+              <ul class="industry-card__features">
+                <li><span>✓</span> مساعد مبيعات AI يغلق الصفقات 24/7</li>
+                <li><span>✓</span> تطبيق متوافق 100% مع Android 15</li>
+                <li><span>✓</span> ربط بوابات الدفع (Paymob, Fawry, ValU)</li>
+              </ul>
+            </div>
+
+            <div class="industry-card">
+              <div class="industry-card__icon">🎓</div>
+              <h3 class="industry-card__title">قطاع التعليم والمنصات (EdTech & LMS)</h3>
+              <p class="industry-card__desc">منصة تعليمية ذكية على غرار Coursera و NanoGrad، تدعم حماية الفيديوهات من التحميل، اختبارات تفاعلية، وشهادات إتمام رقمية معتمدة.</p>
+              <ul class="industry-card__features">
+                <li><span>✓</span> مشغل فيديو محمي ومضاد للتسريب</li>
+                <li><span>✓</span> بنك أسئلة وتصحيح تلقائي بالذكاء الاصطناعي</li>
+                <li><span>✓</span> تطبيق موبايل للطلاب والمعلمين</li>
+              </ul>
+            </div>
+
+            <div class="industry-card">
+              <div class="industry-card__icon">🚗</div>
+              <h3 class="industry-card__title">النقل والسلامة المرورية (Mobility & Vision)</h3>
+              <p class="industry-card__desc">أنظمة رؤية حاسوبية لمراقبة السائقين واكتشاف النعاس والتشتت في الوقت الفعلي + تتبع حركة المرور وكشف المخالفات بـ YOLOv12x.</p>
+              <ul class="industry-card__features">
+                <li><span>✓</span> إنذار لحظي عند إغماض العين أو التثاؤب</li>
+                <li><span>✓</span> تتبع أسطول السيارات وكاميرات المراقبة</li>
+                <li><span>✓</span> لوحة تحكم مركزية بإحصائيات القيادة</li>
+              </ul>
+            </div>
+
+            <div class="industry-card">
+              <div class="industry-card__icon">📄</div>
+              <h3 class="industry-card__title">الشركات وتحليل المستندات (Document AI)</h3>
+              <p class="industry-card__desc">تطبيقات قراءة وتلخيص وفهرسة المستندات والملفات الضخمة (PDF, Excel, Word) بالذكاء الاصطناعي مع إمكانية استخراج البيانات وطرح الأسئلة الذكية.</p>
+              <ul class="industry-card__features">
+                <li><span>✓</span> تلخيص مئات الصفحات في ثوانٍ بالـ AI</li>
+                <li><span>✓</span> بحث دلالي ذكي واستخراج الأرقام والجداول</li>
+                <li><span>✓</span> ربط مباشر بالسحابة و Google Drive</li>
+              </ul>
+            </div>
+
+            <div class="industry-card">
+              <div class="industry-card__icon">🧩</div>
+              <h3 class="industry-card__title">أدوات المتصفح والأتمتة (Browser Tools)</h3>
+              <p class="industry-card__desc">بناء وتطوير إضافات كروم وإيدج (Manifest V3) المخصصة لأتمتة سير العمل، سحب البيانات (Scraping)، ومحركات التحميل المجزأ متعددة المسارات.</p>
+              <ul class="industry-card__features">
+                <li><span>✓</span> نشر معتمد على Chrome Web Store</li>
+                <li><span>✓</span> واجهات Dark Mode مدمجة داخل المتصفح</li>
+                <li><span>✓</span> تكامل كامل مع خوادم الـ Backend</li>
+              </ul>
+            </div>
+
+            <div class="industry-card">
+              <div class="industry-card__icon">🏛️</div>
+              <h3 class="industry-card__title">السياحة والإرشاد الذكي (AI Tour Guide)</h3>
+              <p class="industry-card__desc">تطبيقات المرشد السياحي الذكي (مثل مشروع Anubis AI)، تتعرف بالكاميرا على المعالم والآثار وتقدم شات بوت ناطق بـ 18 لغة مختلفة.</p>
+              <ul class="industry-card__features">
+                <li><span>✓</span> تعرف بصري لحظي بدقة >90%</li>
+                <li><span>✓</span> شات بوت تفاعلي متعدد اللغات</li>
+                <li><span>✓</span> توليد صور تاريخية بـ Stable Diffusion</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 4: Engagement Models -->
+        <section class="content-section" id="section-models">
+          <div class="section-title-wrap">
+            <span class="section-tag">نماذج التعاقد والشراكة (Engagement Models)</span>
+            <h2 class="section-heading">طرق تعاقد مرنة وشفافة تناسب مرحلة مشروعك وميزانيتك</h2>
+            <p class="section-subtext">اختر النموذج الأنسب لك سواء كنت تبدأ فكرة جديدة، أو تحتاج تسليم مشروع جاهز، أو تريد دعماً مستمراً.</p>
+          </div>
+
+          <div class="models-grid">
+            <div class="model-card">
+              <div class="model-card__badge">الأكثر شعبية لرواد الأعمال</div>
+              <h3 class="model-card__title">تسليم المشروع المتكامل (Turnkey Fixed-Price)</h3>
+              <p class="model-card__desc">نتفق على نطاق العمل، السعر الثابت، وموعد التسليم. نتولى نحن كافة مراحل التصميم، البرمجة، التأمين، والنشر على السحابة والمتاجر.</p>
+              <ul class="model-card__list">
+                <li><span>✓</span> تسعير ثابت بدون أي تكاليف خفية</li>
+                <li><span>✓</span> جدول زمني دقيق ومحدد للتسليم</li>
+                <li><span>✓</span> ضمان تسليم واختبار شامل قبل الدفع النهائي</li>
+                <li><span>✓</span> كود مصدري كامل ملك لك بنسبة 100%</li>
+              </ul>
+              <a href="https://wa.me/201222777345?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%AA%D8%B9%D8%A7%D9%82%D8%AF%20%D8%B9%D9%84%D9%89%20%D9%86%D9%85%D9%88%D8%B0%D8%AC%20Turnkey%20Fixed-Price" target="_blank" class="btn btn-secondary btn-block">طلب تسعيرة Turnkey</a>
+            </div>
+
+            <div class="model-card model-card--highlight">
+              <div class="model-card__badge model-card__badge--vip">لإطلاق الأفكار السريعة ⚡</div>
+              <h3 class="model-card__title">إطلاق النموذج الأولي السريع (Fast-Track MVP / PoC)</h3>
+              <p class="model-card__desc">نبني لك نموذجاً أولياً فعالاً (MVP) لمشروعك أو نظام الذكاء الاصطناعي خلال 7 إلى 14 يوماً فقط لاختبار السوق وجذب المستثمرين والعملاء الأوائل.</p>
+              <ul class="model-card__list">
+                <li><span>✓</span> تسليم فائق السرعة خلال 7 - 14 يوم عمل</li>
+                <li><span>✓</span> تركيز على الميزات الجوهرية (Core Value)</li>
+                <li><span>✓</span> تكلفة اقتصادية ممتازة ومناسبة للمرحلة الأولى</li>
+                <li><span>✓</span> قابلية التوسع إلى منظومة كاملة بسهولة</li>
+              </ul>
+              <a href="https://wa.me/201222777345?text=%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A5%D8%B7%D9%84%D8%A7%D9%82%20%D9%86%D9%85%D9%88%D8%B0%D8%AC%20%D8%A3%D9%88%D9%84%D9%8A%20MVP%20%D8%B3%D8%B1%D9%8A%D8%B9" target="_blank" class="btn btn-primary btn-block">ابدأ بناء الـ MVP الآن</a>
+            </div>
+
+            <div class="model-card">
+              <div class="model-card__badge">للشركات والمشاريع القائمة</div>
+              <h3 class="model-card__title">فريق الدعم والتطوير المستمر (Dedicated Retainer)</h3>
+              <p class="model-card__desc">فريق هندسي متخصص مكرس لمشروعك لمتابعة الأداء، الصيانة الدورية، إضافة ميزات جديدة بالـ AI، وحماية السيرفرات والتطبيقات على مدار الساعة.</p>
+              <ul class="model-card__list">
+                <li><span>✓</span> استجابة فورية لأي طوارئ أو تحديثات</li>
+                <li><span>✓</span> ترقية دورية لمعايير Google Play والأمان</li>
+                <li><span>✓</span> تدريب وصيانة نماذج الذكاء الاصطناعي</li>
+                <li><span>✓</span> تقارير شهرية مفصلة للأداء والحماية</li>
+              </ul>
+              <a href="https://wa.me/201222777345?text=%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AE%D8%AF%D9%85%D8%A7%D8%AA%20%D8%A7%D9%84%D8%AF%D8%B9%D9%85%20%D9%88%D8%A7%D9%84%D8%B5%D9%8A%D8%A7%D9%86%D8%A9%20Retainer" target="_blank" class="btn btn-secondary btn-block">استفسر عن الـ Retainer</a>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 5: Step-by-Step Engineering Lifecycle (NEW) -->
+        <section class="content-section" id="section-workflow">
+          <div class="section-title-wrap">
+            <span class="section-tag">منهجية العمل الهندسية (Engineering Workflow)</span>
+            <h2 class="section-heading">كيف نحول فكرتك إلى منظومة برمجية حية في 6 خطوات منظمة</h2>
+            <p class="section-subtext">خطوات واضحة وشفافة تضمن لك متابعة دقيقة لمشروعك وجودة هندسية بلا مفاجآت.</p>
+          </div>
+
+          <div class="workflow-steps-grid">
+            <div class="step-card">
+              <div class="step-num">01</div>
+              <h3 class="step-title">دراسة المتطلبات والمعمارية</h3>
+              <p class="step-desc">جلسة استشارية متعمقة لفهم أهداف مشروعك وتحديد المعمارية الهندسية ونماذج الـ AI والتقنيات الأنسب.</p>
+            </div>
+
+            <div class="step-card">
+              <div class="step-num">02</div>
+              <h3 class="step-title">تصميم الواجهات وتجربة المستخدم</h3>
+              <p class="step-desc">بناء النماذج التفاعلية وواجهات الـ UI/UX بنظام الألوان HSL والـ Dark Mode العصري لتجربة مستخدم لا تُنسى.</p>
+            </div>
+
+            <div class="step-card">
+              <div class="step-num">03</div>
+              <h3 class="step-title">البرمجة وهندسة الذكاء الاصطناعي</h3>
+              <p class="step-desc">كتابة كود نظيف (Clean Architecture)، دمج نماذج Gemini AI، بناء الـ APIs، وبرمجة تطبيقات الموبايل والويب.</p>
+            </div>
+
+            <div class="step-card">
+              <div class="step-num">04</div>
+              <h3 class="step-title">الفحص الأمني ومعايير Google Play</h3>
+              <p class="step-desc">فحص شامل للأمان، اختبار التوافق مع معيار 16KB Page Alignment على أجهزة Android 15، والتأكد من خلو التطبيق من الـ Crashes.</p>
+            </div>
+
+            <div class="step-card">
+              <div class="step-num">05</div>
+              <h3 class="step-title">النشر السحابي والإنتاج المرئي</h3>
+              <p class="step-desc">رفع التطبيق على Google Play، تجهيز الدومين والخوادم، وإنتاج الفيديو الإعلاني الترويجي السينمائي بالـ AI.</p>
+            </div>
+
+            <div class="step-card">
+              <div class="step-num">06</div>
+              <h3 class="step-title">التسليم والضمان المجاني</h3>
+              <p class="step-desc">تسليم الكود المصدري كاملاً، تدريبك على لوحة التحكم، وبدء فترة الضمان والصيانة المجانية لـ 30 يوماً.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 6: Tech Stack Radar & Matrix (NEW) -->
+        <section class="content-section" id="section-techstack">
+          <div class="section-title-wrap">
+            <span class="section-tag">مصفوفة التقنيات (Tech Stack Matrix)</span>
+            <h2 class="section-heading">أحدث التقنيات وأطر العمل الهندسية المعتمدة لعام 2026</h2>
+            <p class="section-subtext">نستخدم فقط أحدث وأقوى التقنيات المستقرة والسريعة عالمياً لضمان عمر تشغيلي طويل لمنصتك.</p>
+          </div>
+
+          <div class="techstack-grid">
+            <div class="tech-box">
+              <div class="tech-box__header">
+                <span class="tech-box__tag">Frontend & Web</span>
+                <span class="tech-box__icon">🌐</span>
+              </div>
+              <h3 class="tech-box__title">منصات الويب السريعة</h3>
+              <div class="tech-tags-list">
+                <span>React 19</span><span>Next.js 15</span><span>Vite</span><span>Modern CSS HSL</span><span>Tailwind CSS</span><span>WebSockets</span>
+              </div>
+            </div>
+
+            <div class="tech-box">
+              <div class="tech-box__header">
+                <span class="tech-box__tag">Mobile & Native</span>
+                <span class="tech-box__icon">📱</span>
+              </div>
+              <h3 class="tech-box__title">تطبيقات الموبايل الممتثلة</h3>
+              <div class="tech-tags-list">
+                <span>Flutter 3.29</span><span>Android 15 (SDK 35)</span><span>16KB Page Aligned</span><span>NDK r28</span><span>Kotlin</span><span>iOS Swift</span>
+              </div>
+            </div>
+
+            <div class="tech-box">
+              <div class="tech-box__header">
+                <span class="tech-box__tag">AI & Machine Learning</span>
+                <span class="tech-box__icon">🧠</span>
+              </div>
+              <h3 class="tech-box__title">محركات ونماذج الذكاء الاصطناعي</h3>
+              <div class="tech-tags-list">
+                <span>Google Gemini API</span><span>PyTorch</span><span>YOLOv12x</span><span>MediaPipe</span><span>Stable Diffusion</span><span>OpenCV</span>
+              </div>
+            </div>
+
+            <div class="tech-box">
+              <div class="tech-box__header">
+                <span class="tech-box__tag">Backend & Cloud</span>
+                <span class="tech-box__icon">☁️</span>
+              </div>
+              <h3 class="tech-box__title">الخوادم والبنية السحابية</h3>
+              <div class="tech-tags-list">
+                <span>Node.js / Express</span><span>Python FastAPI</span><span>PostgreSQL</span><span>Cloudflare Pro</span><span>Firebase Multi-Site</span><span>Redis</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 7: Live Demos & Video Showcase -->
+        <section class="content-section" id="section-demos">
+          <div class="section-title-wrap">
+            <span class="section-tag">العروض المرئية والتجارب الحية (Interactive Live Demos)</span>
+            <h2 class="section-heading">شاهد فيديوهات الاستعراض وجرب المنصات والتطبيقات مباشرة!</h2>
+            <p class="section-subtext">تفضل بمشاهدة استعراض حقيقي لمنتجاتنا وتجربة المنصات الحية على الإنترنت وتطبيقات جوجل بلاي.</p>
+          </div>
+
+          <div class="demos-grid">
+            <div class="demo-card">
+              <div class="demo-card__media">
+                <div class="demo-card__badge">Live Platform & Android App</div>
+                <div class="demo-card__preview">
+                  <span class="demo-icon">🎓</span>
+                  <div class="demo-overlay-btn" data-action="open-link" data-url="https://nanograd.nbra.in">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    <span>فتح المنصة الحية</span>
+                  </div>
+                </div>
+              </div>
+              <div class="demo-card__content">
+                <h3 class="demo-card__title">منصة وتطبيق NanoGrad LMS</h3>
+                <p class="demo-card__desc">منصة تعليمية ذكية للـ AI مع تطبيق Android على Google Play يدعم 16KB Page Alignment.</p>
+                <div class="demo-card__actions">
+                  <a href="https://nanograd.nbra.in" target="_blank" class="btn btn-primary btn-sm">
+                    <span>🚀 تجربة المنصة الحية</span>
+                  </a>
+                  <a href="https://github.com/NadeemBadr00/nanograd-platform" target="_blank" class="btn btn-secondary btn-sm">
+                    <span>💻 كود المشروع</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="demo-card">
+              <div class="demo-card__media">
+                <div class="demo-card__badge">Escrow Marketplace Live</div>
+                <div class="demo-card__preview">
+                  <span class="demo-icon">🤝</span>
+                  <div class="demo-overlay-btn" data-action="open-link" data-url="https://safqa.nbra.in">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    <span>فتح سوق صفقة برو</span>
+                  </div>
+                </div>
+              </div>
+              <div class="demo-card__content">
+                <h3 class="demo-card__title">سوق ومنصة صفقة برو (Safqa Pro)</h3>
+                <p class="demo-card__desc">منصة وساطة مالية وحماية للمشتري والبائع مع تطبيق موبايل متكامل على Google Play.</p>
+                <div class="demo-card__actions">
+                  <a href="https://safqa.nbra.in" target="_blank" class="btn btn-primary btn-sm">
+                    <span>🚀 تجربة المنصة الحية</span>
+                  </a>
+                  <a href="https://github.com/NadeemBadr00/safqa-pro" target="_blank" class="btn btn-secondary btn-sm">
+                    <span>💻 كود المشروع</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="demo-card">
+              <div class="demo-card__media">
+                <div class="demo-card__badge">AI Interactive Demo</div>
+                <div class="demo-card__preview">
+                  <span class="demo-icon">🏛️</span>
+                  <button class="demo-overlay-btn open-media-modal" data-title="مشروع Anubis AI Tour Guide" data-type="gif" data-src="https://raw.githubusercontent.com/NadeemBadr00/Anubis-AI-Tour-Guide/main/assets/Anubisgit.gif" data-info="نظام مرشد سياحي ذكي للحضارة المصرية بالذكاء الاصطناعي مع شات بوت هجين وتعرف لحظي على التماثيل بدقة >90%.">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    <span>مشاهدة العرض الحي (Demo)</span>
+                  </button>
+                </div>
+              </div>
+              <div class="demo-card__content">
+                <h3 class="demo-card__title">مشروع Anubis AI Tour Guide</h3>
+                <p class="demo-card__desc">شات بوت هجين بـ 18 لغة + تعرف على الآثار بـ MobileNetV2 + توليد صور بـ Stable Diffusion.</p>
+                <div class="demo-card__actions">
+                  <button class="btn btn-primary btn-sm open-media-modal" data-title="مشروع Anubis AI Tour Guide" data-type="gif" data-src="https://raw.githubusercontent.com/NadeemBadr00/Anubis-AI-Tour-Guide/main/assets/Anubisgit.gif" data-info="نظام مرشد سياحي ذكي للحضارة المصرية بالذكاء الاصطناعي مع شات بوت هجين وتعرف لحظي على التماثيل بدقة >90%.">
+                    <span>🎬 استعراض الفيديو التوضيحي</span>
+                  </button>
+                  <a href="https://github.com/NadeemBadr00/Anubis-AI-Tour-Guide" target="_blank" class="btn btn-secondary btn-sm">
+                    <span>💻 كود المشروع</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="demo-card">
+              <div class="demo-card__media">
+                <div class="demo-card__badge">Extension & Multi-Threaded</div>
+                <div class="demo-card__preview">
+                  <span class="demo-icon">⚡</span>
+                  <button class="demo-overlay-btn open-media-modal" data-title="Nitro Download Manager (NDM Pro)" data-type="info" data-info="محرك تحميل متطور مفتوح المصدر كبديل لـ IDM، يقسم الملفات لـ 32 مسار متزامن عبر HTTP Range مع إضافة كروم وإيدج (Manifest V3) ولوحة تحكم Dark Mode.">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    <span>تفاصيل المحرك والإضافة</span>
+                  </button>
+                </div>
+              </div>
+              <div class="demo-card__content">
+                <h3 class="demo-card__title">Nitro Download Manager (NDM)</h3>
+                <p class="demo-card__desc">محرك تحميل مجزأ فائق السرعة مع إضافة متصفح لكروم وإيدج وواجهة تحكم Dark Mode.</p>
+                <div class="demo-card__actions">
+                  <a href="https://github.com/NadeemBadr00/Nitro-Download-Manager" target="_blank" class="btn btn-primary btn-sm">
+                    <span>🧩 تحميل وتجربة الإضافة</span>
+                  </a>
+                  <a href="https://github.com/NadeemBadr00/Nitro-Download-Manager" target="_blank" class="btn btn-secondary btn-sm">
+                    <span>💻 المستودع الرسمي</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="demo-card">
+              <div class="demo-card__media">
+                <div class="demo-card__badge">YOLOv12x & MediaPipe</div>
+                <div class="demo-card__preview">
+                  <span class="demo-icon">🚗</span>
+                  <button class="demo-overlay-btn open-media-modal" data-title="Smart Driver & Traffic Vision" data-type="info" data-info="أنظمة سلامة مرورية ذكية تكتشف نعاس وتشتت وتثاؤب السائقين في الوقت الفعلي عبر تحليل EAR و MAR + تتبع حركة المرور وكشف السير العكسي بنموذج YOLOv12x.">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
+                    <span>استعراض النظام وتحليل الرؤية</span>
+                  </button>
+                </div>
+              </div>
+              <div class="demo-card__content">
+                <h3 class="demo-card__title">أنظمة Driver & Traffic AI Vision</h3>
+                <p class="demo-card__desc">كشف النعاس والتشتت في الوقت الفعلي (EAR / PERCLOS) + تحليل المرور وكشف السير العكسي.</p>
+                <div class="demo-card__actions">
+                  <a href="https://github.com/NadeemBadr00/smart-traffic-vision" target="_blank" class="btn btn-primary btn-sm">
+                    <span>🚦 استعراض Traffic Vision</span>
+                  </a>
+                  <a href="https://github.com/NadeemBadr00/smart-driver-monitoring" target="_blank" class="btn btn-secondary btn-sm">
+                    <span>🚗 نظام Driver Safety</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="demo-card">
+              <div class="demo-card__media">
+                <div class="demo-card__badge">Flutter & Gemini AI</div>
+                <div class="demo-card__preview">
+                  <span class="demo-icon">📄</span>
+                  <button class="demo-overlay-btn open-media-modal" data-title="SmartDocs AI Document Reader" data-type="info" data-info="تطبيق موبايل Flutter لقراءة وتلخيص كافة أنواع المستندات (PDF, Word, Excel, PPTX, CSV) مع شات بوت Gemini AI مدمج و Google Drive API.">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                    <span>معاينة مميزات التطبيق</span>
+                  </button>
+                </div>
+              </div>
+              <div class="demo-card__content">
+                <h3 class="demo-card__title">تطبيق SmartDocs AI Reader</h3>
+                <p class="demo-card__desc">قارئ ومحلل المستندات بالذكاء الاصطناعي مع دعم تلخيص PDF و Word و Excel بالـ AI.</p>
+                <div class="demo-card__actions">
+                  <a href="https://github.com/NadeemBadr00/SmartDocs" target="_blank" class="btn btn-primary btn-sm">
+                    <span>📱 استعراض التطبيق</span>
+                  </a>
+                  <a href="https://github.com/NadeemBadr00/SmartDocs" target="_blank" class="btn btn-secondary btn-sm">
+                    <span>💻 كود Flutter</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 8: Interactive AI Simulator Demo -->
+        <section class="content-section" id="section-ai-demo">
+          <div class="section-title-wrap">
+            <span class="section-tag">تجربة تفاعلية حية (Live Interactive Demo)</span>
+            <h2 class="section-heading">شاهد كيف يعمل المساعد ومحرك الترشيحات الذكي في متجرك ومشروعك!</h2>
+            <p class="section-subtext">تخيل أن لديك متجراً أو منصة، ويدخل العميل بميزانية محددة (مثلاً 5,999 ج.م).. جرب بنفسك كيف يساعده الـ AI فوراً!</p>
+          </div>
+
+          <div class="ai-simulator-card">
+            <div class="ai-sim-header">
+              <div class="ai-sim-status">
+                <span class="status-dot online"></span>
+                <span class="ai-sim-name">NBrain AI Sales Advisor (المساعد الذكي للمبيعات والترشيحات)</span>
+              </div>
+              <div class="badge-pill">Powered by Gemini AI Engine</div>
+            </div>
+
+            <div class="ai-sim-messages" id="chat-messages">
+              <div class="chat-msg chat-msg--bot">
+                <div class="chat-msg__avatar">🤖</div>
+                <div class="chat-msg__bubble">
+                  أهلاً بك! 👋 أنا المساعد الذكي لمشروعك. أنا هنا لأساعد عملاءك في اختيار أفضل المنتجات أو الباقات المناسبة لاحتياجاتهم وميزانيتهم تماماً.
+                  <br><br>
+                  <strong>جرب إدخال ميزانيتك الآن، أو اضغط على الأزرار السريعة بالأسفل لنوضح لك كيف يرشح الذكاء الاصطناعي الخطة المثالية:</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="ai-sim-presets">
+              <span class="presets-label">أمثلة سريعة للتجربة:</span>
+              <button class="preset-btn" data-budget="5999" data-query="معايا 5999 جنيه وعايز أشتري تشكيلة ممتازة، ترشحلي إيه؟">
+                💡 ميزانية 5,999 ج.م (متجر ذكي)
+              </button>
+              <button class="preset-btn" data-budget="15000" data-query="عايز أطلق متجر إلكتروني مع تطبيق موبايل على جوجل بلاي، إيه أنسب خطة لي؟">
+                🚀 إطلاق تطبيق ومتجر متكامل
+              </button>
+              <button class="preset-btn" data-budget="3000" data-query="محتاج إضافة كروم ذكية لأتمتة أعمال فريلانسر أو تحميل">
+                🧩 إضافة متصفح Chrome مخصصة
+              </button>
+            </div>
+
+            <div class="ai-sim-input-row">
+              <input type="text" id="ai-user-input" class="sim-input" placeholder="اكتب سؤالك أو ميزانيتك هنا (مثال: معايا 5999 جنيه رشحلي...)" autocomplete="off">
+              <button id="ai-submit-btn" class="btn btn-primary">
+                <span>إرسال</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 9: Interactive AI ROI & Savings Calculator (NEW) -->
+        <section class="content-section" id="section-roi-calc">
+          <div class="section-title-wrap">
+            <span class="section-tag">حاسبة العائد الاستثماري (AI ROI Calculator)</span>
+            <h2 class="section-heading">احسب كم ستوفر وتربح بدمج الذكاء الاصطناعي والأتمتة في مشروعك!</h2>
+            <p class="section-subtext">حرك المؤشرات لمعرفة ساعات العمل المهدرة والتكاليف التي يوفرها لك المساعد الذكي شهرياً.</p>
+          </div>
+
+          <div class="roi-calc-card">
+            <div class="roi-inputs-col">
+              <div class="calc-control-group">
+                <div class="calc-label-row">
+                  <span>عدد استفسارات / رسائل العملاء شهرياً:</span>
+                  <strong class="calc-val-display" id="inquiriesVal">1,500 رسالة</strong>
+                </div>
+                <input type="range" class="calc-slider" id="inquiriesRange" min="200" max="10000" step="100" value="1500">
+              </div>
+
+              <div class="calc-control-group">
+                <div class="calc-label-row">
+                  <span>متوسط قيمة الطلب / السلعة (ج.م):</span>
+                  <strong class="calc-val-display" id="avgOrderVal">850 ج.م</strong>
+                </div>
+                <input type="range" class="calc-slider" id="orderRange" min="100" max="5000" step="50" value="850">
+              </div>
+
+              <div class="calc-control-group">
+                <div class="calc-label-row">
+                  <span>عدد ساعات موظفي خدمة العملاء أسبوعياً:</span>
+                  <strong class="calc-val-display" id="hoursVal">40 ساعة</strong>
+                </div>
+                <input type="range" class="calc-slider" id="hoursRange" min="10" max="160" step="5" value="40">
+              </div>
+            </div>
+
+            <div class="roi-results-col">
+              <div class="roi-result-box">
+                <div class="roi-result-label">الوقت الموفر شهرياً بالأتمتة:</div>
+                <div class="roi-result-num text-primary" id="savedHoursResult">120 ساعة عمل</div>
+                <div class="roi-result-sub">يعادل عمل موظف ونصف بدوام كامل</div>
+              </div>
+
+              <div class="roi-result-box">
+                <div class="roi-result-label">الزيادة التقديرية في المبيعات بالـ AI:</div>
+                <div class="roi-result-num text-success" id="extraSalesResult">+38,250 ج.م/شهرياً</div>
+                <div class="roi-result-sub">عبر سرعة الرد اللحظي واقتراح المنتجات بالميزانية</div>
+              </div>
+
+              <a href="https://wa.me/201222777345?text=%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%AF%D9%85%D8%AC%20%D9%85%D8%B3%D8%A7%D8%B9%D8%AF%20AI%20%D9%81%D9%8A%20%D9%85%D8%B4%D8%B1%D9%88%D8%B9%D9%8A%20%D9%84%D8%B2%D9%8A%D8%A7%D8%AF%D8%A9%20%D8%A7%D9%84%D9%85%D8%A8%D9%8A%D8%B9%D8%A7%D8%AA" target="_blank" class="btn btn-primary btn-block">
+                <span>تفعيل المساعد الذكي لمشروعي فوراً</span>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 10: Package Customizer & Timeline Calculator -->
+        <section class="content-section" id="section-customizer">
+          <div class="section-title-wrap">
+            <span class="section-tag">صمم باقتك بنفسك</span>
+            <h2 class="section-heading">حاسبة ومخصص باقات المشروعات المباشرة</h2>
+            <p class="section-subtext">حدد المكونات التي يحتاجها مشروعك بدقة، وسنقوم بحساب الخطة والجدول الزمني التقديري للتنفيذ فوراً.</p>
+          </div>
+
+          <div class="customizer-grid">
+            <div class="customizer-items">
+              <label class="custom-card">
+                <input type="checkbox" class="customizer__checkbox" data-id="web" data-name="موقع ويب متكامل فائق السرعة" data-time="5 أيام" checked>
+                <div class="custom-card__body">
+                  <div class="custom-card__header">
+                    <span class="custom-card__title">موقع ويب متكامل (Modern Web App)</span>
+                    <span class="badge-pill badge-pill--success">أساسي</span>
+                  </div>
+                  <p class="custom-card__desc">واجهة مستخدم حديثة بـ React / Next.js، سريعة ومتجاوبة مع لوحة تحكم كاملة.</p>
+                </div>
+              </label>
+
+              <label class="custom-card">
+                <input type="checkbox" class="customizer__checkbox" data-id="app" data-name="تطبيق موبايل على Google Play" data-time="7 أيام" checked>
+                <div class="custom-card__body">
+                  <div class="custom-card__header">
+                    <span class="custom-card__title">تطبيق موبايل رسمي على Google Play Store</span>
+                    <span class="badge-pill badge-pill--primary">الأكثر طلباً</span>
+                  </div>
+                  <p class="custom-card__desc">تطبيق Flutter أصلي متوافق مع Android 15 ومعيار 16KB Page Alignment.</p>
+                </div>
+              </label>
+
+              <label class="custom-card">
+                <input type="checkbox" class="customizer__checkbox" data-id="bot" data-name="شات بوت ومساعد مبيعات ذكي (Gemini AI)" data-time="3 أيام" checked>
+                <div class="custom-card__body">
+                  <div class="custom-card__header">
+                    <span class="custom-card__title">شات بوت ذكي ومساعد مبيعات بالـ AI</span>
+                    <span class="badge-pill badge-pill--primary">Gemini GenAI</span>
+                  </div>
+                  <p class="custom-card__desc">مساعد ذكي للرد على العملاء وترشيح المنتجات بناءً على الميزانية وتسهيل العمليات.</p>
+                </div>
+              </label>
+
+              <label class="custom-card">
+                <input type="checkbox" class="customizer__checkbox" data-id="security" data-name="تأمين سيبراني ودروع حماية كاملة" data-time="2 يوم" checked>
+                <div class="custom-card__body">
+                  <div class="custom-card__header">
+                    <span class="custom-card__title">تأمين سيبراني ودروع حماية شاملة</span>
+                    <span class="badge-pill badge-pill--warning">حماية قصوى</span>
+                  </div>
+                  <p class="custom-card__desc">حماية من هجمات الحرمان من الخدمة (DDoS)، تشفير SSL، وجدران نارية سحابية.</p>
+                </div>
+              </label>
+
+              <label class="custom-card">
+                <input type="checkbox" class="customizer__checkbox" data-id="video" data-name="فيديو إعلاني ترويجي بالذكاء الاصطناعي" data-time="2 يوم" checked>
+                <div class="custom-card__body">
+                  <div class="custom-card__header">
+                    <span class="custom-card__title">فيديو ترويجي سينمائي بالذكاء الاصطناعي</span>
+                    <span class="badge-pill badge-pill--accent">تسويق احترافي</span>
+                  </div>
+                  <p class="custom-card__desc">فيديو عالي الجودة مع تعليق صوتي سينمائي جاهز للنشر على منصات التواصل والإعلانات.</p>
+                </div>
+              </label>
+
+              <label class="custom-card">
+                <input type="checkbox" class="customizer__checkbox" data-id="extension" data-name="إضافة متصفح كروم مخصصة (Chrome Extension)" data-time="4 أيام">
+                <div class="custom-card__body">
+                  <div class="custom-card__header">
+                    <span class="custom-card__title">إضافة مخصصة لمتصفح Chrome & Edge</span>
+                    <span class="badge-pill badge-pill--info">اختياري</span>
+                  </div>
+                  <p class="custom-card__desc">إضافة متصفح لأتمتة المهام، أو تنزيل الملفات، أو دمج خدمات موقعك بالمتصفح مباشرة.</p>
+                </div>
+              </label>
+
+              <label class="custom-card">
+                <input type="checkbox" class="customizer__checkbox" data-id="domain" data-name="حجز اسم الدومين والاستضافة السحابية" data-time="1 يوم" checked>
+                <div class="custom-card__body">
+                  <div class="custom-card__header">
+                    <span class="custom-card__title">دومين مخصص واستضافة سحابية فائقة السرعة</span>
+                    <span class="badge-pill badge-pill--success">مجاناً بالباقة</span>
+                  </div>
+                  <p class="custom-card__desc">إعداد الدومين والـ DNS والخوادم السحابية بدون أي تعقيدات تقنية من طرفك.</p>
+                </div>
+              </label>
+            </div>
+
+            <!-- Customizer Summary Card -->
+            <div class="customizer-summary">
+              <div class="summary-box">
+                <div class="summary-box__header">
+                  <h3 class="summary-box__title">ملخص الباقة المخصصة</h3>
+                  <span class="badge-pill badge-pill--primary" id="selected-count-badge">6 عناصر مختارة</span>
+                </div>
+
+                <div class="summary-box__body">
+                  <div class="summary-items-list" id="selected-items-list">
+                    <!-- Populated via JS -->
+                  </div>
+
+                  <div class="summary-divider"></div>
+
+                  <div class="summary-row">
+                    <span class="summary-label">مدة التنفيذ التقديرية:</span>
+                    <span class="summary-val text-primary" id="estimated-timeline">10 - 14 يوم عمل</span>
+                  </div>
+
+                  <div class="summary-row">
+                    <span class="summary-label">الدعم الفني والضمان:</span>
+                    <span class="summary-val text-success">مشمول بالكامل ✅</span>
+                  </div>
+
+                  <div class="summary-note">
+                    💡 أسعارنا مرنة وتنافسية جداً وتعتمد على حجم متطلباتك الدقيقة مع إمكانية الدفع على مراحل.
+                  </div>
+                </div>
+
+                <div class="summary-box__footer">
+                  <button id="request-quote-btn" class="btn btn-primary btn-block">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                    <span>اطلب تسعيرة هذه الباقة عبر واتساب</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 11: Portfolio Showcase -->
+        <section class="content-section" id="section-portfolio">
+          <div class="section-title-wrap">
+            <span class="section-tag">سابقة الأعمال والابتكارات</span>
+            <h2 class="section-heading">مشاريع ومنصات حقيقية تم بناؤها وإطلاقها</h2>
+          </div>
+
+          <div class="portfolio-filter-bar">
+            <button class="filter-btn active" data-filter="all">الكل</button>
+            <button class="filter-btn" data-filter="ai">الذكاء الاصطناعي & Vision</button>
+            <button class="filter-btn" data-filter="mobile">الموبايل و Google Play</button>
+            <button class="filter-btn" data-filter="web">منصات الويب & Cloud</button>
+            <button class="filter-btn" data-filter="tools">إضافات المتصفح والأدوات</button>
+          </div>
+
+          <div class="portfolio-grid">
+            <div class="project-box" data-category="ai mobile web">
+              <div class="project-box__header">
+                <span class="badge-pill badge-pill--primary">AI & Mobile & Desktop</span>
+                <span class="project-box__year">2025 - 2026</span>
+              </div>
+              <h3 class="project-box__title">Anubis AI Smart Tour Guide</h3>
+              <p class="project-box__desc">منصة مرشد سياحي ذكي للحضارة المصرية بالذكاء الاصطناعي مع شات بوت هجين وتعرف لحظي على التماثيل بدقة >90%.</p>
+              <div class="project-box__tags">
+                <span>PyTorch</span><span>MobileNetV2</span><span>Gemini AI</span><span>Flutter</span><span>.NET MAUI</span>
+              </div>
+            </div>
+
+            <div class="project-box" data-category="web mobile ai">
+              <div class="project-box__header">
+                <span class="badge-pill badge-pill--success">Google Play 16KB Aligned</span>
+                <span class="project-box__year">Live</span>
+              </div>
+              <h3 class="project-box__title">NanoGrad LMS & Deep Tech</h3>
+              <p class="project-box__desc">منصة تعليمية متكاملة للـ AI مستوحاة من Coursera مع تطبيق Android متوافق مع Android 15 وشهادات رقمية معتمدة.</p>
+              <div class="project-box__tags">
+                <span>Flutter</span><span>Target SDK 35</span><span>Node.js</span><span>Firebase Multi-Site</span>
+              </div>
+            </div>
+
+            <div class="project-box" data-category="web mobile">
+              <div class="project-box__header">
+                <span class="badge-pill badge-pill--warning">Escrow Marketplace</span>
+                <span class="project-box__year">Live</span>
+              </div>
+              <h3 class="project-box__title">Safqa Pro Marketplace</h3>
+              <p class="project-box__desc">منصة وسوق وساطة مالية آمنة (Escrow) 100% مع تطبيق موبايل Flutter متكامل على متجر Google Play.</p>
+              <div class="project-box__tags">
+                <span>Flutter</span><span>Node.js</span><span>NDK r28</span><span>Multi-Vendor Escrow</span>
+              </div>
+            </div>
+
+            <div class="project-box" data-category="tools web">
+              <div class="project-box__header">
+                <span class="badge-pill badge-pill--info">Chrome Extension & System</span>
+                <span class="project-box__year">Open Source</span>
+              </div>
+              <h3 class="project-box__title">Nitro Download Manager (NDM)</h3>
+              <p class="project-box__desc">بديل IDM مفتوح المصدر بتحميل مجزأ متعدد المسارات (Multi-Threaded Range) مع إضافة متصفح لكروم وإيدج.</p>
+              <div class="project-box__tags">
+                <span>Manifest V3 Extension</span><span>Node.js Chunk Engine</span><span>Dark UI</span>
+              </div>
+            </div>
+
+            <div class="project-box" data-category="ai mobile">
+              <div class="project-box__header">
+                <span class="badge-pill badge-pill--accent">Document AI</span>
+                <span class="project-box__year">Production</span>
+              </div>
+              <h3 class="project-box__title">SmartDocs AI Reader</h3>
+              <p class="project-box__desc">تطبيق Flutter شامل لقراءة وتلخيص كافة أنواع المستندات (PDF, Word, Excel, CSV) مدعوم بـ Gemini AI و Drive API.</p>
+              <div class="project-box__tags">
+                <span>Flutter</span><span>Gemini API</span><span>Riverpod</span><span>Drive API</span>
+              </div>
+            </div>
+
+            <div class="project-box" data-category="ai">
+              <div class="project-box__header">
+                <span class="badge-pill badge-pill--danger">Computer Vision AI</span>
+                <span class="project-box__year">Safety Tech</span>
+              </div>
+              <h3 class="project-box__title">Smart Traffic & Driver Vision</h3>
+              <p class="project-box__desc">نظام مراقبة السائق وكشف النعاس والتشتت في الوقت الفعلي + تحليل حركة المرور وكشف السير العكسي بـ YOLOv12x.</p>
+              <div class="project-box__tags">
+                <span>YOLOv12x</span><span>MediaPipe</span><span>OpenCV</span><span>Real-Time Alerts</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 12: Guarantees & SLAs -->
+        <section class="content-section" id="section-guarantees">
+          <div class="section-title-wrap">
+            <span class="section-tag">الضمانات الهندسية ومطابقة المعايير (SLAs)</span>
+            <h2 class="section-heading">التزام صارم بالجودة وضمانات تمنحك راحة البال التامة</h2>
+            <p class="section-subtext">نطبق أعلى المعايير الهندسية الصارمة لحماية مشروعك وضمان نجاحه الفني والقانوني والأمني.</p>
+          </div>
+
+          <div class="guarantees-grid">
+            <div class="guarantee-card">
+              <div class="guarantee-card__seal">🛡️</div>
+              <div class="guarantee-card__badge">100% Guaranteed</div>
+              <h3 class="guarantee-card__title">ضمان قبول Google Play 2026</h3>
+              <p class="guarantee-card__desc">نضمن قبول ونشر تطبيقك على Google Play Store بدون أي رفض متعلق بمعمارية 16KB Page Alignment أو Target SDK 35 أو سياسات الأمان.</p>
+            </div>
+
+            <div class="guarantee-card">
+              <div class="guarantee-card__seal">🔒</div>
+              <div class="guarantee-card__badge">Zero-Trust</div>
+              <h3 class="guarantee-card__title">حماية سيبرانية وتشفير تام</h3>
+              <p class="guarantee-card__desc">تأمين شامل ضد هجمات الـ DDoS والحرمان من الخدمة، وتشفير بيانات المستخدمين (End-to-End SSL)، ومطابقة معايير OWASP للويب والموبايل.</p>
+            </div>
+
+            <div class="guarantee-card">
+              <div class="guarantee-card__seal">⚡</div>
+              <div class="guarantee-card__badge">99.9% Uptime</div>
+              <h3 class="guarantee-card__title">استقرار الخوادم والسحاب</h3>
+              <p class="guarantee-card__desc">بنية تحتية سحابية موزعة تضمن سرعة تحميل فائقة وتوفر الموقع والتطبيق بنسبة 99.9% دون أي توقف مفاجئ.</p>
+            </div>
+
+            <div class="guarantee-card">
+              <div class="guarantee-card__seal">🤝</div>
+              <div class="guarantee-card__badge">Free Warranty</div>
+              <h3 class="guarantee-card__title">ضمان مجاني بعد التسليم</h3>
+              <p class="guarantee-card__desc">نقدم فترة دعم فني وصيانة مجانية لمدة 30 يوماً بعد التسليم لمعالجة أي ملاحظات وضمان الاستقرار التشغيلي التام.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 13: Frequently Asked Questions (FAQ) (NEW) -->
+        <section class="content-section" id="section-faq">
+          <div class="section-title-wrap">
+            <span class="section-tag">الأسئلة الشائعة (FAQ)</span>
+            <h2 class="section-heading">إجابات واضحة وحاسمة على أكثر الأسئلة التي يطرحها عملاؤنا</h2>
+          </div>
+
+          <div class="faq-accordion" id="faqAccordion">
+            <div class="faq-item">
+              <button class="faq-question">
+                <span>ما هو معيار 16KB Page Alignment ولماذا هو إلزامي لتطبيقات Google Play في 2026؟</span>
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <p>جوجل فرضت بدءاً من Android 15 دعماً إلزامياً لحجم صفحات الذاكرة 16KB للأجهزة الحديثة لتحسين أداء الرام وسرعة فتح التطبيقات بنسبة تصل لـ 30%. التطبيقات التي تستخدم مكتبات C/C++ قديمة أو NDK غير مهيأة سيتم رفضها على المتجر. نحن في NBrain نبني تطبيقات Flutter و Native باستخدام NDK r28 ومكتبات 16KB-aligned بنسبة 100% لضمان القبول الفوري.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question">
+                <span>هل الكود المصدري (Source Code) وحسابات المنصة تكون ملكي بالكامل؟</span>
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <p>نعم، 100%! نحن لا نحتكر كودك. فور استكمال المشروع، يتم تسليم كامل الكود المصدري على مستودع GitHub خاص بك، مع نقل ملكية الدومين، السيرفرات، وقواعد البيانات وحسابات المتجر تحت إدارتك المباشرة.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question">
+                <span>كيف يتم تدريب وضبط شات بوت المبيعات بالـ AI ليعرف منتجات متجري؟</span>
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <p>نقوم بربط نموذج Gemini AI مباشرة بقاعدة بيانات متجرك أو ملفات المنتجات والأسعار عبر تقنية الـ RAG (Retrieval-Augmented Generation). هذا يجعل المساعد يعرف الأسعار والخصومات لحظياً، ويرشح السلع بدقة للمشتري حسب ميزانيته، ويساعده في إتمام الطلب عبر واتساب أو الدفع الإلكتروني.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question">
+                <span>ما هي خيارات وطرق الدفع وهل يمكن السداد على مراحل؟</span>
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <p>نعم بكل تأكيد! نظام السداد مرن جداً ويتم على دفعات مرحلية (دفعة بدء + دفعة عند اعتماد التصميم والنموذج الأولي + دفعة نهائية عند التسليم والاختبار). ندعم الدفع عبر التحويل البنكي، فودافون كاش / إنستاباي، والبطاقات البنكية.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question">
+                <span>كيف يتم إنتاج الفيديو الإعلاني الترويجي بالذكاء الاصطناعي وما هي جودته؟</span>
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <p>نستخدم أحدث نماذج توليد الفيديو والصور السينمائية بالـ AI لإنتاج فيديو إعلاني بدقة 4K مع تعليق صوتي احترافي (Voiceover) ومؤثرات صوتية وموسيقى مرخصة، يوضح مميزات مشروعك وخدماتك ويكون جاهزاً للنشر الفوري على إنستجرام، فيسبوك، وتيك توك.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 14: Engineering Leadership & Founder Spotlight (NEW) -->
+        <section class="content-section" id="section-founder">
+          <div class="founder-card">
+            <div class="founder-avatar-col">
+              <div class="founder-avatar-wrapper">
+                <img src="nadeem-avatar.png" alt="المهندس نديم بدر" class="founder-avatar-img" onerror="this.src='https://avatars.githubusercontent.com/u/177332148?v=4'">
+              </div>
+              <span class="badge-pill badge-pill--success" style="margin-top: 12px;">Chief Software Architect</span>
+            </div>
+            <div class="founder-info-col">
+              <span class="section-tag">القيادة الهندسية لمنظومة NBrain</span>
+              <h2 class="founder-name">المهندس نديم بدر (Nadeem Badr)</h2>
+              <p class="founder-title">مهندس برمجيات وذكاء اصطناعي — جامعة حلوان التكنولوجية الدولية (HITU IT & AI)</p>
+              <p class="founder-bio">
+                قائد منظومة **NBrain AI Ecosystem** ومطور حلول الذكاء الاصطناعي وتطبيقات الويب والموبايل عالية الأداء. متخصص في هندسة النظم العميقة، نماذج الرؤية الحاسوبية (YOLO & MediaPipe)، نماذج الـ Generative AI، ومعمارية أندرويد الحديثة (16KB Page Alignment).
+              </p>
+              <div class="founder-links">
+                <a href="https://github.com/NadeemBadr00" target="_blank" class="btn btn-secondary btn-sm">
+                  <span>🐙 حساب GitHub الرسمي</span>
+                </a>
+                <a href="https://wa.me/201222777345?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%85%D9%87%D9%86%D8%AF%D8%B3%20%D9%86%D8%AF%D9%8A%D9%85%D8%8C%20%D8%A3%D9%88%D8%AF%20%D8%AD%D8%AC%D8%B2%20%D8%A7%D8%B3%D8%AA%D8%B4%D8%A7%D8%B1%D8%A9%20%D9%85%D8%B9%D9%83" target="_blank" class="btn btn-primary btn-sm">
+                  <span>💬 تواصل مباشر عبر واتساب (+201222777345)</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- 3. Right Small Utility Rail (52px) -->
+    <aside class="utility-rail">
+      <div class="rail-top">
+        <button class="rail-btn avatar-btn tooltip-anchor switch-to-tab" data-tab-target="founder" data-tooltip="المهندس نديم بدر (مؤسس NBrain)">
+          <div class="avatar">
+            <img src="nadeem-avatar.png" alt="Nadeem Badr" class="avatar-img" onerror="this.src='https://avatars.githubusercontent.com/u/177332148?v=4'">
+          </div>
+          <div class="status-dot online"></div>
+        </button>
+
+        <button class="rail-btn tooltip-anchor switch-to-tab" data-tab-target="demos" data-tooltip="استعراض الفيديوهات والديمو">
+          <div class="icon-wrapper">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            <span class="badge">8</span>
+          </div>
+        </button>
+
+        <button class="rail-btn tooltip-anchor switch-to-tab" data-tab-target="ai-demo" data-tooltip="فتح المساعد الذكي">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+        </button>
+
+        <button class="rail-btn tooltip-anchor switch-to-tab" data-tab-target="roi-calc" data-tooltip="حاسبة العائد ROI">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </button>
+
+        <div class="rail-separator"></div>
+
+        <a href="https://wa.me/201222777345?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%85%D9%87%D9%86%D8%AF%D8%B3%20%D9%86%D8%AF%D9%8A%D9%85%D8%8C%20%D8%A3%D9%88%D8%AF%20%D8%AD%D8%AC%D8%B2%20%D8%A7%D8%B3%D8%AA%D8%B4%D8%A7%D8%B1%D8%A9%20%D8%AA%D9%82%D9%86%D9%8A%D8%A9" target="_blank" class="rail-btn tooltip-anchor" data-tooltip="طلب استشارة / واتساب">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+        </a>
+      </div>
+
+      <div class="rail-bottom">
+        <button class="rail-btn tooltip-anchor" id="themeToggleBtn" data-tooltip="تبديل المظهر (Dark/Light)">
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3.6"/><path d="M12 2v2.2M12 19.8V22M2 12h2.2M19.8 12H22M4.93 4.93l1.56 1.56M17.51 17.51l1.56 1.56M19.07 4.93l-1.56 1.56M6.49 17.51l-1.56 1.56"/></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+
+        <a href="https://wa.me/201222777345?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%85%D9%87%D9%86%D8%AF%D8%B3%20%D9%86%D8%AF%D9%8A%D9%85%D8%8C%20%D8%A3%D9%88%D8%AF%20%D8%AD%D8%AC%D8%B2%20%D8%A7%D8%B3%D8%AA%D8%B4%D8%A7%D8%B1%D8%A9%20%D9%85%D8%A8%D8%A7%D8%B4%D8%B1%D8%A9" target="_blank" class="rail-btn tooltip-anchor" data-tooltip="حجز استشارة مباشرة">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </a>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- Interactive Media / Video Demo Modal -->
+  <div id="mediaModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="mediaModalTitle" class="modal-title">العرض التوضيحي للمشروع</h3>
+        <button class="icon-button" id="closeMediaModalBtn" aria-label="إغلاق">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="mediaModalBody">
+        <!-- Injected via JS -->
+      </div>
+      <div class="modal-footer">
+        <p id="mediaModalInfo" class="modal-info-text"></p>
+        <button class="btn btn-secondary" id="closeMediaBtn">إغلاق</button>
+        <a href="https://wa.me/201222777345?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%85%D9%87%D9%86%D8%AF%D8%B3%20%D9%86%D8%AF%D9%8A%D9%85%D8%8C%20%D8%B4%D8%A7%D9%87%D8%AF%D8%AA%20%D8%A7%D9%84%D8%B9%D8%B1%D8%B6%20%D8%A7%D9%84%D8%AA%D9%88%D8%B6%D9%8A%D8%AD%D9%8A%20%D9%88%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A8%D8%AF%D8%A1%20%D9%81%D9%8A%20%D9%85%D8%B4%D8%B1%D9%88%D8%B9%20%D9%85%D9%85%D8%A7%D8%AB%D9%84" target="_blank" class="btn btn-primary">
+          <span>طلب مشروع مماثل عبر واتساب</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive RFP / Project Proposal Request Modal -->
+  <div id="rfpModal" class="modal-overlay">
+    <div class="modal-card modal-card--lg">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title">طلب عرض سعر وخطة تنفيذ مخصصة (Request for Proposal)</h3>
+          <p style="font-size: 0.8rem; color: var(--console-text-muted); margin-top: 2px;">حدد تفاصيل مشروعك وسيقوم النظام بتجهيز ملخص تقني شامل لإرساله فوراً للمهندس نديم بدر</p>
+        </div>
+        <button class="icon-button" id="closeRfpModalBtn" aria-label="إغلاق">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="modal-body rfp-modal-body">
+        <form id="rfpForm" class="rfp-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="rfpClientName">اسمك الكريم / اسم الشركة *</label>
+              <input type="text" id="rfpClientName" class="form-input" placeholder="مثال: أحمد عبد الله - شركة النيل" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="rfpPhone">رقم الواتساب / الهاتف *</label>
+              <input type="tel" id="rfpPhone" class="form-input" placeholder="مثال: +201012345678" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">الخدمات والمكونات المطلوبة في مشروعك:</label>
+            <div class="rfp-checkboxes-grid">
+              <label class="rfp-check-pill">
+                <input type="checkbox" name="rfpServices" value="موقع ويب متطور (SPA / Web App)" checked>
+                <span>🌐 موقع ويب متطور</span>
+              </label>
+              <label class="rfp-check-pill">
+                <input type="checkbox" name="rfpServices" value="تطبيق موبايل Google Play (16KB Aligned)" checked>
+                <span>📱 تطبيق Google Play</span>
+              </label>
+              <label class="rfp-check-pill">
+                <input type="checkbox" name="rfpServices" value="شات بوت ذكي ومساعد مبيعات Gemini AI" checked>
+                <span>🤖 شات بوت ذكي Gemini AI</span>
+              </label>
+              <label class="rfp-check-pill">
+                <input type="checkbox" name="rfpServices" value="فيديو إعلاني ترويجي بالذكاء الاصطناعي">
+                <span>🎬 فيديو إعلاني بالـ AI</span>
+              </label>
+              <label class="rfp-check-pill">
+                <input type="checkbox" name="rfpServices" value="إضافة متصفح كروم مخصصة (Manifest V3)">
+                <span>🧩 إضافة متصفح كروم</span>
+              </label>
+              <label class="rfp-check-pill">
+                <input type="checkbox" name="rfpServices" value="نظام رؤية حاسوبية (YOLO / Computer Vision)">
+                <span>🚗 نظام رؤية حاسوبية</span>
+              </label>
+              <label class="rfp-check-pill">
+                <input type="checkbox" name="rfpServices" value="حجز دومين واستضافة سحابية وتأمين Cloudflare" checked>
+                <span>🛡️ استضافة وتأمين سحابي</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="rfpBudget">الميزانية التقريبية المرصودة:</label>
+              <select id="rfpBudget" class="form-select">
+                <option value="5,000 - 10,000 ج.م">5,000 - 10,000 ج.م (باقة سريعة / MVP)</option>
+                <option value="10,000 - 25,000 ج.م" selected>10,000 - 25,000 ج.م (منظومة ويب + تطبيق متكاملة)</option>
+                <option value="25,000 - 50,000 ج.م">25,000 - 50,000 ج.م (منظومة أعمال ومتاجر VIP متقدمة)</option>
+                <option value="أكثر من 50,000 ج.م / Enterprise">+50,000 ج.م (حلول مؤسسية و Vision مخصصة)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="rfpTimeline">الجدول الزمني المفضل للإطلاق:</label>
+              <select id="rfpTimeline" class="form-select">
+                <option value="عاجل جداً (خلال أسبوع إلى 10 أيام)">عاجل جداً (خلال 7 - 10 أيام عمل)</option>
+                <option value="قياسي (خلال أسبوعين إلى 3 أسابيع)" selected>قياسي (خلال 14 - 21 يوم عمل)</option>
+                <option value="مرن (حسب حجم المتطلبات الهندسية)">مرن (حسب حجم المتطلبات)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="rfpNotes">نبذة مختصرة عن فكرة مشروعك أو أي روابط مرجعية:</label>
+            <textarea id="rfpNotes" class="form-textarea" rows="3" placeholder="اكتب نبذة عن فكرة متجرك أو تطبيقك، نوع المنتجات، أو أي ميزات خاصة تريد إضافتها..."></textarea>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancelRfpBtn">إلغاء</button>
+        <button class="btn btn-primary" id="submitRfpBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+          <span>إرسال وتوليد عرض السعر عبر واتساب 🚀</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
