@@ -34,3 +34,27 @@ Run the lightweight local PowerShell HTTP listener:
 powershell -ExecutionPolicy Bypass -File .\server.ps1
 ```
 Open `http://localhost:3000` in your browser.
+
+---
+
+## 🚀 Firebase Hosting Deployment Guide (`nbra.in`)
+
+### 1. Project Configuration
+- **Firebase Project ID:** `nbrain-a654f`
+- **Primary Custom Domain:** `https://nbra.in`
+- **Default Site URL:** `https://nbrain-a654f.web.app`
+
+### 2. Deploy Commands
+```bash
+# Set active project
+npx -y firebase-tools@latest use nbrain-a654f
+
+# Deploy to live production hosting
+npx -y firebase-tools@latest deploy --only hosting
+```
+
+### 3. Preview Channels (Testing before live)
+```bash
+npx -y firebase-tools@latest hosting:channel:deploy beta --expires 7d
+```
+
