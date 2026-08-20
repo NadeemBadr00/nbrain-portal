@@ -191,10 +191,10 @@ button {
 }
 
 .logo-icon {
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   background: linear-gradient(135deg, var(--console-primary-container), var(--console-primary));
-  border-radius: var(--radius-md);
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -202,19 +202,26 @@ button {
   flex-shrink: 0;
   box-shadow: 0 0 16px var(--console-primary-glow);
   overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.logo-icon:hover {
+  transform: scale(1.05);
 }
 
 .logo-icon--image {
-  background: hsl(222, 47%, 8%);
-  box-shadow: 0 0 18px var(--console-primary-glow);
-  border: 1px solid var(--console-border-subtle);
+  background: hsl(220, 35%, 6%);
+  box-shadow: 0 0 16px hsla(217, 91%, 60%, 0.35);
+  border: 1px solid hsla(217, 91%, 60%, 0.3);
 }
 
 .brand-logo-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  border-radius: calc(var(--radius-md) - 1px);
+  object-fit: contain;
+  padding: 2px;
+  border-radius: 8px;
+  display: block;
 }
 
 .logo-icon svg {
@@ -230,17 +237,19 @@ button {
 }
 
 .app-name {
-  font-size: 1.15rem;
+  font-size: 1.12rem;
   font-weight: 800;
   line-height: 1.1;
   color: var(--console-text);
+  letter-spacing: -0.3px;
 }
 
 .app-domain {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.76rem;
   color: var(--console-primary);
-  font-weight: 600;
+  font-weight: 700;
+  margin-top: 1px;
 }
 
 .sidebar-search {
