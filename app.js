@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initRoiCalculator();
   initCustomizer();
   initPortfolioFilter();
+  initDemosFilter();
   initSidebarSearch();
   initMediaModal();
   initFaqAccordion();
@@ -480,6 +481,32 @@ function initPortfolioFilter() {
           box.style.display = 'flex';
         } else {
           box.style.display = 'none';
+        }
+      });
+    });
+  });
+}
+
+/* ==========================================================================
+   9.1 Demos & Video Category Filter
+   ========================================================================== */
+function initDemosFilter() {
+  const filterBtns = document.querySelectorAll('.demo-filter-btn');
+  const demoCards = document.querySelectorAll('.demos-grid .demo-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filterValue = btn.getAttribute('data-filter');
+
+      demoCards.forEach(card => {
+        const categories = card.getAttribute('data-category') || '';
+        if (filterValue === 'all' || categories.includes(filterValue)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
         }
       });
     });

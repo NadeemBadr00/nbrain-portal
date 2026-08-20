@@ -1354,17 +1354,33 @@ button {
   background-color: hsl(0, 85%, 55%);
 }
 
-.demo-card__badge {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background-color: hsla(0, 0%, 7%, 0.85);
-  border: 1px solid var(--console-border);
-  color: var(--console-primary);
-  font-size: 0.72rem;
-  font-weight: 700;
-  padding: 3px 10px;
+.demos-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+
+.demo-filter-btn {
+  padding: 7px 16px;
   border-radius: var(--radius-full);
+  background-color: var(--console-surface);
+  border: 1px solid var(--console-border);
+  color: var(--console-text-muted);
+  font-weight: 700;
+  font-size: 0.82rem;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.demo-filter-btn:hover, .demo-filter-btn.active {
+  background-color: var(--console-primary);
+  color: hsl(215, 40%, 10%);
+  border-color: var(--console-primary);
+}
+[data-theme="light"] .demo-filter-btn:hover, [data-theme="light"] .demo-filter-btn.active {
+  color: #fff;
 }
 
 .demo-card__preview {

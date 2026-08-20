@@ -519,21 +519,21 @@
           </div>
         </section>
 
-        <!-- SECTION 7: Live Demos & Video Showcase -->
+        <!-- SECTION 7: Live Demos & Video Showcase (Complete Master Gallery) -->
         <section class="content-section" id="section-demos">
           <div class="section-title-wrap">
-            <span class="section-tag">العروض المرئية والتجارب الحية (Interactive Live Demos & Videos)</span>
+            <span class="section-tag">معرض العروض المرئية والمشاريع الحية (Master Video & Projects Gallery)</span>
             <h2 class="section-heading">شاهد فيديوهات الاستعراض الحي وجرب المنصات والتطبيقات مباشرة!</h2>
-            <p class="section-subtext">فيديوهات حية وعروض توضيحية لجميع المشاريع موثقة ومسجلة على قناتنا الرسمية، مع روابط مباشرة للتجربة والتحميل.</p>
+            <p class="section-subtext">أكثر من 28 مشروعاً ونظاماً برمجياً بالذكاء الاصطناعي والموبايل والويب والواقع المعزز، موثقة بالفيديو الحي والروابط التجريبية.</p>
           </div>
 
           <!-- YouTube Channel Banner -->
-          <div style="background: linear-gradient(135deg, hsla(0, 85%, 45%, 0.15), var(--console-surface)); border: 1px solid hsla(0, 85%, 50%, 0.3); border-radius: var(--radius-lg); padding: 16px 24px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+          <div style="background: linear-gradient(135deg, hsla(0, 85%, 45%, 0.15), var(--console-surface)); border: 1px solid hsla(0, 85%, 50%, 0.3); border-radius: var(--radius-lg); padding: 16px 24px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
             <div style="display: flex; align-items: center; gap: 14px;">
-              <span style="font-size: 2rem;">📺</span>
+              <span style="font-size: 2.2rem;">📺</span>
               <div>
-                <h4 style="font-size: 1.05rem; font-weight: 800; margin-bottom: 2px;">قناة اليوتيوب الرسمية للمهندس نديم بدر (@VibeCodingCV)</h4>
-                <p style="font-size: 0.85rem; color: var(--console-text-muted);">جميع عروض المشاريع والأنظمة مسجلة وموثقة بالفيديو الحي بجودة عالية — شاهد واشترك في القناة</p>
+                <h4 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 2px;">قناة اليوتيوب الرسمية للمهندس نديم بدر (@VibeCodingCV)</h4>
+                <p style="font-size: 0.85rem; color: var(--console-text-muted);">جميع عروض المشاريع والأنظمة مسجلة وموثقة بالفيديو الحي بجودة عالية — تفضل بزيارة القناة والاشتراك</p>
               </div>
             </div>
             <a href="https://www.youtube.com/@VibeCodingCV" target="_blank" class="btn btn-primary btn-sm" style="background-color: #ff0000; border-color: #ff0000; color: #fff;">
@@ -542,9 +542,19 @@
             </a>
           </div>
 
+          <!-- Demos Category Filter Bar -->
+          <div class="demos-filter-bar">
+            <button class="demo-filter-btn active" data-filter="all">🌟 جميع المشاريع والعروض (28)</button>
+            <button class="demo-filter-btn" data-filter="video">🎬 فيديوهات اليوتيوب الحية (16)</button>
+            <button class="demo-filter-btn" data-filter="ai">🧠 الذكاء الاصطناعي والرؤية (18)</button>
+            <button class="demo-filter-btn" data-filter="mobile">📱 الموبايل و Google Play (6)</button>
+            <button class="demo-filter-btn" data-filter="web">🌐 منصات الويب والـ Cloud (8)</button>
+            <button class="demo-filter-btn" data-filter="ar">🎮 الواقع المعزز والألعاب AR (5)</button>
+          </div>
+
           <div class="demos-grid">
-            <!-- Video 1: Nabd Masr Medical AI -->
-            <div class="demo-card">
+            <!-- 1: Nabd Masr Medical AI -->
+            <div class="demo-card" data-category="video ai">
               <div class="demo-card__media">
                 <img src="https://img.youtube.com/vi/08LBl-fkmjI/hqdefault.jpg" alt="Nabd Masr CXR AI" class="demo-thumb-img" loading="lazy">
                 <div class="demo-card__media-overlay">
@@ -556,25 +566,23 @@
                 <div class="demo-card__badge yt-badge">YouTube Demo</div>
               </div>
               <div class="demo-card__content">
-                <h3 class="demo-card__title">مشروع نبض مصر (Nadeem CXR AI)</h3>
-                <p class="demo-card__desc">نظام ذكاء اصطناعي طبي لتشخيص 14 مرضاً صدرياً من أشعة الصدر بدقة >92% مع توليد تقارير باللغة العربية.</p>
+                <h3 class="demo-card__title">نبض مصر (Nadeem CXR Medical AI)</h3>
+                <p class="demo-card__desc">تشخيص 14 مرضاً صدرياً من أشعة الصدر (CXR) بدقة >92% وتوليد تقارير طبية باللغة العربية.</p>
                 <div class="demo-card__actions">
-                  <button class="btn btn-primary btn-sm open-media-modal" data-title="مشروع نبض مصر (Nadeem CXR)" data-type="youtube" data-src="08LBl-fkmjI" data-info="تشخيص أشعة الصدر بالذكاء الاصطناعي مع تقارير طبية دقيقة.">
+                  <button class="btn btn-primary btn-sm open-media-modal" data-title="مشروع نبض مصر" data-type="youtube" data-src="08LBl-fkmjI" data-info="تشخيص أشعة الصدر بالذكاء الاصطناعي.">
                     <span>🎬 مشاهدة الفيديو</span>
                   </button>
-                  <a href="https://youtu.be/08LBl-fkmjI" target="_blank" class="btn btn-secondary btn-sm">
-                    <span>📺 فتح على YouTube</span>
-                  </a>
+                  <a href="https://youtu.be/08LBl-fkmjI" target="_blank" class="btn btn-secondary btn-sm"><span>📺 YouTube</span></a>
                 </div>
               </div>
             </div>
 
-            <!-- Video 2: Anubis AI Tour Guide -->
-            <div class="demo-card">
+            <!-- 2: Anubis AI Tour Guide -->
+            <div class="demo-card" data-category="video ai mobile">
               <div class="demo-card__media">
                 <img src="https://img.youtube.com/vi/VKcRGNrjHFs/hqdefault.jpg" alt="Anubis AI Tour Guide" class="demo-thumb-img" loading="lazy">
                 <div class="demo-card__media-overlay">
-                  <button class="yt-play-btn open-media-modal" data-title="مشروع Anubis AI Tour Guide" data-type="youtube" data-src="VKcRGNrjHFs" data-info="مرشد سياحي ذكي للحضارة المصرية بالذكاء الاصطناعي مع شات بوت هجين وتعرف لحظي على التماثيل وتوليد صور.">
+                  <button class="yt-play-btn open-media-modal" data-title="مشروع Anubis AI Tour Guide" data-type="youtube" data-src="VKcRGNrjHFs" data-info="مرشد سياحي ذكي للحضارة المصرية بالذكاء الاصطناعي بـ 18 لغة وتعرف لحظي على التماثيل والآثار.">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
                     <span>تشغيل الفيديو</span>
                   </button>
@@ -582,25 +590,23 @@
                 <div class="demo-card__badge yt-badge">YouTube Demo</div>
               </div>
               <div class="demo-card__content">
-                <h3 class="demo-card__title">مشروع Anubis AI Smart Tour Guide</h3>
-                <p class="demo-card__desc">مرشد سياحي تفاعلي بـ 18 لغة + تعرف لحظي على التماثيل بـ MobileNetV2 وتوليد صور سينمائية.</p>
+                <h3 class="demo-card__title">Anubis AI Smart Tour Guide 🏛️</h3>
+                <p class="demo-card__desc">مرشد سياحي تفاعلي بـ 18 لغة + تعرف لحظي على الآثار بـ MobileNetV2 وتوليد صور تاريخية.</p>
                 <div class="demo-card__actions">
-                  <button class="btn btn-primary btn-sm open-media-modal" data-title="مشروع Anubis AI Tour Guide" data-type="youtube" data-src="VKcRGNrjHFs" data-info="مرشد سياحي ذكي للحضارة المصرية بالذكاء الاصطناعي.">
+                  <button class="btn btn-primary btn-sm open-media-modal" data-title="مشروع Anubis AI Tour Guide" data-type="youtube" data-src="VKcRGNrjHFs" data-info="مرشد سياحي ذكي للحضارة المصرية.">
                     <span>🎬 مشاهدة الفيديو</span>
                   </button>
-                  <a href="https://github.com/NadeemBadr00/Anubis-AI-Tour-Guide" target="_blank" class="btn btn-secondary btn-sm">
-                    <span>💻 كود المشروع</span>
-                  </a>
+                  <a href="https://github.com/NadeemBadr00/Anubis-AI-Tour-Guide" target="_blank" class="btn btn-secondary btn-sm"><span>💻 كود المشروع</span></a>
                 </div>
               </div>
             </div>
 
-            <!-- Video 3: Football AI Analytics Suite -->
-            <div class="demo-card">
+            <!-- 3: Football AI Analytics Suite -->
+            <div class="demo-card" data-category="video ai">
               <div class="demo-card__media">
                 <img src="https://img.youtube.com/vi/rpE5UnYFH5c/hqdefault.jpg" alt="Football AI Analytics" class="demo-thumb-img" loading="lazy">
                 <div class="demo-card__media-overlay">
-                  <button class="yt-play-btn open-media-modal" data-title="منظومة Football AI Analytics Suite" data-type="youtube" data-src="rpE5UnYFH5c" data-info="نظام تحليل مباريات كرة القدم بالرؤية الحاسوبية: تتبع اللاعبين، قياس السرعة والاستحواذ، وإنشاء فيديو إحصائيات تلقائي.">
+                  <button class="yt-play-btn open-media-modal" data-title="Football AI Analytics Suite" data-type="youtube" data-src="rpE5UnYFH5c" data-info="نظام تحليل مباريات كرة القدم بالرؤية الحاسوبية: تتبع اللاعبين، قياس السرعة والاستحواذ، وشاشات إحصائية آلية بالفيديو.">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
                     <span>تشغيل الفيديو</span>
                   </button>
@@ -608,21 +614,19 @@
                 <div class="demo-card__badge yt-badge">YouTube Demo</div>
               </div>
               <div class="demo-card__content">
-                <h3 class="demo-card__title">منظومة Football AI Analytics Suite</h3>
-                <p class="demo-card__desc">تحليل مباريات كرة القدم بالرؤية الحاسوبية وتتبع اللاعبين وقياس السرعة مع شاشات إحصائية آلية بالفيديو.</p>
+                <h3 class="demo-card__title">Football AI Analytics Suite ⚽📊</h3>
+                <p class="demo-card__desc">تتبع اللاعبين والكرة، قياس السرعة ومناطق الاستحواذ، وإنشاء شاشات إحصائية آلية بالفيديو.</p>
                 <div class="demo-card__actions">
                   <button class="btn btn-primary btn-sm open-media-modal" data-title="Football AI Analytics" data-type="youtube" data-src="rpE5UnYFH5c" data-info="تحليل مباريات كرة القدم بالذكاء الاصطناعي.">
                     <span>🎬 مشاهدة الفيديو</span>
                   </button>
-                  <a href="https://youtu.be/rpE5UnYFH5c" target="_blank" class="btn btn-secondary btn-sm">
-                    <span>📺 فتح على YouTube</span>
-                  </a>
+                  <a href="https://youtu.be/rpE5UnYFH5c" target="_blank" class="btn btn-secondary btn-sm"><span>📺 YouTube</span></a>
                 </div>
               </div>
             </div>
 
-            <!-- Video 4: AI4Roadmap Platform -->
-            <div class="demo-card">
+            <!-- 4: AI4Roadmap Platform -->
+            <div class="demo-card" data-category="video web ai">
               <div class="demo-card__media">
                 <img src="https://img.youtube.com/vi/v6XVp01_3rI/hqdefault.jpg" alt="AI4Roadmap Platform" class="demo-thumb-img" loading="lazy">
                 <div class="demo-card__media-overlay">
@@ -634,25 +638,23 @@
                 <div class="demo-card__badge yt-badge">YouTube Demo</div>
               </div>
               <div class="demo-card__content">
-                <h3 class="demo-card__title">منصة AI4Roadmap للتعلم الذكي</h3>
-                <p class="demo-card__desc">توليد مسارات تعلم وخرائط تقنية بالـ AI مع تقييم مستمر واختبارات تفاعلية.</p>
+                <h3 class="demo-card__title">منصة AI4Roadmap للتعلم الذكي 🗺️</h3>
+                <p class="demo-card__desc">توليد مسارات تعلم تقنية مخصصة بالذكاء الاصطناعي مع اختبارات تقييم وتوصيات مصادر.</p>
                 <div class="demo-card__actions">
-                  <button class="btn btn-primary btn-sm open-media-modal" data-title="منصة AI4Roadmap" data-type="youtube" data-src="v6XVp01_3rI" data-info="منصة خرائط التعلم الذكية.">
+                  <button class="btn btn-primary btn-sm open-media-modal" data-title="منصة AI4Roadmap" data-type="youtube" data-src="v6XVp01_3rI" data-info="خرائط التعلم الذكية بالذكاء الاصطناعي.">
                     <span>🎬 مشاهدة الفيديو</span>
                   </button>
-                  <a href="https://github.com/NadeemBadr00/AI4Roadmap" target="_blank" class="btn btn-secondary btn-sm">
-                    <span>💻 كود المشروع</span>
-                  </a>
+                  <a href="https://github.com/NadeemBadr00/AI4Roadmap" target="_blank" class="btn btn-secondary btn-sm"><span>💻 كود المشروع</span></a>
                 </div>
               </div>
             </div>
 
-            <!-- Video 5: Smart Traffic & Vehicle Tracking -->
-            <div class="demo-card">
+            <!-- 5: Smart Traffic & Vehicle Tracking -->
+            <div class="demo-card" data-category="video ai">
               <div class="demo-card__media">
                 <img src="https://img.youtube.com/vi/KLiPsch5h0I/hqdefault.jpg" alt="Smart Traffic Vision" class="demo-thumb-img" loading="lazy">
                 <div class="demo-card__media-overlay">
-                  <button class="yt-play-btn open-media-modal" data-title="نظام Smart Traffic & Vehicle Tracking" data-type="youtube" data-src="KLiPsch5h0I" data-info="نظام ذكي لتتبع السيارات وكشف السير العكسي والاختناقات المرورية بنموذج YOLOv12x و OpenCV.">
+                  <button class="yt-play-btn open-media-modal" data-title="Smart Traffic & Vehicle Tracking" data-type="youtube" data-src="KLiPsch5h0I" data-info="نظام ذكي لتتبع السيارات وكشف السير العكسي والانسدادات المرورية بنموذج YOLOv12x و OpenCV.">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
                     <span>تشغيل الفيديو</span>
                   </button>
@@ -660,21 +662,19 @@
                 <div class="demo-card__badge yt-badge">YouTube Demo</div>
               </div>
               <div class="demo-card__content">
-                <h3 class="demo-card__title">نظام المرور وكشف السير العكسي بـ YOLO</h3>
-                <p class="demo-card__desc">تتبع وحصر المركبات في الحارات المرورية وكشف السير العكسي والانسدادات في الوقت الفعلي.</p>
+                <h3 class="demo-card__title">نظام تتبع وحصر المرور بـ YOLO 🚗</h3>
+                <p class="demo-card__desc">تتبع وحصر المركبات في الحارات المرورية وكشف السير العكسي والانسدادات بنموذج YOLOv12x.</p>
                 <div class="demo-card__actions">
                   <button class="btn btn-primary btn-sm open-media-modal" data-title="Smart Traffic Vision" data-type="youtube" data-src="KLiPsch5h0I" data-info="تتبع وتحليل حركة المرور بـ YOLOv12x.">
                     <span>🎬 مشاهدة الفيديو</span>
                   </button>
-                  <a href="https://github.com/NadeemBadr00/smart-traffic-vision" target="_blank" class="btn btn-secondary btn-sm">
-                    <span>💻 كود المشروع</span>
-                  </a>
+                  <a href="https://github.com/NadeemBadr00/smart-traffic-vision" target="_blank" class="btn btn-secondary btn-sm"><span>💻 كود المشروع</span></a>
                 </div>
               </div>
             </div>
 
-            <!-- Video 6: Driver Drowsiness & Distraction -->
-            <div class="demo-card">
+            <!-- 6: Driver Drowsiness & Distraction -->
+            <div class="demo-card" data-category="video ai">
               <div class="demo-card__media">
                 <img src="https://img.youtube.com/vi/gzkPC7qm84w/hqdefault.jpg" alt="Driver Drowsiness Detection" class="demo-thumb-img" loading="lazy">
                 <div class="demo-card__media-overlay">
@@ -686,25 +686,23 @@
                 <div class="demo-card__badge yt-badge">YouTube Demo</div>
               </div>
               <div class="demo-card__content">
-                <h3 class="demo-card__title">نظام كشف نعاس وتشتت السائق</h3>
+                <h3 class="demo-card__title">كشف نعاس وتشتت السائق 😴</h3>
                 <p class="demo-card__desc">مراقبة الـ EAR و MAR بالرؤية الحاسوبية لحماية السائقين وتنبيههم فوراً عند التشتت أو النوم.</p>
                 <div class="demo-card__actions">
                   <button class="btn btn-primary btn-sm open-media-modal" data-title="Driver Drowsiness" data-type="youtube" data-src="gzkPC7qm84w" data-info="مراقبة أمان وسلامة السائق بالـ AI.">
                     <span>🎬 مشاهدة الفيديو</span>
                   </button>
-                  <a href="https://github.com/NadeemBadr00/smart-driver-monitoring" target="_blank" class="btn btn-secondary btn-sm">
-                    <span>💻 كود المشروع</span>
-                  </a>
+                  <a href="https://github.com/NadeemBadr00/smart-driver-monitoring" target="_blank" class="btn btn-secondary btn-sm"><span>💻 كود المشروع</span></a>
                 </div>
               </div>
             </div>
 
-            <!-- Video 7: Smart AI HR Interviewer -->
-            <div class="demo-card">
+            <!-- 7: Smart AI HR Interviewer -->
+            <div class="demo-card" data-category="video ai">
               <div class="demo-card__media">
                 <img src="https://img.youtube.com/vi/gcMLGpozMR8/hqdefault.jpg" alt="AI HR Interviewer" class="demo-thumb-img" loading="lazy">
                 <div class="demo-card__media-overlay">
-                  <button class="yt-play-btn open-media-modal" data-title="نظام Smart AI HR Interviewer" data-type="youtube" data-src="gcMLGpozMR8" data-info="نظام إجراء مقابلات التوظيف الصوتية بالذكاء الاصطناعي مع تقييم أداء المرشحين وتوليد تقارير HR تفصيلية.">
+                  <button class="yt-play-btn open-media-modal" data-title="Smart AI HR Interviewer" data-type="youtube" data-src="gcMLGpozMR8" data-info="نظام إجراء مقابلات التوظيف الصوتية بالذكاء الاصطناعي مع تقييم أداء المرشحين وتوليد تقارير HR تفصيلية.">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
                     <span>تشغيل الفيديو</span>
                   </button>
@@ -712,25 +710,23 @@
                 <div class="demo-card__badge yt-badge">YouTube Demo</div>
               </div>
               <div class="demo-card__content">
-                <h3 class="demo-card__title">نظام المقابلات الصوتية الذكي (AI HR)</h3>
-                <p class="demo-card__desc">محاور توظيف صوتي بالـ AI لإجراء المقابلات وتقييم المرشحين وتلخيص نقاط القوة والضعف.</p>
+                <h3 class="demo-card__title">المحاور الصوتي الذكي (Smart AI HR) 🎙️</h3>
+                <p class="demo-card__desc">إجراء مقابلات التوظيف الصوتية بالذكاء الاصطناعي وتقييم المرشحين وتوليد تقارير أداء شاملة.</p>
                 <div class="demo-card__actions">
                   <button class="btn btn-primary btn-sm open-media-modal" data-title="Smart AI HR" data-type="youtube" data-src="gcMLGpozMR8" data-info="المقابلات الذكية بالذكاء الاصطناعي.">
                     <span>🎬 مشاهدة الفيديو</span>
                   </button>
-                  <a href="https://youtu.be/gcMLGpozMR8" target="_blank" class="btn btn-secondary btn-sm">
-                    <span>📺 فتح على YouTube</span>
-                  </a>
+                  <a href="https://youtu.be/gcMLGpozMR8" target="_blank" class="btn btn-secondary btn-sm"><span>📺 YouTube</span></a>
                 </div>
               </div>
             </div>
 
-            <!-- Video 8: Pro Virtual Staging AI -->
-            <div class="demo-card">
+            <!-- 8: Pro Virtual Staging AI -->
+            <div class="demo-card" data-category="video ai web">
               <div class="demo-card__media">
                 <img src="https://img.youtube.com/vi/JJIk5pqT5S0/hqdefault.jpg" alt="Virtual Staging AI" class="demo-thumb-img" loading="lazy">
                 <div class="demo-card__media-overlay">
-                  <button class="yt-play-btn open-media-modal" data-title="منظومة Pro Virtual Staging AI" data-type="youtube" data-src="JJIk5pqT5S0" data-info="تحويل صور الشقق والغرف الفارغة إلى غرف مفروشة بأرقى الديكورات المعمارية بالذكاء الاصطناعي.">
+                  <button class="yt-play-btn open-media-modal" data-title="Pro Virtual Staging AI" data-type="youtube" data-src="JJIk5pqT5S0" data-info="تحويل صور الشقق والغرف الفارغة إلى غرف مفروشة بأرقى الديكورات المعمارية بالذكاء الاصطناعي.">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
                     <span>تشغيل الفيديو</span>
                   </button>
@@ -738,21 +734,211 @@
                 <div class="demo-card__badge yt-badge">YouTube Demo</div>
               </div>
               <div class="demo-card__content">
-                <h3 class="demo-card__title">الفرش والتصميم المعماري الافتراضي (AI)</h3>
-                <p class="demo-card__desc">تحويل الغرف الفارغة إلى تصاميم ديكور واقعية ومفروشة بالذكاء الاصطناعي لشركات العقارات والمقاولات.</p>
+                <h3 class="demo-card__title">الفرش والتصميم المعماري الافتراضي 🏠</h3>
+                <p class="demo-card__desc">تحويل الغرف الفارغة إلى تصاميم ديكور واقعية ومفروشة بالذكاء الاصطناعي لشركات العقارات.</p>
                 <div class="demo-card__actions">
                   <button class="btn btn-primary btn-sm open-media-modal" data-title="Virtual Staging AI" data-type="youtube" data-src="JJIk5pqT5S0" data-info="الفرش الافتراضي بالذكاء الاصطناعي.">
                     <span>🎬 مشاهدة الفيديو</span>
                   </button>
-                  <a href="https://youtu.be/JJIk5pqT5S0" target="_blank" class="btn btn-secondary btn-sm">
-                    <span>📺 فتح على YouTube</span>
-                  </a>
+                  <a href="https://youtu.be/JJIk5pqT5S0" target="_blank" class="btn btn-secondary btn-sm"><span>📺 YouTube</span></a>
                 </div>
               </div>
             </div>
 
-            <!-- App 9: SmartDocs AI on Google Play (Image Preview) -->
-            <div class="demo-card">
+            <!-- 9: HITU AI University Assistant -->
+            <div class="demo-card" data-category="video ai web">
+              <div class="demo-card__media">
+                <img src="https://img.youtube.com/vi/J-5KC-D4Bc0/hqdefault.jpg" alt="HITU AI Assistant" class="demo-thumb-img" loading="lazy">
+                <div class="demo-card__media-overlay">
+                  <button class="yt-play-btn open-media-modal" data-title="HITU AI University Assistant" data-type="youtube" data-src="J-5KC-D4Bc0" data-info="المساعد الذكي لمنظومة جامعة حلوان التكنولوجية الدولية (HITU) لإرشاد الطلاب والرد على الاستفسارات الأكاديمية.">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    <span>تشغيل الفيديو</span>
+                  </button>
+                </div>
+                <div class="demo-card__badge yt-badge">YouTube Demo</div>
+              </div>
+              <div class="demo-card__content">
+                <h3 class="demo-card__title">المساعد الذكي للمنظومة الجامعية (HITU) 🎓</h3>
+                <p class="demo-card__desc">مساعد ذكي للطلاب وأعضاء هيئة التدريس لمنظومة جامعة حلوان التكنولوجية الدولية.</p>
+                <div class="demo-card__actions">
+                  <button class="btn btn-primary btn-sm open-media-modal" data-title="HITU AI Assistant" data-type="youtube" data-src="J-5KC-D4Bc0" data-info="المساعد الذكي الجامعي.">
+                    <span>🎬 مشاهدة الفيديو</span>
+                  </button>
+                  <a href="https://youtu.be/J-5KC-D4Bc0" target="_blank" class="btn btn-secondary btn-sm"><span>📺 YouTube</span></a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 10: Player Performance Analyzer -->
+            <div class="demo-card" data-category="video ai">
+              <div class="demo-card__media">
+                <img src="https://img.youtube.com/vi/IIuHzSopYCo/hqdefault.jpg" alt="Player Performance Analyzer" class="demo-thumb-img" loading="lazy">
+                <div class="demo-card__media-overlay">
+                  <button class="yt-play-btn open-media-modal" data-title="Player Performance Analyzer" data-type="youtube" data-src="IIuHzSopYCo" data-info="تحليل أداء وسرعة وحركات اللاعبين الرياضيين في الملعب بالرؤية الحاسوبية.">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    <span>تشغيل الفيديو</span>
+                  </button>
+                </div>
+                <div class="demo-card__badge yt-badge">YouTube Demo</div>
+              </div>
+              <div class="demo-card__content">
+                <h3 class="demo-card__title">محلل أداء اللاعبين الرياضيين 🏃‍♂️</h3>
+                <p class="demo-card__desc">قياس السرعة والتسارع والمجهود البدني للاعبين في الوقت الفعلي عبر الرؤية الحاسوبية.</p>
+                <div class="demo-card__actions">
+                  <button class="btn btn-primary btn-sm open-media-modal" data-title="Player Performance Analyzer" data-type="youtube" data-src="IIuHzSopYCo" data-info="تحليل أداء اللاعبين.">
+                    <span>🎬 مشاهدة الفيديو</span>
+                  </button>
+                  <a href="https://youtu.be/IIuHzSopYCo" target="_blank" class="btn btn-secondary btn-sm"><span>📺 YouTube</span></a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 11: Smart Retail Security System -->
+            <div class="demo-card" data-category="video ai">
+              <div class="demo-card__media">
+                <img src="https://img.youtube.com/vi/RRlgmT3lSPw/hqdefault.jpg" alt="Smart Retail Security" class="demo-thumb-img" loading="lazy">
+                <div class="demo-card__media-overlay">
+                  <button class="yt-play-btn open-media-modal" data-title="Smart Retail Security System" data-type="youtube" data-src="RRlgmT3lSPw" data-info="نظام أمان المحلات والمتاجر بالـ AI لكشف السرقات والسلوكيات المشبوهة وتنبيه الإدارة فوراً.">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    <span>تشغيل الفيديو</span>
+                  </button>
+                </div>
+                <div class="demo-card__badge yt-badge">YouTube Demo</div>
+              </div>
+              <div class="demo-card__content">
+                <h3 class="demo-card__title">نظام الأمان للمحلات والمتاجر 🚨</h3>
+                <p class="demo-card__desc">كشف السرقات والسلوكيات المشبوهة في المتاجر والمولات لحظياً وتوليد تنبيهات أمنية فورية.</p>
+                <div class="demo-card__actions">
+                  <button class="btn btn-primary btn-sm open-media-modal" data-title="Smart Retail Security" data-type="youtube" data-src="RRlgmT3lSPw" data-info="أمان المتاجر بالـ AI.">
+                    <span>🎬 مشاهدة الفيديو</span>
+                  </button>
+                  <a href="https://youtu.be/RRlgmT3lSPw" target="_blank" class="btn btn-secondary btn-sm"><span>📺 YouTube</span></a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 12: Virtual Piano AR -->
+            <div class="demo-card" data-category="video ar">
+              <div class="demo-card__media">
+                <img src="https://img.youtube.com/vi/kx3oGRUom-M/hqdefault.jpg" alt="Virtual Piano AR" class="demo-thumb-img" loading="lazy">
+                <div class="demo-card__media-overlay">
+                  <button class="yt-play-btn open-media-modal" data-title="Virtual Piano AR" data-type="youtube" data-src="kx3oGRUom-M" data-info="عزف البيانو في الهواء بدون لمس عبر تتبع حركة ومفاصل الأصابع بالواقع المعزز (AR).">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    <span>تشغيل الفيديو</span>
+                  </button>
+                </div>
+                <div class="demo-card__badge yt-badge">YouTube Demo</div>
+              </div>
+              <div class="demo-card__content">
+                <h3 class="demo-card__title">البيانو الافتراضي بالواقع المعزز 🎹</h3>
+                <p class="demo-card__desc">عزف البيانو في الهواء بدون لمس عبر تتبع حركة ومفاصل الأصابع بالواقع المعزز (MediaPipe AR).</p>
+                <div class="demo-card__actions">
+                  <button class="btn btn-primary btn-sm open-media-modal" data-title="Virtual Piano AR" data-type="youtube" data-src="kx3oGRUom-M" data-info="عزف البيانو بالواقع المعزز.">
+                    <span>🎬 مشاهدة الفيديو</span>
+                  </button>
+                  <a href="https://youtu.be/kx3oGRUom-M" target="_blank" class="btn btn-secondary btn-sm"><span>📺 YouTube</span></a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 13: Virtual Birthday Studio AR -->
+            <div class="demo-card" data-category="video ar">
+              <div class="demo-card__media">
+                <img src="https://img.youtube.com/vi/It5vCsB8sr0/hqdefault.jpg" alt="Virtual Birthday Studio AR" class="demo-thumb-img" loading="lazy">
+                <div class="demo-card__media-overlay">
+                  <button class="yt-play-btn open-media-modal" data-title="Virtual Birthday Studio AR" data-type="youtube" data-src="It5vCsB8sr0" data-info="استوديو أعياد الميلاد التفاعلي بالواقع المعزز وتأثيرات بصرية وصوتية بالحركات.">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    <span>تشغيل الفيديو</span>
+                  </button>
+                </div>
+                <div class="demo-card__badge yt-badge">YouTube Demo</div>
+              </div>
+              <div class="demo-card__content">
+                <h3 class="demo-card__title">استوديو أعياد الميلاد التفاعلي AR 🎉</h3>
+                <p class="demo-card__desc">تجربة احتفالات وأعياد ميلاد تفاعلية بالواقع المعزز مع تأثيرات ومؤثرات صوتية بحركات اليد.</p>
+                <div class="demo-card__actions">
+                  <button class="btn btn-primary btn-sm open-media-modal" data-title="Birthday Studio AR" data-type="youtube" data-src="It5vCsB8sr0" data-info="استوديو الاحتفالات بالواقع المعزز.">
+                    <span>🎬 مشاهدة الفيديو</span>
+                  </button>
+                  <a href="https://youtu.be/It5vCsB8sr0" target="_blank" class="btn btn-secondary btn-sm"><span>📺 YouTube</span></a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 14: Touchless Subway Surfers -->
+            <div class="demo-card" data-category="video ar">
+              <div class="demo-card__media">
+                <img src="https://img.youtube.com/vi/vPwG3hm4E14/hqdefault.jpg" alt="Touchless Subway Surfers" class="demo-thumb-img" loading="lazy">
+                <div class="demo-card__media-overlay">
+                  <button class="yt-play-btn open-media-modal" data-title="Touchless Subway Surfers" data-type="youtube" data-src="vPwG3hm4E14" data-info="التحكم الكامل في لعبة Subway Surfers بحركات الجسد والقفز في الهواء بدون لمس.">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    <span>تشغيل الفيديو</span>
+                  </button>
+                </div>
+                <div class="demo-card__badge yt-badge">YouTube Demo</div>
+              </div>
+              <div class="demo-card__content">
+                <h3 class="demo-card__title">التحكم في الألعاب بالإيماءات بدون لمس 🎮</h3>
+                <p class="demo-card__desc">لعب وتحكم كامل في لعبة Subway Surfers بحركات اليد والقفز في الهواء بدون لمس الكيبورد.</p>
+                <div class="demo-card__actions">
+                  <button class="btn btn-primary btn-sm open-media-modal" data-title="Touchless Subway Surfers" data-type="youtube" data-src="vPwG3hm4E14" data-info="التحكم بالألعاب بدون لمس.">
+                    <span>🎬 مشاهدة الفيديو</span>
+                  </button>
+                  <a href="https://youtu.be/vPwG3hm4E14" target="_blank" class="btn btn-secondary btn-sm"><span>📺 YouTube</span></a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 15: Mortal Kombat AR Controller -->
+            <div class="demo-card" data-category="video ar">
+              <div class="demo-card__media">
+                <img src="https://img.youtube.com/vi/xxWROnxDLi8/hqdefault.jpg" alt="Mortal Kombat AR Controller" class="demo-thumb-img" loading="lazy">
+                <div class="demo-card__media-overlay">
+                  <button class="yt-play-btn open-media-modal" data-title="Mortal Kombat AR Controller" data-type="youtube" data-src="xxWROnxDLi8" data-info="التحكم القتالي في الألعاب بحركات اليد والركلات في الهواء عبر الرؤية الحاسوبية.">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    <span>تشغيل الفيديو</span>
+                  </button>
+                </div>
+                <div class="demo-card__badge yt-badge">YouTube Demo</div>
+              </div>
+              <div class="demo-card__content">
+                <h3 class="demo-card__title">التحكم القتالي في الألعاب (AR Combat) 🥊</h3>
+                <p class="demo-card__desc">تحكم قتالي بالرؤية الحاسوبية وحركات اللكمات والركلات في الهواء بدون دراع تحكم.</p>
+                <div class="demo-card__actions">
+                  <button class="btn btn-primary btn-sm open-media-modal" data-title="Mortal Kombat AR" data-type="youtube" data-src="xxWROnxDLi8" data-info="التحكم القتالي بالواقع المعزز.">
+                    <span>🎬 مشاهدة الفيديو</span>
+                  </button>
+                  <a href="https://youtu.be/xxWROnxDLi8" target="_blank" class="btn btn-secondary btn-sm"><span>📺 YouTube</span></a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 16: LegendBot V1.0 -->
+            <div class="demo-card" data-category="video ai">
+              <div class="demo-card__media">
+                <img src="https://img.youtube.com/vi/0qogwbneTFA/hqdefault.jpg" alt="LegendBot V1.0" class="demo-thumb-img" loading="lazy">
+                <div class="demo-card__media-overlay">
+                  <button class="yt-play-btn open-media-modal" data-title="LegendBot V1.0 Automation" data-type="youtube" data-src="0qogwbneTFA" data-info="روبوت أتمتة وذكاء اصطناعي لتنفيذ المهام المتكررة والتحكم السحابي بسرعة فائقة.">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    <span>تشغيل الفيديو</span>
+                  </button>
+                </div>
+                <div class="demo-card__badge yt-badge">YouTube Demo</div>
+              </div>
+              <div class="demo-card__content">
+                <h3 class="demo-card__title">روبوت الأتمتة الذكي (LegendBot V1.0) 🤖</h3>
+                <p class="demo-card__desc">أتمتة العمليات المتكررة وإدارة الخوادم وتنفيذ المهام المعقدة بالـ AI بسرعة فائقة.</p>
+                <div class="demo-card__actions">
+                  <button class="btn btn-primary btn-sm open-media-modal" data-title="LegendBot V1.0" data-type="youtube" data-src="0qogwbneTFA" data-info="روبوت الأتمتة الذكي.">
+                    <span>🎬 مشاهدة الفيديو</span>
+                  </button>
+                  <a href="https://youtu.be/0qogwbneTFA" target="_blank" class="btn btn-secondary btn-sm"><span>📺 YouTube</span></a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 17: SmartDocs AI on Google Play -->
+            <div class="demo-card" data-category="mobile ai">
               <div class="demo-card__media">
                 <img src="https://cv.nbra.in/images/smartdocs_preview.png" alt="SmartDocs AI on Google Play" class="demo-thumb-img" loading="lazy">
                 <div class="demo-card__media-overlay">
@@ -764,8 +950,8 @@
                 <div class="demo-card__badge">Google Play Official App</div>
               </div>
               <div class="demo-card__content">
-                <h3 class="demo-card__title">تطبيق SmartDocs AI على Google Play</h3>
-                <p class="demo-card__desc">تطبيق موبايل رسمي منشور على جوجل بلاي لتحليل وتلخيص المستندات بالـ AI مع تكامل Google Drive.</p>
+                <h3 class="demo-card__title">SmartDocs AI Reader (Google Play) 📄</h3>
+                <p class="demo-card__desc">تطبيق موبايل رسمي منشور على جوجل بلاي لتحليل وتلخيص المستندات بالـ AI (26K سطر Flutter).</p>
                 <div class="demo-card__actions">
                   <a href="https://play.google.com/store/apps/details?id=com.docuai.smartdocs" target="_blank" class="btn btn-primary btn-sm">
                     <span>📱 صفحة Google Play</span>
@@ -777,8 +963,8 @@
               </div>
             </div>
 
-            <!-- Web 10: Nile ERP Cloud System (Image Preview) -->
-            <div class="demo-card">
+            <!-- 18: Nile ERP Cloud Platform -->
+            <div class="demo-card" data-category="web">
               <div class="demo-card__media">
                 <img src="https://cv.nbra.in/images/erp_preview.png" alt="Nile ERP Cloud Platform" class="demo-thumb-img" loading="lazy">
                 <div class="demo-card__media-overlay">
@@ -790,115 +976,227 @@
                 <div class="demo-card__badge">Enterprise Web ERP Live</div>
               </div>
               <div class="demo-card__content">
-                <h3 class="demo-card__title">منظومة Nile ERP السحابية للمؤسسات</h3>
-                <p class="demo-card__desc">نظام إدارة موارد الشركات والمخازن والفواتير الإلكترونية والمبيعات بلوحة تحكم 3-Column Console متطورة.</p>
+                <h3 class="demo-card__title">منظومة Nile ERP السحابية 🏭</h3>
+                <p class="demo-card__desc">إدارة موارد الشركات والمخازن والفواتير الإلكترونية والمبيعات بلوحة تحكم 3-Column متطورة.</p>
                 <div class="demo-card__actions">
-                  <a href="https://erp.nbra.in" target="_blank" class="btn btn-primary btn-sm">
-                    <span>🚀 تجربة نظام الـ ERP الحي</span>
-                  </a>
-                  <a href="https://github.com/NadeemBadr00/nile-erp-react" target="_blank" class="btn btn-secondary btn-sm">
-                    <span>💻 كود React & Node.js</span>
-                  </a>
+                  <a href="https://erp.nbra.in" target="_blank" class="btn btn-primary btn-sm"><span>🚀 تجربة النظام الحي</span></a>
+                  <a href="https://github.com/NadeemBadr00/nile-erp-react" target="_blank" class="btn btn-secondary btn-sm"><span>💻 كود المشروع</span></a>
                 </div>
               </div>
             </div>
 
-            <div class="demo-card">
+            <!-- 19: Yasta Smart Services -->
+            <div class="demo-card" data-category="web mobile">
               <div class="demo-card__media">
-                <div class="demo-card__badge">AI Interactive Demo</div>
-                <div class="demo-card__preview">
-                  <span class="demo-icon">🏛️</span>
-                  <button class="demo-overlay-btn open-media-modal" data-title="مشروع Anubis AI Tour Guide" data-type="gif" data-src="https://raw.githubusercontent.com/NadeemBadr00/Anubis-AI-Tour-Guide/main/assets/Anubisgit.gif" data-info="نظام مرشد سياحي ذكي للحضارة المصرية بالذكاء الاصطناعي مع شات بوت هجين وتعرف لحظي على التماثيل بدقة >90%.">
+                <img src="https://cv.nbra.in/images/yasta.png" alt="Yasta Services Platform" class="demo-thumb-img" loading="lazy">
+                <div class="demo-card__media-overlay">
+                  <div class="demo-overlay-btn" data-action="open-link" data-url="https://yasta.nbra.in">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    <span>فتح منصة يسطا</span>
+                  </div>
+                </div>
+                <div class="demo-card__badge">On-Demand Platform Live</div>
+              </div>
+              <div class="demo-card__content">
+                <h3 class="demo-card__title">منصة يسطا (Yasta) للخدمات الذكية 🛠️</h3>
+                <p class="demo-card__desc">حجز ومطابقة الفنيين والخدمات المنزلية بنظام ذكي وتتبع مباشر ومدفوعات إلكترونية آمنة.</p>
+                <div class="demo-card__actions">
+                  <a href="https://yasta.nbra.in" target="_blank" class="btn btn-primary btn-sm"><span>🚀 تجربة المنصة الحية</span></a>
+                  <a href="https://github.com/NadeemBadr00/yasta" target="_blank" class="btn btn-secondary btn-sm"><span>💻 كود المشروع</span></a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 20: AI Web Video Editor & Montage -->
+            <div class="demo-card" data-category="web ai">
+              <div class="demo-card__media">
+                <img src="https://cv.nbra.in/images/montage_preview.png" alt="AI Web Video Editor" class="demo-thumb-img" loading="lazy">
+                <div class="demo-card__media-overlay">
+                  <div class="demo-overlay-btn" data-action="open-link" data-url="https://github.com/NadeemBadr00/render-video-gen">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                    <span>مشاهدة العرض الحي (Demo)</span>
-                  </button>
+                    <span>استعراض المحرر</span>
+                  </div>
                 </div>
+                <div class="demo-card__badge">AI Video Engine</div>
               </div>
               <div class="demo-card__content">
-                <h3 class="demo-card__title">مشروع Anubis AI Tour Guide</h3>
-                <p class="demo-card__desc">شات بوت هجين بـ 18 لغة + تعرف على الآثار بـ MobileNetV2 + توليد صور بـ Stable Diffusion.</p>
+                <h3 class="demo-card__title">محرر الفيديو والمونتاج السحابي بالـ AI 🎬</h3>
+                <p class="demo-card__desc">محرر فيديو سحابي فائق السرعة لقص ودمج الفيديوهات وتوليد التأثيرات بـ Node.js و FFmpeg.</p>
                 <div class="demo-card__actions">
-                  <button class="btn btn-primary btn-sm open-media-modal" data-title="مشروع Anubis AI Tour Guide" data-type="gif" data-src="https://raw.githubusercontent.com/NadeemBadr00/Anubis-AI-Tour-Guide/main/assets/Anubisgit.gif" data-info="نظام مرشد سياحي ذكي للحضارة المصرية بالذكاء الاصطناعي مع شات بوت هجين وتعرف لحظي على التماثيل بدقة >90%.">
-                    <span>🎬 استعراض الفيديو التوضيحي</span>
-                  </button>
-                  <a href="https://github.com/NadeemBadr00/Anubis-AI-Tour-Guide" target="_blank" class="btn btn-secondary btn-sm">
-                    <span>💻 كود المشروع</span>
-                  </a>
+                  <a href="https://github.com/NadeemBadr00/render-video-gen" target="_blank" class="btn btn-primary btn-sm"><span>💻 كود محرك الفيديو</span></a>
                 </div>
               </div>
             </div>
 
-            <div class="demo-card">
+            <!-- 21: Nizam Accounting App -->
+            <div class="demo-card" data-category="mobile">
               <div class="demo-card__media">
-                <div class="demo-card__badge">Extension & Multi-Threaded</div>
-                <div class="demo-card__preview">
-                  <span class="demo-icon">⚡</span>
-                  <button class="demo-overlay-btn open-media-modal" data-title="Nitro Download Manager (NDM Pro)" data-type="info" data-info="محرك تحميل متطور مفتوح المصدر كبديل لـ IDM، يقسم الملفات لـ 32 مسار متزامن عبر HTTP Range مع إضافة كروم وإيدج (Manifest V3) ولوحة تحكم Dark Mode.">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                    <span>تفاصيل المحرك والإضافة</span>
-                  </button>
+                <img src="https://cv.nbra.in/images/smartdocs_preview.png" alt="Nizam Accounting App" class="demo-thumb-img" loading="lazy">
+                <div class="demo-card__media-overlay">
+                  <div class="demo-overlay-btn" data-action="open-link" data-url="https://github.com/NadeemBadr00/safqa-mobile">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line></svg>
+                    <span>استعراض التطبيق</span>
+                  </div>
                 </div>
+                <div class="demo-card__badge">Flutter Mobile App</div>
               </div>
               <div class="demo-card__content">
-                <h3 class="demo-card__title">Nitro Download Manager (NDM)</h3>
-                <p class="demo-card__desc">محرك تحميل مجزأ فائق السرعة مع إضافة متصفح لكروم وإيدج وواجهة تحكم Dark Mode.</p>
+                <h3 class="demo-card__title">تطبيق نظام المحاسبي (Nizam App) 📱</h3>
+                <p class="demo-card__desc">تطبيق موبايل للمحاسبة السريعة وإدارة الفواتير والديون اليومية للتجار والشركات الناشئة.</p>
                 <div class="demo-card__actions">
-                  <a href="https://github.com/NadeemBadr00/Nitro-Download-Manager" target="_blank" class="btn btn-primary btn-sm">
-                    <span>🧩 تحميل وتجربة الإضافة</span>
-                  </a>
-                  <a href="https://github.com/NadeemBadr00/Nitro-Download-Manager" target="_blank" class="btn btn-secondary btn-sm">
-                    <span>💻 المستودع الرسمي</span>
-                  </a>
+                  <a href="https://github.com/NadeemBadr00/safqa-mobile" target="_blank" class="btn btn-primary btn-sm"><span>💻 كود التطبيق</span></a>
                 </div>
               </div>
             </div>
 
-            <div class="demo-card">
+            <!-- 22: Traffic Accidents Analytics Dashboard -->
+            <div class="demo-card" data-category="web ai">
               <div class="demo-card__media">
-                <div class="demo-card__badge">YOLOv12x & MediaPipe</div>
-                <div class="demo-card__preview">
-                  <span class="demo-icon">🚗</span>
-                  <button class="demo-overlay-btn open-media-modal" data-title="Smart Driver & Traffic Vision" data-type="info" data-info="أنظمة سلامة مرورية ذكية تكتشف نعاس وتشتت وتثاؤب السائقين في الوقت الفعلي عبر تحليل EAR و MAR + تتبع حركة المرور وكشف السير العكسي بنموذج YOLOv12x.">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
-                    <span>استعراض النظام وتحليل الرؤية</span>
-                  </button>
+                <img src="https://cv.nbra.in/images/dashboard_preview.png" alt="Traffic Accidents Analytics" class="demo-thumb-img" loading="lazy">
+                <div class="demo-card__media-overlay">
+                  <div class="demo-overlay-btn" data-action="open-link" data-url="https://github.com/NadeemBadr00/ai-traffic-safety">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline></svg>
+                    <span>فتح اللوحة</span>
+                  </div>
                 </div>
+                <div class="demo-card__badge">Analytics Dashboard</div>
               </div>
               <div class="demo-card__content">
-                <h3 class="demo-card__title">أنظمة Driver & Traffic AI Vision</h3>
-                <p class="demo-card__desc">كشف النعاس والتشتت في الوقت الفعلي (EAR / PERCLOS) + تحليل المرور وكشف السير العكسي.</p>
+                <h3 class="demo-card__title">لوحة تحليل النقاط السوداء للحوادث 📊</h3>
+                <p class="demo-card__desc">لوحة معلومات ذكية لتحليل مناطق الحوادث الحرجة وتقديم توصيات هندسية لتقليل المخاطر.</p>
                 <div class="demo-card__actions">
-                  <a href="https://github.com/NadeemBadr00/smart-traffic-vision" target="_blank" class="btn btn-primary btn-sm">
-                    <span>🚦 استعراض Traffic Vision</span>
-                  </a>
-                  <a href="https://github.com/NadeemBadr00/smart-driver-monitoring" target="_blank" class="btn btn-secondary btn-sm">
-                    <span>🚗 نظام Driver Safety</span>
-                  </a>
+                  <a href="https://github.com/NadeemBadr00/ai-traffic-safety" target="_blank" class="btn btn-primary btn-sm"><span>💻 كود المنظومة</span></a>
                 </div>
               </div>
             </div>
 
-            <div class="demo-card">
+            <!-- 23: Smart Book AI Platform -->
+            <div class="demo-card" data-category="web ai">
               <div class="demo-card__media">
-                <div class="demo-card__badge">Flutter & Gemini AI</div>
-                <div class="demo-card__preview">
-                  <span class="demo-icon">📄</span>
-                  <button class="demo-overlay-btn open-media-modal" data-title="SmartDocs AI Document Reader" data-type="info" data-info="تطبيق موبايل Flutter لقراءة وتلخيص كافة أنواع المستندات (PDF, Word, Excel, PPTX, CSV) مع شات بوت Gemini AI مدمج و Google Drive API.">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                    <span>معاينة مميزات التطبيق</span>
+                <img src="https://cv.nbra.in/images/roadmap_preview.png" alt="Smart Book AI" class="demo-thumb-img" loading="lazy">
+                <div class="demo-card__media-overlay">
+                  <div class="demo-overlay-btn" data-action="open-link" data-url="https://github.com/NadeemBadr00/HITU-Web">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                    <span>معاينة المنصة</span>
+                  </div>
+                </div>
+                <div class="demo-card__badge">EduTech AI</div>
+              </div>
+              <div class="demo-card__content">
+                <h3 class="demo-card__title">منصة الكتاب التفاعلي الذكي (Smart Book) 📚</h3>
+                <p class="demo-card__desc">تحويل الكتب المدرسية والجامعية إلى كتب تفاعلية مع شات بوت ذكي مدمج يجيب على أي فقرة.</p>
+                <div class="demo-card__actions">
+                  <a href="https://github.com/NadeemBadr00/HITU-Web" target="_blank" class="btn btn-primary btn-sm"><span>💻 كود المشروع</span></a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 24: AI Smart Pen Suite -->
+            <div class="demo-card" data-category="mobile ai">
+              <div class="demo-card__media">
+                <img src="https://cv.nbra.in/images/dashboard_preview.png" alt="AI Smart Pen Suite" class="demo-thumb-img" loading="lazy">
+                <div class="demo-card__media-overlay">
+                  <button class="demo-overlay-btn open-media-modal" data-title="AI Smart Pen Suite" data-type="info" data-info="منظومة برمجية متكاملة لربط الأقلام الذكية بالبلوتوث وتحويل الكتابة اليدوية والرسومات إلى نصوص وبيانات رقمية فورية.">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 19 21 12 17 5 21 12 2"></polygon></svg>
+                    <span>تفاصيل المنظومة</span>
+                  </button>
+                </div>
+                <div class="demo-card__badge">Hardware & Mobile AI</div>
+              </div>
+              <div class="demo-card__content">
+                <h3 class="demo-card__title">منظومة القلم الذكي (Smart Pen Suite) 📱</h3>
+                <p class="demo-card__desc">تطبيق وتكامل هاردوير لتحويل الكتابة اليدوية والرسومات إلى نصوص رقمية فورية بالـ AI.</p>
+                <div class="demo-card__actions">
+                  <button class="btn btn-primary btn-sm open-media-modal" data-title="AI Smart Pen Suite" data-type="info" data-info="منظومة القلم الذكي.">
+                    <span>💡 التفاصيل التقنية</span>
                   </button>
                 </div>
               </div>
+            </div>
+
+            <!-- 25: Real-Time Face Recognition -->
+            <div class="demo-card" data-category="ai">
+              <div class="demo-card__media">
+                <img src="https://cv.nbra.in/images/dashboard_preview.png" alt="Face Recognition" class="demo-thumb-img" loading="lazy">
+                <div class="demo-card__media-overlay">
+                  <button class="demo-overlay-btn open-media-modal" data-title="Real-Time Face Recognition" data-type="info" data-info="نظام تعرف لحظي على الوجوه وإثبات الحضور والانصراف وإدارة البوابات الأمنية بالذكاء الاصطناعي و OpenCV.">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+                    <span>تفاصيل النظام</span>
+                  </button>
+                </div>
+                <div class="demo-card__badge">Biometrics & AI</div>
+              </div>
               <div class="demo-card__content">
-                <h3 class="demo-card__title">تطبيق SmartDocs AI Reader</h3>
-                <p class="demo-card__desc">قارئ ومحلل المستندات بالذكاء الاصطناعي مع دعم تلخيص PDF و Word و Excel بالـ AI.</p>
+                <h3 class="demo-card__title">التعرف اللحظي على الوجوه (Biometrics) 👤</h3>
+                <p class="demo-card__desc">نظام بصمة وجه لحظي لإدارة الحضور والدخول الأمني بدقة فائقة باستخدام Deep Learning و OpenCV.</p>
                 <div class="demo-card__actions">
-                  <a href="https://github.com/NadeemBadr00/SmartDocs" target="_blank" class="btn btn-primary btn-sm">
-                    <span>📱 استعراض التطبيق</span>
+                  <button class="btn btn-primary btn-sm open-media-modal" data-title="Real-Time Face Recognition" data-type="info" data-info="التعرف اللحظي على الوجوه.">
+                    <span>💡 التفاصيل التقنية</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 26: Open World 3D City Game -->
+            <div class="demo-card" data-category="ar web">
+              <div class="demo-card__media">
+                <img src="https://cv.nbra.in/images/dashboard_preview.png" alt="Open World 3D City Game" class="demo-thumb-img" loading="lazy">
+                <div class="demo-card__media-overlay">
+                  <a href="https://github.com/NadeemBadr00/3D-Game" target="_blank" class="demo-overlay-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    <span>استعراض اللعبة 3D</span>
                   </a>
-                  <a href="https://github.com/NadeemBadr00/SmartDocs" target="_blank" class="btn btn-secondary btn-sm">
-                    <span>💻 كود Flutter</span>
+                </div>
+                <div class="demo-card__badge">3D & WebGL</div>
+              </div>
+              <div class="demo-card__content">
+                <h3 class="demo-card__title">لعبة المدينة ثلاثية الأبعاد (3D City Game) 🏙️</h3>
+                <p class="demo-card__desc">بيئة عالم مفتوح ثلاثية الأبعاد بفيزياء ورسوميات متقدمة تعمل على المتصفح عبر WebGL و Three.js.</p>
+                <div class="demo-card__actions">
+                  <a href="https://github.com/NadeemBadr00/3D-Game" target="_blank" class="btn btn-primary btn-sm"><span>💻 كود اللعبة 3D</span></a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 27: NanoGrad Neural Framework -->
+            <div class="demo-card" data-category="ai">
+              <div class="demo-card__media">
+                <img src="https://cv.nbra.in/images/hitu_preview.png" alt="NanoGrad Neural Framework" class="demo-thumb-img" loading="lazy">
+                <div class="demo-card__media-overlay">
+                  <a href="https://github.com/NadeemBadr00/NanoGrad" target="_blank" class="demo-overlay-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    <span>كود الإطار العصبي</span>
                   </a>
+                </div>
+                <div class="demo-card__badge">Core Deep Tech AI</div>
+              </div>
+              <div class="demo-card__content">
+                <h3 class="demo-card__title">إطار الشبكات العصبية من الصفر (NanoGrad) 🧠</h3>
+                <p class="demo-card__desc">بناء محرك حساب التدرج العكسي (Backpropagation) والشبكات العصبية في بايثون بدون مكتبات خارجية.</p>
+                <div class="demo-card__actions">
+                  <a href="https://github.com/NadeemBadr00/NanoGrad" target="_blank" class="btn btn-primary btn-sm"><span>💻 المستودع على GitHub</span></a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 28: Safqa Pro Marketplace -->
+            <div class="demo-card" data-category="web mobile">
+              <div class="demo-card__media">
+                <img src="https://cv.nbra.in/images/erp_preview.png" alt="Safqa Pro Marketplace" class="demo-thumb-img" loading="lazy">
+                <div class="demo-card__media-overlay">
+                  <div class="demo-overlay-btn" data-action="open-link" data-url="https://safqa.nbra.in">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline></svg>
+                    <span>فتح سوق صفقة</span>
+                  </div>
+                </div>
+                <div class="demo-card__badge">Escrow Marketplace Live</div>
+              </div>
+              <div class="demo-card__content">
+                <h3 class="demo-card__title">سوق ومنصة صفقة برو (Safqa Pro) 🤝</h3>
+                <p class="demo-card__desc">منصة وساطة مالية وحماية للمشتري والبائع (Escrow) مع تطبيق موبايل Flutter متكامل.</p>
+                <div class="demo-card__actions">
+                  <a href="https://safqa.nbra.in" target="_blank" class="btn btn-primary btn-sm"><span>🚀 تجربة المنصة الحية</span></a>
+                  <a href="https://github.com/NadeemBadr00/safqa-pro" target="_blank" class="btn btn-secondary btn-sm"><span>💻 كود المشروع</span></a>
                 </div>
               </div>
             </div>
