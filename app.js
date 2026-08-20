@@ -232,9 +232,17 @@ function initMediaModal() {
             <img src="${src}" alt="${title}" class="modal-media-img" style="max-height: 380px; object-fit: contain;">
           `;
         } else if (type === 'youtube') {
+          let videoId = src;
+          if (src.includes('watch?v=')) {
+            videoId = src.split('watch?v=')[1].split('&')[0];
+          } else if (src.includes('youtu.be/')) {
+            videoId = src.split('youtu.be/')[1].split('?')[0];
+          } else if (src.includes('embed/')) {
+            videoId = src.split('embed/')[1].split('?')[0];
+          }
           modalBody.innerHTML = `
             <div style="width: 100%; aspect-ratio: 16/9;">
-              <iframe width="100%" height="100%" src="${src}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius: 8px;"></iframe>
+              <iframe width="100%" height="100%" src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius: 8px;"></iframe>
             </div>
           `;
         } else {

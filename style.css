@@ -1287,13 +1287,71 @@ button {
 }
 
 .demo-card__media {
-  height: 160px;
+  height: 190px;
   background: linear-gradient(135deg, hsl(215, 20%, 12%), hsl(220, 30%, 18%));
   position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px;
+}
+
+.demo-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.demo-card:hover .demo-thumb-img {
+  transform: scale(1.06);
+}
+
+.demo-card__media-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, hsla(0, 0%, 0%, 0.2), hsla(0, 0%, 0%, 0.7));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.demo-card:hover .demo-card__media-overlay {
+  background: linear-gradient(180deg, hsla(0, 0%, 0%, 0.1), hsla(0, 0%, 0%, 0.8));
+}
+
+.yt-badge {
+  background-color: hsl(0, 85%, 55%);
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.72rem;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.yt-play-btn {
+  background-color: hsla(0, 85%, 50%, 0.9);
+  color: #fff;
+  border: 1px solid hsla(0, 100%, 75%, 0.4);
+  box-shadow: 0 4px 20px hsla(0, 85%, 50%, 0.5);
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.yt-play-btn:hover {
+  transform: scale(1.08);
+  background-color: hsl(0, 85%, 55%);
 }
 
 .demo-card__badge {
