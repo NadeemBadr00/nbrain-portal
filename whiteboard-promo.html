@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NBrain — استوديو فيديو الوايت بورد التفاعلي (Whiteboard Video Studio)</title>
+  
+  <!-- Google Fonts: Cairo & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: hsl(222, 47%, 9%);
+      --bg-card: hsl(222, 40%, 14%);
+      --border-color: hsl(220, 25%, 22%);
+      --text-main: hsl(210, 40%, 98%);
+      --text-muted: hsl(215, 20%, 65%);
+      --primary: hsl(217, 91%, 60%);
+      --primary-glow: hsla(217, 91%, 60%, 0.4);
+      --accent: hsl(160, 84%, 45%);
+      --wb-paper: hsl(40, 20%, 97%);
+      --wb-grid: hsla(215, 25%, 80%, 0.4);
+      --ink-dark: hsl(220, 40%, 15%);
+      --ink-blue: hsl(217, 90%, 45%);
+      --ink-cyan: hsl(190, 95%, 40%);
+      --ink-orange: hsl(25, 95%, 50%);
+      --ink-green: hsl(155, 80%, 35%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px;
+      overflow-x: hidden;
+    }
+
+    .studio-header {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding: 12px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: hsl(220, 35%, 6%);
+      border: 1px solid hsla(217, 91%, 60%, 0.3);
+      padding: 2px;
+      box-shadow: 0 0 16px var(--primary-glow);
+    }
+
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .brand-subtitle {
+      font-size: 0.75rem;
+      color: var(--primary);
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border-radius: 9999px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), hsl(224, 76%, 48%));
+      color: #fff;
+      box-shadow: 0 4px 14px var(--primary-glow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px var(--primary-glow);
+    }
+
+    .btn-secondary {
+      background: hsl(220, 30%, 18%);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background: hsl(220, 30%, 24%);
+    }
+
+    .btn-export {
+      background: linear-gradient(135deg, hsl(350, 85%, 55%), hsl(15, 90%, 55%));
+      color: #fff;
+      box-shadow: 0 4px 15px hsla(350, 85%, 55%, 0.4);
+    }
+
+    .btn-export:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px hsla(350, 85%, 55%, 0.6);
+    }
+
+    /* Video Player Canvas Container */
+    .player-container {
+      width: 100%;
+      max-width: 1200px;
+      background: #000;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 2px solid var(--border-color);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .video-viewport {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      position: relative;
+      background: var(--wb-paper);
+      cursor: pointer;
+    }
+
+    #whiteboardCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Drawing Hand / Stylus Cursor Effect */
+    .hand-cursor {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      pointer-events: none;
+      transform: translate(-10px, -50px);
+      transition: opacity 0.3s;
+      z-index: 100;
+      filter: drop-shadow(4px 10px 10px rgba(0,0,0,0.3));
+    }
+
+    /* Video Control Bar */
+    .player-controls {
+      background: hsl(222, 45%, 11%);
+      border-top: 1px solid var(--border-color);
+      padding: 14px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .timeline-bar-wrapper {
+      width: 100%;
+      height: 6px;
+      background: hsl(220, 25%, 20%);
+      border-radius: 6px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .timeline-bar-progress {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 6px;
+      width: 0%;
+      position: relative;
+      transition: width 0.1s linear;
+    }
+
+    .timeline-bar-progress::after {
+      content: '';
+      position: absolute;
+      right: -6px;
+      top: -3px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 0 10px var(--primary);
+    }
+
+    .controls-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .controls-left, .controls-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .icon-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-main);
+      cursor: pointer;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .icon-btn:hover {
+      background: hsl(220, 30%, 20%);
+      color: var(--primary);
+    }
+
+    .time-display {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .scene-badge {
+      background: hsla(217, 91%, 60%, 0.15);
+      color: var(--primary);
+      border: 1px solid hsla(217, 91%, 60%, 0.3);
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    /* Scene Index Grid Selector */
+    .scenes-selector {
+      width: 100%;
+      max-width: 1200px;
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+    }
+
+    .scene-pill {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 10px;
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .scene-pill:hover, .scene-pill.active {
+      border-color: var(--primary);
+      background: hsla(217, 91%, 60%, 0.12);
+      transform: translateY(-2px);
+    }
+
+    .scene-pill-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--primary);
+      font-weight: 700;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .scene-pill-name {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: block;
+    }
+
+    /* Export Overlay Modal */
+    .export-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .export-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 480px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+    }
+
+    .export-progress-bar {
+      width: 100%;
+      height: 10px;
+      background: hsl(220, 25%, 20%);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 20px 0;
+    }
+
+    .export-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transition: width 0.2s;
+    }
+
+    @media (max-width: 900px) {
+      .scenes-selector {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    @media (max-width: 600px) {
+      .scenes-selector {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .studio-header {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Studio Top Navigation -->
+  <header class="studio-header">
+    <div class="brand-group">
+      <img src="logo-emblem.png" alt="NBrain Emblem" class="brand-logo" onerror="this.src='https://nbra.in/logo-emblem.png'">
+      <div>
+        <h1 class="brand-title">NBrain Whiteboard Studio 360°</h1>
+        <p class="brand-subtitle">Automated Motion Graphics & Services Showcase Video</p>
+      </div>
+    </div>
+    
+    <div class="header-actions">
+      <button class="btn btn-secondary" id="audioToggleBtn">
+        <span>🔊 تفعيل الصوت والموسيقى</span>
+      </button>
+      <button class="btn btn-export" id="exportVideoBtn">
+        <span>🔴 تسجيل وتصدير MP4 / WebM (1080p)</span>
+      </button>
+      <a href="https://nbra.in" target="_blank" class="btn btn-primary">
+        <span>زيارة الموقع (nbra.in) 🌐</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Video Player Section -->
+  <main class="player-container">
+    <div class="video-viewport" id="viewport">
+      <canvas id="whiteboardCanvas" width="1920" height="1080"></canvas>
+      <!-- Stylus Drawing Cursor -->
+      <svg class="hand-cursor" id="handCursor" viewBox="0 0 100 100" fill="none">
+        <path d="M20,90 L75,35 L65,25 L10,80 L20,90 Z" fill="#2c3e50" stroke="#1a252f" stroke-width="2"/>
+        <path d="M75,35 L85,25 L75,15 L65,25 L75,35 Z" fill="#3498db"/>
+        <polygon points="10,80 5,95 20,90" fill="#f1c40f"/>
+        <polygon points="5,95 8,88 12,92" fill="#2c3e50"/>
+      </svg>
+    </div>
+
+    <!-- Controls -->
+    <div class="player-controls">
+      <div class="timeline-bar-wrapper" id="timelineWrapper">
+        <div class="timeline-bar-progress" id="timelineProgress"></div>
+      </div>
+      
+      <div class="controls-row">
+        <div class="controls-left">
+          <button class="icon-btn" id="playPauseBtn" title="تشغيل / إيقاف">
+            <svg id="playIcon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <svg id="pauseIcon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+          </button>
+          
+          <button class="icon-btn" id="replayBtn" title="إعادة تشغيل من البداية">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          </button>
+          
+          <span class="time-display" id="timeDisplay">00:00 / 00:35</span>
+        </div>
+
+        <div class="controls-right">
+          <span class="scene-badge" id="sceneBadge">المشهد 1: المقدمة والابتكار</span>
+          <button class="icon-btn" id="speedToggleBtn" title="سرعة التشغيل">1.0x</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Interactive Scenes Bar -->
+  <div class="scenes-selector">
+    <div class="scene-pill active" data-scene="0">
+      <span class="scene-pill-num">01</span>
+      <span class="scene-pill-name">الشعار والمنظومة</span>
+    </div>
+    <div class="scene-pill" data-scene="1">
+      <span class="scene-pill-num">02</span>
+      <span class="scene-pill-name">مواقع الويب السريعة</span>
+    </div>
+    <div class="scene-pill" data-scene="2">
+      <span class="scene-pill-num">03</span>
+      <span class="scene-pill-name">تطبيقات Google Play</span>
+    </div>
+    <div class="scene-pill" data-scene="3">
+      <span class="scene-pill-num">04</span>
+      <span class="scene-pill-name">شات بوتس المبيعات AI</span>
+    </div>
+    <div class="scene-pill" data-scene="4">
+      <span class="scene-pill-num">05</span>
+      <span class="scene-pill-name">الرؤية وتتبع الكاميرات</span>
+    </div>
+    <div class="scene-pill" data-scene="5">
+      <span class="scene-pill-num">06</span>
+      <span class="scene-pill-name">باقة VIP والضمانات</span>
+    </div>
+    <div class="scene-pill" data-scene="6">
+      <span class="scene-pill-num">07</span>
+      <span class="scene-pill-name">التواصل و nbra.in</span>
+    </div>
+  </div>
+
+  <!-- Exporting Video Modal -->
+  <div class="export-modal" id="exportModal">
+    <div class="export-card">
+      <h3 style="font-size: 1.3rem; margin-bottom: 8px;">🎬 جارٍ تسجيل وتوليد الفيديو...</h3>
+      <p style="font-size: 0.85rem; color: var(--text-muted);">يقوم النظام بتسجيل الأنيميشن في الخلفية بدقة 1080p Full HD (60 FPS). يرجى الانتظار ثوانٍ معدودة.</p>
+      <div class="export-progress-bar">
+        <div class="export-progress-fill" id="exportProgressFill"></div>
+      </div>
+      <p id="exportStatusText" style="font-size: 0.9rem; font-weight: 700; color: var(--primary);">جارٍ تسجيل المشاهد: 0%</p>
+    </div>
+  </div>
+
+  <script>
+    /**
+     * NBrain Whiteboard Animation Engine (60 FPS Canvas Vector Renderer)
+     */
+    const canvas = document.getElementById('whiteboardCanvas');
+    const ctx = canvas.getContext('2d');
+    const handCursor = document.getElementById('handCursor');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const playIcon = document.getElementById('playIcon');
+    const pauseIcon = document.getElementById('pauseIcon');
+    const replayBtn = document.getElementById('replayBtn');
+    const timelineWrapper = document.getElementById('timelineWrapper');
+    const timelineProgress = document.getElementById('timelineProgress');
+    const timeDisplay = document.getElementById('timeDisplay');
+    const sceneBadge = document.getElementById('sceneBadge');
+    const speedToggleBtn = document.getElementById('speedToggleBtn');
+    const audioToggleBtn = document.getElementById('audioToggleBtn');
+    const exportVideoBtn = document.getElementById('exportVideoBtn');
+    const exportModal = document.getElementById('exportModal');
+    const exportProgressFill = document.getElementById('exportProgressFill');
+    const exportStatusText = document.getElementById('exportStatusText');
+
+    // Total duration: 35 seconds (7 scenes * 5 seconds each)
+    const TOTAL_DURATION = 35;
+    let currentTime = 0;
+    let isPlaying = true;
+    let playbackSpeed = 1.0;
+    let lastTimestamp = 0;
+    let isAudioEnabled = false;
+    let audioCtx = null;
+
+    // Load Logo Emblem
+    const brandLogoImg = new Image();
+    brandLogoImg.src = 'logo-emblem.png';
+
+    // 7 Scenes Choreography Data
+    const scenes = [
+      {
+        id: 0,
+        title: "المشهد 1: الهوية والمنظومة",
+        badge: "01 / المنظومة الرقمية",
+        start: 0,
+        end: 5,
+        render: renderScene1
+      },
+      {
+        id: 1,
+        title: "المشهد 2: منصات الويب السريعة",
+        badge: "02 / منصات الويب السريعة",
+        start: 5,
+        end: 10,
+        render: renderScene2
+      },
+      {
+        id: 2,
+        title: "المشهد 3: تطبيقات Google Play",
+        badge: "03 / تطبيقات Google Play 2026",
+        start: 10,
+        end: 15,
+        render: renderScene3
+      },
+      {
+        id: 3,
+        title: "المشهد 4: شات بوتس المبيعات AI",
+        badge: "04 / شات بوتس المبيعات الذكية",
+        start: 15,
+        end: 20,
+        render: renderScene4
+      },
+      {
+        id: 4,
+        title: "المشهد 5: الرؤية الحاسوبية والكاميرات",
+        badge: "05 / الرؤية وتتبع الكاميرات YOLO",
+        start: 20,
+        end: 25,
+        render: renderScene5
+      },
+      {
+        id: 5,
+        title: "المشهد 6: الباقة الشاملة VIP",
+        badge: "06 / باقة VIP المتكاملة 360°",
+        start: 25,
+        end: 30,
+        render: renderScene6
+      },
+      {
+        id: 6,
+        title: "المشهد 7: ابدأ الآن و nbra.in",
+        badge: "07 / تواصل مباشر مع المؤسس",
+        start: 30,
+        end: 35,
+        render: renderScene7
+      }
+    ];
+
+    // Main Render Loop
+    function animate(timestamp) {
+      if (!lastTimestamp) lastTimestamp = timestamp;
+      const delta = (timestamp - lastTimestamp) / 1000;
+      lastTimestamp = timestamp;
+
+      if (isPlaying) {
+        currentTime += delta * playbackSpeed;
+        if (currentTime >= TOTAL_DURATION) {
+          currentTime = TOTAL_DURATION;
+          isPlaying = false;
+          updatePlayPauseIcons();
+        }
+      }
+
+      renderFrame(currentTime);
+      updateControls();
+
+      requestAnimationFrame(animate);
+    }
+
+    function renderFrame(t) {
+      // 1. Draw Whiteboard Grid Background
+      drawWhiteboardBackground();
+
+      // 2. Find Active Scene
+      const sceneIndex = Math.min(Math.floor(t / 5), scenes.length - 1);
+      const scene = scenes[sceneIndex];
+      const sceneProgress = Math.min(1, Math.max(0, (t - scene.start) / (scene.end - scene.start)));
+
+      // 3. Render the Scene
+      const penTarget = scene.render(sceneProgress, t);
+
+      // 4. Update Stylus / Hand Cursor Position
+      if (penTarget && isPlaying && t < TOTAL_DURATION) {
+        handCursor.style.opacity = '1';
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = rect.width / 1920;
+        const scaleY = rect.height / 1080;
+        handCursor.style.left = (penTarget.x * scaleX) + 'px';
+        handCursor.style.top = (penTarget.y * scaleY) + 'px';
+      } else {
+        handCursor.style.opacity = '0';
+      }
+    }
+
+    function drawWhiteboardBackground() {
+      // Paper Texture
+      ctx.fillStyle = '#f8f9fa';
+      ctx.fillRect(0, 0, 1920, 1080);
+
+      // Dot Grid
+      ctx.fillStyle = '#e2e8f0';
+      const gridSize = 40;
+      for (let x = 20; x < 1920; x += gridSize) {
+        for (let y = 20; y < 1080; y += gridSize) {
+          ctx.beginPath();
+          ctx.arc(x, y, 1.5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      // Top Corner Brand Tag
+      ctx.font = '700 24px "JetBrains Mono"';
+      ctx.fillStyle = '#94a3b8';
+      ctx.textAlign = 'left';
+      ctx.fillText('NBRAIN AI ECOSYSTEM • nbra.in', 60, 60);
+    }
+
+    // ==================== SCENE 1: Brand Hook & Neural Network ====================
+    function renderScene1(p, t) {
+      let penX = 960, penY = 540;
+
+      // Draw Main Header
+      drawTextStroke('هل تبحث عن شريك هندسي يبني منصتك الرقمية 360°؟', 960, 220, '#0f172a', '900 48px Cairo', p * 2);
+
+      // Draw Center Card
+      drawDrawnRect(710, 320, 500, 480, '#2563eb', 4, Math.min(1, p * 1.5));
+
+      // Draw Logo Emblem in Center
+      if (p > 0.4 && brandLogoImg.complete) {
+        const logoAlpha = Math.min(1, (p - 0.4) * 3);
+        ctx.save();
+        ctx.globalAlpha = logoAlpha;
+        ctx.drawImage(brandLogoImg, 860, 360, 200, 200);
+        ctx.restore();
+      }
+
+      // Draw Brand Text
+      if (p > 0.6) {
+        drawTextStroke('NBrain Software & AI Studio', 960, 620, '#0f172a', '800 36px Cairo', (p - 0.6) * 3);
+        drawTextStroke('حلول برمجية وإنتاجية متطورة بمعايير 2026', 960, 680, '#2563eb', '700 28px Cairo', (p - 0.6) * 3);
+        drawTextStroke('بقيادة المهندس نديم بدر (Nadeem Badr)', 960, 740, '#64748b', '600 24px Cairo', (p - 0.7) * 3);
+      }
+
+      penX = 710 + 500 * Math.min(1, p * 1.5);
+      penY = 320 + 480 * Math.min(1, p * 1.5);
+      return { x: penX, y: penY };
+    }
+
+    // ==================== SCENE 2: High-Speed Web Platforms ====================
+    function renderScene2(p, t) {
+      drawTextStroke('01. منصات وتطبيقات الويب السريعة (Next-Gen Web)', 960, 180, '#0f172a', '900 46px Cairo', p * 2);
+
+      // Laptop Illustration
+      drawDrawnRect(560, 280, 800, 450, '#1e293b', 4, Math.min(1, p * 1.5));
+      drawDrawnLine(500, 730, 1420, 730, '#334155', 6, Math.min(1, p * 1.8));
+
+      // Inner Dashboard Elements
+      if (p > 0.3) {
+        drawDrawnRect(600, 320, 220, 360, '#3b82f6', 2, (p - 0.3) * 2); // Sidebar
+        drawDrawnRect(850, 320, 470, 160, '#10b981', 2, (p - 0.4) * 2); // Top Metric Card
+        drawDrawnRect(850, 510, 470, 170, '#f59e0b', 2, (p - 0.5) * 2); // Chart Area
+      }
+
+      // Feature Bullet Points Below
+      if (p > 0.6) {
+        drawTextStroke('⚡ سرعة فائقة 99+ Core Web Vitals  •  🔒 أمان سيبراني Cloudflare  •  📱 متجاوب 100%', 960, 820, '#0f172a', '700 30px Cairo', (p - 0.6) * 3);
+        drawTextStroke('React 19, Next.js 15, FastAPI, Node.js & Modern HSL Design', 960, 870, '#2563eb', '600 24px "JetBrains Mono"', (p - 0.7) * 3);
+      }
+
+      return { x: 560 + 800 * Math.min(1, p * 1.5), y: 280 + 450 * Math.min(1, p * 1.5) };
+    }
+
+    // ==================== SCENE 3: Google Play Mobile Apps ====================
+    function renderScene3(p, t) {
+      drawTextStroke('02. تطبيقات الموبايل المعتمدة على Google Play', 960, 180, '#0f172a', '900 46px Cairo', p * 2);
+
+      // Phone Frame
+      drawDrawnRect(760, 260, 400, 600, '#0f172a', 5, Math.min(1, p * 1.4));
+
+      // Phone Screen Content
+      if (p > 0.3) {
+        drawDrawnRect(800, 320, 320, 180, '#2563eb', 2, (p - 0.3) * 2);
+        drawDrawnRect(800, 530, 320, 80, '#10b981', 2, (p - 0.4) * 2);
+        drawDrawnRect(800, 630, 320, 80, '#6366f1', 2, (p - 0.5) * 2);
+      }
+
+      // 16KB Page Aligned Badge & Android 15
+      if (p > 0.5) {
+        drawDrawnBadge(1220, 400, 'Android 15 Ready', '#10b981');
+        drawDrawnBadge(1220, 480, '16KB Page Aligned', '#2563eb');
+        drawDrawnBadge(1220, 560, 'Flutter 3.29 & Native', '#f59e0b');
+      }
+
+      if (p > 0.7) {
+        drawTextStroke('ممتثل بالكامل لاشتراطات ومعايير Google Play لعام 2026 بدون رفض أو كراش', 960, 910, '#0f172a', '700 28px Cairo', (p - 0.7) * 3);
+      }
+
+      return { x: 760 + 400 * Math.min(1, p * 1.4), y: 260 + 600 * Math.min(1, p * 1.4) };
+    }
+
+    // ==================== SCENE 4: AI Sales Bots ====================
+    function renderScene4(p, t) {
+      drawTextStroke('03. شات بوتس المبيعات والترشيحات الذكية (Gemini AI)', 960, 180, '#0f172a', '900 46px Cairo', p * 2);
+
+      // Chat Container
+      drawDrawnRect(580, 270, 760, 520, '#1e293b', 3, Math.min(1, p * 1.3));
+
+      // Chat Messages
+      if (p > 0.3) {
+        drawChatBubble(620, 330, 460, 80, 'مرحباً! ميزانيتي 5,000 جنيه، إيه أفضل ترشيح ليا؟', '#f1f5f9', '#0f172a', (p - 0.3) * 3);
+      }
+      if (p > 0.5) {
+        drawChatBubble(820, 450, 480, 100, '✨ بناءً على ميزانيتك أرشحلك باقة الانطلاق السريع بخصم 15% مع شات بوت ذكي!', '#2563eb', '#ffffff', (p - 0.5) * 3);
+      }
+      if (p > 0.7) {
+        drawChatBubble(620, 590, 460, 80, 'رائع جداً! تم تأكيد الطلب والتحويل لواتساب فوراً 🚀', '#10b981', '#ffffff', (p - 0.7) * 3);
+      }
+
+      if (p > 0.8) {
+        drawTextStroke('يزيد مبيعاتك 24/7 • يربط العملاء بالدفع والواتساب • يتعلم من منتجات متجرك', 960, 850, '#0f172a', '700 28px Cairo', (p - 0.8) * 3);
+      }
+
+      return { x: 580 + 760 * Math.min(1, p * 1.3), y: 270 + 520 * Math.min(1, p * 1.3) };
+    }
+
+    // ==================== SCENE 5: Computer Vision ====================
+    function renderScene5(p, t) {
+      drawTextStroke('04. الرؤية الحاسوبية وتتبع الكاميرات (YOLO & MediaPipe)', 960, 180, '#0f172a', '900 46px Cairo', p * 2);
+
+      // Camera Frame
+      drawDrawnRect(560, 280, 800, 460, '#0f172a', 4, Math.min(1, p * 1.4));
+
+      // Bounding Boxes / AI Tracking
+      if (p > 0.3) {
+        drawDrawnRect(640, 360, 260, 300, '#ef4444', 3, (p - 0.3) * 2);
+        drawTextStroke('Vehicle Detected: 98.4%', 640, 345, '#ef4444', '700 20px "JetBrains Mono"', (p - 0.3) * 2);
+      }
+      if (p > 0.5) {
+        drawDrawnRect(980, 400, 240, 240, '#10b981', 3, (p - 0.5) * 2);
+        drawTextStroke('Driver Eye Alert: Normal', 980, 385, '#10b981', '700 20px "JetBrains Mono"', (p - 0.5) * 2);
+      }
+
+      if (p > 0.7) {
+        drawTextStroke('كشف النعاس والتشتت • تتبع المركبات وحركة المرور • الواقع المعزز والألعاب', 960, 820, '#0f172a', '700 30px Cairo', (p - 0.7) * 3);
+        drawTextStroke('YOLOv12x, MediaPipe, OpenCV, PyTorch Real-time Edge AI', 960, 870, '#2563eb', '600 24px "JetBrains Mono"', (p - 0.8) * 3);
+      }
+
+      return { x: 560 + 800 * Math.min(1, p * 1.4), y: 280 + 460 * Math.min(1, p * 1.4) };
+    }
+
+    // ==================== SCENE 6: VIP Bundle & Guarantees ====================
+    function renderScene6(p, t) {
+      drawTextStroke('05. الباقة الشاملة VIP والضمانات الهندسية', 960, 180, '#0f172a', '900 46px Cairo', p * 2);
+
+      // VIP Diamond Card
+      drawDrawnRect(510, 270, 900, 480, '#2563eb', 4, Math.min(1, p * 1.3));
+
+      // Items list
+      if (p > 0.3) {
+        const items = [
+          '👑 موقع ويب كامل + تطبيق موبايل رسمي على Google Play',
+          '🤖 شات بوت مبيعات ذكي مدرب على بيانات مشروعك',
+          '🎬 فيديو إعلاني ترويجي سينمائي بالذكاء الاصطناعي',
+          '🔑 تسليم الكود المصدري (Source Code) كاملاً ملكك 100%',
+          '🛡️ ضمان وصيانة مجانية لمدة 30 يوماً بعد الإطلاق'
+        ];
+        items.forEach((item, idx) => {
+          const itemProgress = Math.min(1, Math.max(0, (p - 0.3 - idx * 0.1) * 3));
+          if (itemProgress > 0) {
+            drawTextStroke(item, 960, 350 + idx * 75, '#0f172a', '700 28px Cairo', itemProgress);
+          }
+        });
+      }
+
+      return { x: 510 + 900 * Math.min(1, p * 1.3), y: 270 + 480 * Math.min(1, p * 1.3) };
+    }
+
+    // ==================== SCENE 7: Outro & Call to Action ====================
+    function renderScene7(p, t) {
+      drawTextStroke('ابدأ مشروعك الرقمي اليوم بأعلى المعايير العالمية 🚀', 960, 220, '#0f172a', '900 48px Cairo', p * 2);
+
+      // Big CTA Box
+      drawDrawnRect(610, 310, 700, 460, '#10b981', 4, Math.min(1, p * 1.4));
+
+      if (p > 0.4) {
+        drawTextStroke('🌐 زور بوابتنا الرسمية:', 960, 400, '#64748b', '700 28px Cairo', (p - 0.4) * 3);
+        drawTextStroke('https://nbra.in', 960, 460, '#2563eb', '900 46px "JetBrains Mono"', (p - 0.4) * 3);
+      }
+
+      if (p > 0.6) {
+        drawTextStroke('💬 تواصل مباشر عبر واتساب:', 960, 570, '#64748b', '700 28px Cairo', (p - 0.6) * 3);
+        drawTextStroke('+20 122 277 7345', 960, 630, '#10b981', '900 44px "JetBrains Mono"', (p - 0.6) * 3);
+      }
+
+      if (p > 0.8) {
+        drawTextStroke('المهندس نديم بدر — Chief Software Architect & Founder', 960, 720, '#0f172a', '700 24px Cairo', (p - 0.8) * 3);
+      }
+
+      return { x: 610 + 700 * Math.min(1, p * 1.4), y: 310 + 460 * Math.min(1, p * 1.4) };
+    }
+
+    // ==================== Vector Drawing Primitives ====================
+
+    function drawTextStroke(text, x, y, color, font, progress) {
+      if (progress <= 0) return;
+      ctx.save();
+      ctx.font = font;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      if (progress < 1) {
+        // Truncate text according to progress
+        const count = Math.floor(text.length * progress);
+        const sub = text.substring(0, count);
+        ctx.fillStyle = color;
+        ctx.fillText(sub, x, y);
+      } else {
+        ctx.fillStyle = color;
+        ctx.fillText(text, x, y);
+      }
+      ctx.restore();
+    }
+
+    function drawDrawnRect(x, y, w, h, strokeColor, lineWidth, progress) {
+      if (progress <= 0) return;
+      ctx.save();
+      ctx.strokeStyle = strokeColor;
+      ctx.lineWidth = lineWidth;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      const totalPerimeter = (w + h) * 2;
+      const currentLen = totalPerimeter * Math.min(1, progress);
+
+      ctx.beginPath();
+      let drawn = 0;
+      ctx.moveTo(x, y);
+
+      // Top line
+      const l1 = Math.min(w, currentLen - drawn);
+      if (l1 > 0) { ctx.lineTo(x + l1, y); drawn += l1; }
+
+      // Right line
+      if (currentLen > w) {
+        const l2 = Math.min(h, currentLen - drawn);
+        if (l2 > 0) { ctx.lineTo(x + w, y + l2); drawn += l2; }
+      }
+
+      // Bottom line
+      if (currentLen > w + h) {
+        const l3 = Math.min(w, currentLen - drawn);
+        if (l3 > 0) { ctx.lineTo(x + w - l3, y + h); drawn += l3; }
+      }
+
+      // Left line
+      if (currentLen > w * 2 + h) {
+        const l4 = Math.min(h, currentLen - drawn);
+        if (l4 > 0) { ctx.lineTo(x, y + h - l4); drawn += l4; }
+      }
+
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawDrawnLine(x1, y1, x2, y2, strokeColor, lineWidth, progress) {
+      if (progress <= 0) return;
+      ctx.save();
+      ctx.strokeStyle = strokeColor;
+      ctx.lineWidth = lineWidth;
+      ctx.lineCap = 'round';
+
+      const currX = x1 + (x2 - x1) * Math.min(1, progress);
+      const currY = y1 + (y2 - y1) * Math.min(1, progress);
+
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(currX, currY);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawDrawnBadge(x, y, text, color) {
+      ctx.save();
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.roundRect(x, y - 24, 280, 48, 12);
+      ctx.fill();
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '700 20px "JetBrains Mono", Cairo';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('✓ ' + text, x + 140, y);
+      ctx.restore();
+    }
+
+    function drawChatBubble(x, y, w, h, text, bgColor, textColor, progress) {
+      if (progress <= 0) return;
+      ctx.save();
+      ctx.globalAlpha = Math.min(1, progress);
+
+      ctx.fillStyle = bgColor;
+      ctx.beginPath();
+      ctx.roundRect(x, y, w, h, 16);
+      ctx.fill();
+
+      ctx.fillStyle = textColor;
+      ctx.font = '700 22px Cairo';
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(text, x + w - 24, y + h / 2);
+      ctx.restore();
+    }
+
+    // ==================== Audio Synthesizer (Zero External Dependencies) ====================
+    function playBeepRhythm() {
+      if (!isAudioEnabled) return;
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(440 + (currentTime % 5) * 50, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.3);
+    }
+
+    // Interval for gentle tech beat
+    setInterval(() => {
+      if (isPlaying && isAudioEnabled) {
+        playBeepRhythm();
+      }
+    }, 600);
+
+    // ==================== Controls & Events ====================
+    function updateControls() {
+      const prog = (currentTime / TOTAL_DURATION) * 100;
+      timelineProgress.style.width = prog + '%';
+
+      const curM = String(Math.floor(currentTime / 60)).padStart(2, '0');
+      const curS = String(Math.floor(currentTime % 60)).padStart(2, '0');
+      timeDisplay.textContent = `${curM}:${curS} / 00:35`;
+
+      const activeSceneIdx = Math.min(Math.floor(currentTime / 5), scenes.length - 1);
+      sceneBadge.textContent = scenes[activeSceneIdx].badge;
+
+      document.querySelectorAll('.scene-pill').forEach((pill, idx) => {
+        pill.classList.toggle('active', idx === activeSceneIdx);
+      });
+    }
+
+    function updatePlayPauseIcons() {
+      playIcon.style.display = isPlaying ? 'none' : 'block';
+      pauseIcon.style.display = isPlaying ? 'block' : 'none';
+    }
+
+    playPauseBtn.addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      updatePlayPauseIcons();
+      if (isPlaying && currentTime >= TOTAL_DURATION) {
+        currentTime = 0;
+      }
+    });
+
+    replayBtn.addEventListener('click', () => {
+      currentTime = 0;
+      isPlaying = true;
+      updatePlayPauseIcons();
+    });
+
+    timelineWrapper.addEventListener('click', (e) => {
+      const rect = timelineWrapper.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const ratio = clickX / rect.width;
+      currentTime = ratio * TOTAL_DURATION;
+    });
+
+    document.querySelectorAll('.scene-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        const sId = parseInt(pill.getAttribute('data-scene'));
+        currentTime = sId * 5;
+        isPlaying = true;
+        updatePlayPauseIcons();
+      });
+    });
+
+    speedToggleBtn.addEventListener('click', () => {
+      if (playbackSpeed === 1.0) playbackSpeed = 1.5;
+      else if (playbackSpeed === 1.5) playbackSpeed = 2.0;
+      else playbackSpeed = 1.0;
+      speedToggleBtn.textContent = playbackSpeed.toFixed(1) + 'x';
+    });
+
+    audioToggleBtn.addEventListener('click', () => {
+      isAudioEnabled = !isAudioEnabled;
+      audioToggleBtn.innerHTML = isAudioEnabled ? '<span>🔊 الصوت مفعل (Tech Beat)</span>' : '<span>🔇 تفعيل الصوت</span>';
+      audioToggleBtn.classList.toggle('btn-primary', isAudioEnabled);
+      if (isAudioEnabled) {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+      }
+    });
+
+    // ==================== 1-Click Video Recording & Export (MP4/WebM 1080p) ====================
+    exportVideoBtn.addEventListener('click', async () => {
+      exportModal.style.display = 'flex';
+      exportProgressFill.style.width = '0%';
+      exportStatusText.textContent = 'جارٍ تحضير محرك التسجيل...';
+
+      // 1. Setup MediaRecorder on Canvas Stream at 60 FPS
+      const stream = canvas.captureStream(60);
+      const mimeType = MediaRecorder.isTypeSupported('video/webm;codecs=vp9') ? 'video/webm;codecs=vp9' : 'video/webm';
+      const recorder = new MediaRecorder(stream, {
+        mimeType: mimeType,
+        videoBitsPerSecond: 8000000 // 8 Mbps high quality
+      });
+
+      const chunks = [];
+      recorder.ondataavailable = (e) => {
+        if (e.data && e.data.size > 0) {
+          chunks.push(e.data);
+        }
+      };
+
+      recorder.onstop = () => {
+        const blob = new Blob(chunks, { type: mimeType });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'NBrain-Whiteboard-Promo-1080p.webm';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        exportStatusText.textContent = '🎉 تم توليد وتحميل الفيديو بنجاح!';
+        exportProgressFill.style.width = '100%';
+        setTimeout(() => {
+          exportModal.style.display = 'none';
+        }, 1500);
+      };
+
+      // 2. Play from beginning to end while recording
+      currentTime = 0;
+      isPlaying = true;
+      playbackSpeed = 1.0;
+      recorder.start();
+
+      const exportInterval = setInterval(() => {
+        const percent = Math.min(100, Math.floor((currentTime / TOTAL_DURATION) * 100));
+        exportProgressFill.style.width = percent + '%';
+        exportStatusText.textContent = `جارٍ تسجيل المشاهد: ${percent}% (بدقة 1080p)`;
+
+        if (currentTime >= TOTAL_DURATION) {
+          clearInterval(exportInterval);
+          recorder.stop();
+        }
+      }, 200);
+    });
+
+    // Start Animation on Load
+    requestAnimationFrame(animate);
+  </script>
+</body>
+</html>
