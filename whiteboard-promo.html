@@ -837,11 +837,13 @@
       ctx.font = font;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
+      ctx.globalAlpha = Math.min(1, progress * 1.5);
 
       if (progress < 1) {
-        // Truncate text according to progress
-        const count = Math.floor(text.length * progress);
-        const sub = text.substring(0, count);
+        // Word-level reveal for natural, beautiful Arabic typography and ligatures
+        const words = text.split(' ');
+        const wordCount = Math.max(1, Math.ceil(words.length * Math.min(1, progress * 1.2)));
+        const sub = words.slice(0, wordCount).join(' ');
         ctx.fillStyle = color;
         ctx.fillText(sub, x, y);
       } else {
@@ -1094,8 +1096,49 @@
       }, 200);
     });
 
-    // Start Animation on Load
-    requestAnimationFrame(animate);
+    // Click Canvas Viewport to Play / Pause
+    document.getElementById('viewport').addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      updatePlayPauseIcons();
+      if (isPlaying && currentTime >= TOTAL_DURATION) {
+        currentTime = 0;
+      }
+    });
+
+    // Touch Support for Timeline
+    timelineWrapper.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches[0]) {
+        const rect = timelineWrapper.getBoundingClientRect();
+        const touchX = e.touches[0].clientX - rect.left;
+        const ratio = Math.max(0, Math.min(1, touchX / rect.width));
+        currentTime = ratio * TOTAL_DURATION;
+      }
+    });
+
+    // Keyboard Shortcuts (Space: Play/Pause, R: Replay, M: Audio)
+    window.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        playPauseBtn.click();
+      } else if (e.key === 'r' || e.key === 'R') {
+        replayBtn.click();
+      } else if (e.key === 'm' || e.key === 'M') {
+        audioToggleBtn.click();
+      } else if (e.key === 'ArrowRight') {
+        currentTime = Math.min(TOTAL_DURATION, currentTime + 5);
+      } else if (e.key === 'ArrowLeft') {
+        currentTime = Math.max(0, currentTime - 5);
+      }
+    });
+
+    // Start Animation on Font Load
+    if (document.fonts) {
+      document.fonts.ready.then(() => {
+        requestAnimationFrame(animate);
+      });
+    } else {
+      requestAnimationFrame(animate);
+    }
   </script>
 </body>
 </html>
