@@ -2278,3 +2278,67 @@ button {
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================================================
+   Language Switcher & LTR Support
+   ========================================================================== */
+
+.lang-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.lang-toggle-btn:hover {
+  background-color: var(--console-primary);
+  color: hsl(215, 40%, 10%);
+  border-color: var(--console-primary);
+}
+[data-theme="light"] .lang-toggle-btn:hover {
+  color: #fff;
+}
+
+/* LTR Direction Overrides */
+[dir="ltr"] {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  text-align: left;
+}
+
+[dir="ltr"] .sidebar {
+  border-left: none;
+  border-right: 1px solid var(--console-border);
+}
+
+[dir="ltr"] .utility-rail {
+  border-right: none;
+  border-left: 1px solid var(--console-border);
+}
+
+[dir="ltr"] .demo-card__badge {
+  right: auto;
+  left: 12px;
+}
+
+[dir="ltr"] .vip-ribbon {
+  right: auto;
+  left: -35px;
+  transform: rotate(-45deg);
+}
+
+[dir="ltr"] .step-card {
+  text-align: left;
+}
+
+[dir="ltr"] .chat-msg--bot {
+  flex-direction: row;
+}
+
+[dir="ltr"] .chat-msg--user {
+  flex-direction: row-reverse;
+}
+

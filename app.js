@@ -6,6 +6,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   initSidebar();
   initTheme();
+  initLanguage();
   initTabsAndNavigation();
   initAiSimulator();
   initRoiCalculator();
@@ -606,6 +607,108 @@ _تم إرسال هذا الطلب عبر بوابة NBrain الرسمية_`;
       closeRfp();
       if (rfpForm) rfpForm.reset();
     });
+  }
+}
+
+/* ==========================================================================
+   14. Internationalization & Language Switcher (AR / EN)
+   ========================================================================== */
+const i18nDict = {
+  ar: {
+    nav_title: "المنظومة والخدمات",
+    nav_overview: "نظرة عامة (Overview)",
+    nav_packages: "الباقات والمنظومة الشاملة VIP",
+    nav_industries: "حلول القطاعات (Industries)",
+    nav_models: "نماذج التعاقد المرنة",
+    nav_workflow: "منهجية العمل الهندسية",
+    nav_techstack: "مصفوفة التقنيات لعام 2026",
+    nav_demos: "معرض الفيديوهات والديمو (28)",
+    nav_aidemo: "المساعد الذكي (Live Demo)",
+    nav_roicalc: "حاسبة العائد والتوفير ROI",
+    nav_customizer: "حاسبة تخصيص الباقة",
+    nav_portfolio: "سابقة الأعمال الموثقة",
+    nav_guarantees: "الضمانات و SLAs الهندسية",
+    nav_faq: "الأسئلة التقنية الشائعة",
+    nav_founder: "المؤسس والقيادة الهندسية",
+    sidebar_contact_label: "استشارة فورية مع المهندس:",
+    call_direct: "اتصال هاتفي مباشر",
+    bc_org: "منظومة NBrain",
+    bc_portal: "بوابة الخدمات والحلول البرمجية المتقدمة",
+    bc_current: "نظرة عامة والمنظومة",
+    hero_title: "منظومة NBrain للبرمجيات والذكاء الاصطناعي",
+    hero_subtitle: "استوديو تطوير البرمجيات وحلول الـ AI المخصصة: مواقع ويب سريعة، تطبيقات Google Play (16KB Aligned)، شات بوتس مبيعات، رؤية حاسوبية، وتهيئة SEO دولية.",
+    btn_rfp: "طلب عرض سعر مخصص (RFP)",
+    btn_whatsapp: "تواصل عبر واتساب فوراً",
+    lang_btn: "English (EN)"
+  },
+  en: {
+    nav_title: "SYSTEM & SERVICES",
+    nav_overview: "Overview & Metrics",
+    nav_packages: "VIP Enterprise Bundles",
+    nav_industries: "Industry Solutions Matrix",
+    nav_models: "Engagement Models",
+    nav_workflow: "Engineering Workflow",
+    nav_techstack: "2026 Tech Stack Radar",
+    nav_demos: "Master Video Showcase (28)",
+    nav_aidemo: "AI Sales Advisor Demo",
+    nav_roicalc: "ROI & Savings Calculator",
+    nav_customizer: "Package Customizer",
+    nav_portfolio: "Verified Portfolio",
+    nav_guarantees: "SLAs & Guarantees",
+    nav_faq: "Technical FAQ",
+    nav_founder: "Founder & Leadership",
+    sidebar_contact_label: "Direct Architect Consultation:",
+    call_direct: "Direct Phone Call",
+    bc_org: "NBrain Ecosystem",
+    bc_portal: "Advanced Software Architecture Portal",
+    bc_current: "System Overview",
+    hero_title: "NBrain Software Architecture & Custom AI Systems",
+    hero_subtitle: "Production-grade custom software & AI studio: High-speed Web, Google Play Ready Mobile Apps (Android 15 / 16KB Page Aligned), AI Sales Bots, Computer Vision & Global SEO.",
+    btn_rfp: "Request Proposal (RFP)",
+    btn_whatsapp: "Instant WhatsApp Chat",
+    lang_btn: "العربية (AR)"
+  }
+};
+
+function initLanguage() {
+  const currentLang = localStorage.getItem('nbrain_lang') || 'ar';
+  applyLanguage(currentLang);
+
+  const headerLangBtn = document.getElementById('headerLangBtn');
+  const railLangBtn = document.getElementById('railLangBtn');
+
+  function toggleLang() {
+    const active = document.documentElement.getAttribute('lang') || 'ar';
+    const nextLang = active === 'ar' ? 'en' : 'ar';
+    applyLanguage(nextLang);
+  }
+
+  if (headerLangBtn) headerLangBtn.addEventListener('click', toggleLang);
+  if (railLangBtn) railLangBtn.addEventListener('click', toggleLang);
+}
+
+function applyLanguage(lang) {
+  const isEn = lang === 'en';
+  document.documentElement.setAttribute('lang', lang);
+  document.documentElement.setAttribute('dir', isEn ? 'ltr' : 'rtl');
+  localStorage.setItem('nbrain_lang', lang);
+
+  const langBtnText = document.getElementById('langBtnText');
+  if (langBtnText) {
+    langBtnText.textContent = isEn ? 'العربية (AR)' : 'English (EN)';
+  }
+
+  const dict = i18nDict[lang] || i18nDict.ar;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key]) {
+      el.textContent = dict[key];
+    }
+  });
+
+  const sidebarSearch = document.getElementById('sidebarSearch');
+  if (sidebarSearch) {
+    sidebarSearch.placeholder = isEn ? 'Search services, stacks, demos...' : 'بحث في الخدمات والأقسام...';
   }
 }
 
