@@ -826,79 +826,83 @@ function getLocalSmartFallback(queryText) {
     : `أهلاً بك! في منظومة **NBrain**، يقوم المهندس نديم بدر (Chief Software Architect) بتصميم وتطوير حلول برمجية وذكاء اصطناعي متكاملة (مواقع ويب فائقة السرعة، تطبيقات Google Play، ونماذج رؤية حاسوبية وGenAI مخصصة) تناسب أهداف مشروعك بدقة.\n\n🌐 **يمكنك تصفح السيرة الذاتية وكافة المشاريع الحية عبر:** [cv.nbra.in](https://cv.nbra.in)`;
 }
 
-// Global Active Audio Context & Source for Google Gemini TTS
-let currentAudioSource = null;
-let currentTtsBtn = null;
+// ============================================================================
+// Google Gemini Cloud TTS Streaming Sentence Queue Engine (100% Expressive Audio)
+// ============================================================================
+let activeStreamingQueue = null;
 
-async function playPcmBase64Audio(base64Data, sampleRate = 24000) {
-  try {
-    const binaryString = window.atob(base64Data);
-    const len = binaryString.length;
-    const bytes = new Uint8Array(len);
-    for (let i = 0; i < len; i++) {
-      bytes[i] = binaryString.charCodeAt(i);
+function splitTextIntoSpeechSegments(text) {
+  const rawSegments = text.match(/[^.!?؟!\n]+[.!?؟!\n]*|\n+/g) || [text];
+  const segments = [];
+  for (let s of rawSegments) {
+    s = s.trim();
+    if (!s) continue;
+    if (s.length > 200) {
+      const parts = s.match(/.{1,160}(?:[\s،,]|$)/g) || [s];
+      segments.push(...parts.map(p => p.trim()).filter(Boolean));
+    } else {
+      segments.push(s);
     }
-
-    const AudioCtx = window.AudioContext || window.webkitAudioContext;
-    if (!window._nbrainAudioCtx || window._nbrainAudioCtx.state === 'closed') {
-      window._nbrainAudioCtx = new AudioCtx({ sampleRate });
-    }
-    const ctx = window._nbrainAudioCtx;
-    if (ctx.state === 'suspended') {
-      await ctx.resume();
-    }
-
-    // If audio is in standard WAV container
-    if (binaryString.startsWith('RIFF')) {
-      const audioBuffer = await ctx.decodeAudioData(bytes.buffer.slice(0));
-      const source = ctx.createBufferSource();
-      source.buffer = audioBuffer;
-      source.connect(ctx.destination);
-      source.start(0);
-      return source;
-    }
-
-    // Raw 16-bit Linear PCM Mono audio (from Gemini TTS API)
-    const int16Array = new Int16Array(bytes.buffer, bytes.byteOffset, Math.floor(bytes.byteLength / 2));
-    const float32Array = new Float32Array(int16Array.length);
-    for (let i = 0; i < int16Array.length; i++) {
-      float32Array[i] = int16Array[i] / 32768.0;
-    }
-
-    const audioBuffer = ctx.createBuffer(1, float32Array.length, sampleRate);
-    audioBuffer.getChannelData(0).set(float32Array);
-
-    const source = ctx.createBufferSource();
-    source.buffer = audioBuffer;
-    source.connect(ctx.destination);
-    source.start(0);
-    return source;
-  } catch (err) {
-    console.warn('[NBrain TTS] WebAudio decoding error:', err);
-    throw err;
   }
+  return segments.length > 0 ? segments : [text];
 }
 
-// Google Gemini Cloud Text-to-Speech (TTS) Engine with Voice Selection & Expressive Emotions
-async function speakAiText(rawText, btnElement) {
-  // 1. If audio is currently playing, stop it immediately
-  if (currentAudioSource) {
+async function fetchSegmentAudioBuffer(ctx, segmentText, voiceName, emotionPrompt) {
+  const prompt = `${emotionPrompt}\n\nRead the following text aloud word-for-word in natural, charming, and lively Egyptian Arabic without omitting or skipping any words:\n"${segmentText}"`;
+
+  for (let attempt = 0; attempt < GEMINI_ROTATION_KEYS.length; attempt++) {
+    const key = getNextGeminiKey();
+    if (!key) continue;
     try {
-      currentAudioSource.stop();
-    } catch (e) {}
-    currentAudioSource = null;
-    if (currentTtsBtn) {
-      currentTtsBtn.classList.remove('is-speaking');
-      currentTtsBtn.innerHTML = `🔊 <span>استمع للرد</span>`;
-    }
-    if (btnElement === currentTtsBtn) {
-      currentTtsBtn = null;
-      return;
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${key}`;
+      const resp = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: {
+            responseModalities: ['AUDIO'],
+            speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName } } }
+          }
+        })
+      });
+
+      if (resp.ok) {
+        const data = await resp.json();
+        const b64 = data.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
+        if (b64) {
+          const binaryString = window.atob(b64);
+          const len = binaryString.length;
+          const bytes = new Uint8Array(len);
+          for (let i = 0; i < len; i++) bytes[i] = binaryString.charCodeAt(i);
+
+          const int16 = new Int16Array(bytes.buffer, bytes.byteOffset, Math.floor(bytes.byteLength / 2));
+          const f32 = new Float32Array(int16.length);
+          for (let i = 0; i < int16.length; i++) f32[i] = int16[i] / 32768.0;
+
+          const audioBuffer = ctx.createBuffer(1, f32.length, 24000);
+          audioBuffer.getChannelData(0).set(f32);
+          return audioBuffer;
+        }
+      }
+    } catch (err) {
+      console.warn('[NBrain TTS] Key error, rotating key:', err.message);
     }
   }
+  return null;
+}
 
-  if (window.speechSynthesis && window.speechSynthesis.speaking) {
-    window.speechSynthesis.cancel();
+// Main Interactive Text-to-Speech Invocation
+async function speakAiText(rawText, btnElement) {
+  // 1. Cancel any browser native speech synthesis
+  if (window.speechSynthesis) {
+    try { window.speechSynthesis.cancel(); } catch(e){}
+  }
+
+  // 2. If already streaming or playing, stop it immediately
+  if (activeStreamingQueue) {
+    activeStreamingQueue.abort();
+    activeStreamingQueue = null;
     if (btnElement && btnElement.classList.contains('is-speaking')) {
       btnElement.classList.remove('is-speaking');
       btnElement.innerHTML = `🔊 <span>استمع للرد</span>`;
@@ -906,7 +910,7 @@ async function speakAiText(rawText, btnElement) {
     }
   }
 
-  // 2. Strip Markdown, URLs, and WhatsApp buttons for crystal-clear natural speech
+  // 3. Strip Markdown, URLs, and action buttons for crystal-clear natural speech
   const cleanSpeechText = rawText
     .replace(/\*\*(.*?)\*\*/g, '$1')
     .replace(/\*(.*?)\*/g, '$1')
@@ -919,153 +923,103 @@ async function speakAiText(rawText, btnElement) {
 
   if (!cleanSpeechText) return;
 
-  // 3. Read Selected Voice & Emotion from Studio Controls
+  // 4. Read Selected Voice & Emotion
   const voiceSelect = document.getElementById('aiVoiceSelect');
   const selectedVoice = voiceSelect ? voiceSelect.value : 'Puck';
 
   const emotionSelect = document.getElementById('aiEmotionSelect');
   const selectedEmotion = emotionSelect ? emotionSelect.value : 'interactive';
 
-  let stylePrompt = '';
-  switch (selectedEmotion) {
-    case 'interactive':
-      stylePrompt = 'You are a warm, witty, and emotionally expressive voice actor speaking in Egyptian Arabic (عامية مصرية) and English. Speak naturally with vocal smiles, light laughter [laughs], friendly chuckles, lively pacing, and genuine human expressiveness.';
-      break;
-    case 'enthusiastic':
-      stylePrompt = 'You are an energetic, inspiring, and enthusiastic speaker! Speak with high passion, dynamic cadence, and exciting delivery!';
-      break;
-    case 'professional':
-      stylePrompt = 'You are a calm, authoritative, and articulate Chief Technical Advisor. Speak in a confident, professional, and clear tone.';
-      break;
-    case 'whisper':
-      stylePrompt = 'Speak in a gentle, warm, and soothing whisper with a relaxed and peaceful pace.';
-      break;
-    default:
-      stylePrompt = 'You are a friendly and helpful AI voice assistant speaking in natural Egyptian Arabic and English.';
+  let stylePrompt = 'You are a warm, witty, and emotionally expressive voice actor speaking in natural Egyptian Arabic (عامية مصرية). Speak naturally with vocal smiles, warm chuckles, dynamic pacing, and genuine human expressiveness.';
+  if (selectedEmotion === 'enthusiastic') {
+    stylePrompt = 'You are an energetic, inspiring speaker! Speak with high passion, dynamic cadence, and exciting delivery in Egyptian Arabic.';
+  } else if (selectedEmotion === 'professional') {
+    stylePrompt = 'You are a calm, articulate Chief Technical Advisor speaking in professional, polished Egyptian Arabic.';
+  } else if (selectedEmotion === 'whisper') {
+    stylePrompt = 'Speak in a gentle, warm, and soothing whisper with a relaxed pace in Egyptian Arabic.';
+  }
+
+  const segments = splitTextIntoSpeechSegments(cleanSpeechText);
+  if (segments.length === 0) return;
+
+  const AudioCtx = window.AudioContext || window.webkitAudioContext;
+  if (!window._nbrainAudioCtx || window._nbrainAudioCtx.state === 'closed') {
+    window._nbrainAudioCtx = new AudioCtx({ sampleRate: 24000 });
+  }
+  const ctx = window._nbrainAudioCtx;
+  if (ctx.state === 'suspended') {
+    await ctx.resume();
   }
 
   if (btnElement) {
     btnElement.classList.add('is-speaking');
-    btnElement.innerHTML = `⏳ <span>جاري توليد الصوت (${selectedVoice})...</span>`;
-    currentTtsBtn = btnElement;
+    btnElement.innerHTML = `⏳ <span>جاري تشغيل الصوت (${selectedVoice})...</span>`;
   }
 
-  // 4. Request Audio from Google Gemini TTS API
-  let audioPlayed = false;
-  const ttsModels = ['gemini-2.5-flash-preview-tts', 'gemini-3.1-flash-tts-preview'];
+  let isAborted = false;
+  let currentSource = null;
 
-  for (let attempt = 0; attempt < 3; attempt++) {
-    const key = getNextGeminiKey();
-    if (!key) break;
-
-    for (const model of ttsModels) {
-      try {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`;
-        const resp = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [
-              {
-                parts: [
-                  {
-                    text: `${stylePrompt}\n\nSay the following text clearly in natural spoken dialect:\n${cleanSpeechText}`
-                  }
-                ]
-              }
-            ],
-            generationConfig: {
-              responseModalities: ['AUDIO'],
-              speechConfig: {
-                voiceConfig: {
-                  prebuiltVoiceConfig: {
-                    voiceName: selectedVoice
-                  }
-                }
-              }
-            }
-          })
-        });
-
-        if (resp.ok) {
-          const data = await resp.json();
-          const base64Audio = data.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
-          if (base64Audio) {
-            const source = await playPcmBase64Audio(base64Audio, 24000);
-            currentAudioSource = source;
-            audioPlayed = true;
-
-            if (btnElement) {
-              btnElement.classList.add('is-speaking');
-              btnElement.innerHTML = `⏸️ <span>إيقاف الصوت (${selectedVoice})</span>`;
-            }
-
-            source.onended = () => {
-              if (currentAudioSource === source) {
-                currentAudioSource = null;
-                if (btnElement) {
-                  btnElement.classList.remove('is-speaking');
-                  btnElement.innerHTML = `🔊 <span>استمع للرد</span>`;
-                }
-              }
-            };
-            break;
-          }
-        }
-      } catch (ttsErr) {
-        console.warn(`[NBrain TTS] Error on ${model}:`, ttsErr.message);
+  const queueController = {
+    abort: () => {
+      isAborted = true;
+      if (currentSource) {
+        try { currentSource.stop(); } catch(e){}
+        currentSource = null;
       }
-    }
-    if (audioPlayed) break;
-  }
-
-  // 5. Native Fallback to Web Speech API if Google TTS is offline
-  if (!audioPlayed) {
-    if ('speechSynthesis' in window) {
-      const utterance = new SpeechSynthesisUtterance(cleanSpeechText);
-      const isArabic = /[\u0600-\u06FF]/.test(cleanSpeechText);
-      const voices = window.speechSynthesis.getVoices();
-
-      if (isArabic) {
-        utterance.lang = 'ar-EG';
-        const arVoice = voices.find(v => v.lang.startsWith('ar'));
-        if (arVoice) utterance.voice = arVoice;
-      } else {
-        utterance.lang = 'en-US';
-        const enVoice = voices.find(v => v.lang.startsWith('en'));
-        if (enVoice) utterance.voice = enVoice;
-      }
-
-      utterance.rate = 1.05;
-      utterance.pitch = 1.0;
-
-      if (btnElement) {
-        btnElement.classList.add('is-speaking');
-        btnElement.innerHTML = `⏸️ <span>إيقاف الصوت</span>`;
-      }
-
-      utterance.onend = () => {
-        if (btnElement) {
-          btnElement.classList.remove('is-speaking');
-          btnElement.innerHTML = `🔊 <span>استمع للرد</span>`;
-        }
-      };
-
-      utterance.onerror = () => {
-        if (btnElement) {
-          btnElement.classList.remove('is-speaking');
-          btnElement.innerHTML = `🔊 <span>استمع للرد</span>`;
-        }
-      };
-
-      window.speechSynthesis.speak(utterance);
-    } else {
       if (btnElement) {
         btnElement.classList.remove('is-speaking');
         btnElement.innerHTML = `🔊 <span>استمع للرد</span>`;
       }
     }
-  }
+  };
+  activeStreamingQueue = queueController;
+
+  // Stream & play each segment sequentially with parallel pre-fetching
+  (async () => {
+    try {
+      const bufferPromises = segments.map(seg => fetchSegmentAudioBuffer(ctx, seg, selectedVoice, stylePrompt));
+
+      for (let i = 0; i < segments.length; i++) {
+        if (isAborted) break;
+
+        const buffer = await bufferPromises[i];
+        if (isAborted) break;
+
+        if (!buffer) {
+          console.warn(`[NBrain TTS] Segment ${i + 1} skipped due to network issue`);
+          continue;
+        }
+
+        if (btnElement) {
+          btnElement.innerHTML = `⏸️ <span>إيقاف الصوت (${selectedVoice})</span>`;
+        }
+
+        await new Promise((resolve) => {
+          if (isAborted) { resolve(); return; }
+          const source = ctx.createBufferSource();
+          source.buffer = buffer;
+          source.connect(ctx.destination);
+          currentSource = source;
+
+          source.onended = () => {
+            currentSource = null;
+            resolve();
+          };
+          source.start(0);
+        });
+      }
+    } catch (err) {
+      console.warn('[NBrain TTS Streaming] Error during playback:', err);
+    } finally {
+      if (activeStreamingQueue === queueController) {
+        activeStreamingQueue = null;
+      }
+      if (btnElement) {
+        btnElement.classList.remove('is-speaking');
+        btnElement.innerHTML = `🔊 <span>استمع للرد</span>`;
+      }
+    }
+  })();
 }
 
 
