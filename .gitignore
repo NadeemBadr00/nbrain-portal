@@ -2,3 +2,11 @@
 Thumbs.db
 *.log
 .firebase
+debug_*.js
+test_*.js
+*.png
+!logo.png
+!logo-emblem.png
+!favicon.png
+!nadeem-avatar.png
+
