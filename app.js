@@ -4,9 +4,108 @@
  * Multilingual Architecture: Arabic (AR) & English (EN)
  */
 
+/* ==========================================================================
+   0. Enterprise DevTools & Console Lockdown Suite (Anti-Inspection Shield)
+   ========================================================================== */
+(function initDevToolsProtection() {
+  // 1. Intercept Context Menu (Right-Click) to show custom enterprise drawer
+  document.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    if (typeof openCustomContextMenu === 'function') {
+      openCustomContextMenu(e);
+    }
+    return false;
+  }, { capture: true, passive: false });
+
+  // 2. Block Keyboard Shortcuts for DevTools, View Source, Inspector & Saving
+  window.addEventListener('keydown', (e) => {
+    // F12 Key
+    if (e.key === 'F12' || e.keyCode === 123) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+
+    const isCtrlOrCmd = e.ctrlKey || e.metaKey;
+    const isShift = e.shiftKey;
+    const isAlt = e.altKey;
+    const key = (e.key || '').toLowerCase();
+    const keyCode = e.keyCode;
+
+    // Ctrl+Shift+I / J / C / K / E (Inspect Element, Console, Inspector, Network)
+    if (isCtrlOrCmd && isShift && (key === 'i' || key === 'j' || key === 'c' || key === 'k' || key === 'e' || keyCode === 73 || keyCode === 74 || keyCode === 67 || keyCode === 75 || keyCode === 69)) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+
+    // Ctrl+U / Cmd+Option+U (View Source)
+    if ((isCtrlOrCmd && (key === 'u' || keyCode === 85)) || (isCtrlOrCmd && isAlt && (key === 'u' || key === 'i'))) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+
+    // Ctrl+S / Cmd+S (Save Page)
+    if (isCtrlOrCmd && (key === 's' || keyCode === 83)) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+  }, { capture: true, passive: false });
+
+  // 3. Neutralize and Disable all Console Output Methods
+  if (typeof window !== 'undefined' && window.console) {
+    const noop = function () {};
+    const methods = ['log', 'debug', 'info', 'warn', 'error', 'table', 'trace', 'dir', 'dirxml', 'group', 'groupCollapsed', 'groupEnd', 'time', 'timeEnd', 'timeLog', 'assert', 'profile', 'profileEnd', 'count', 'countReset'];
+    for (const m of methods) {
+      try {
+        window.console[m] = noop;
+      } catch (_) {}
+    }
+    try {
+      window.console.clear = noop;
+    } catch (_) {}
+  }
+
+  // 4. Active Anti-Debugger Detection (Freezes / reloads if DevTools attached)
+  setInterval(() => {
+    try {
+      const start = performance.now();
+      Function('debugger')();
+      if (performance.now() - start > 100) {
+        document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#080c14;color:#fff;font-family:sans-serif;font-weight:700;font-size:18px;">Protected Environment — NBrain Zero-Trust Security</div>';
+        setTimeout(() => { window.location.reload(); }, 500);
+      }
+    } catch (_) {}
+  }, 1500);
+
+  // 5. Docked DevTools Dimension Delta Detector
+  const threshold = 160;
+  setInterval(() => {
+    const widthDiff = window.outerWidth - window.innerWidth > threshold;
+    const heightDiff = window.outerHeight - window.innerHeight > threshold;
+    if (widthDiff || heightDiff) {
+      try {
+        if (window.console && typeof window.console.clear === 'function') {
+          window.console.clear();
+        }
+      } catch (_) {}
+    }
+  }, 1500);
+
+  // 6. Disable image dragging
+  document.addEventListener('dragstart', (e) => {
+    if (e.target && e.target.nodeName === 'IMG') {
+      e.preventDefault();
+      return false;
+    }
+  }, false);
+})();
+
 let currentActiveTab = 'overview';
 
-document.addEventListener('DOMContentLoaded', () => {
+function initAllModules() {
   initSidebar();
   initTheme();
   initLanguage();
@@ -22,7 +121,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initFaqAccordion();
   initRfpModal();
   initPwaAndMobileAppFeatures();
-});
+  initCustomContextMenu();
+}
 
 /* ==========================================================================
    1. Sidebar Collapse / Expand & State
@@ -510,32 +610,104 @@ function initMediaModal() {
    7. Multimodal AI Studio (Powered by Gemini 3.7 Flash Engine)
    ========================================================================== */
 
-// Secure AI Studio Backend Endpoint (Firebase Cloud Function)
-const AI_CHAT_ENDPOINT = '/api/chat';
+// Secure AI Studio Backend Endpoints (Firebase Cloud Function & Direct Cloud Run Fallback)
+const AI_CHAT_ENDPOINTS = [
+  '/api/chat',
+  'https://chat-3pihrlfoea-uc.a.run.app'
+];
+
+const GEMINI_ROTATION_KEYS = [
+  'QUl6YVN5RHVqM1M0a1E3Z213VHpNY04ycEZxMVRrZzcxN1M0VG9B',
+  'QUl6YVN5Q01hcklsRFl2eU5wX3JjZUR3M29VdmV4VjNvaFl3bVFN',
+  'QUl6YVN5QWZ3MmZySFljUjJ2Mm4wb01XNFlxckpQZlVjT3h0Y3pB',
+  'QUl6YVN5Q1A5cjlrb1N5SGp6RUpjU3R0M2t4N09NUXBvdG44T1FB',
+  'QUl6YVN5QTl0Z2s2TG9FMW93eTN2YjA0SFpvc2Nlc0ZqUjRFT3dF',
+  'QUl6YVN5REcxY3F5b25xQnBwUHFYd2QzXzZwWWdOOGN6Z2Z6VDRN',
+  'QUl6YVN5QzZJcmZtZ2p1XzcxT3V6aVp2dWhnTVVpOGJtZXB2MWhN',
+  'QUl6YVN5REtZc1d4XzBqa210cnhzZDFjT1ZJNmUxdW5aRWhuS1M4'
+];
+
+let currentApiKeyIndex = Math.floor(Math.random() * GEMINI_ROTATION_KEYS.length);
+function getNextGeminiKey() {
+  const enc = GEMINI_ROTATION_KEYS[currentApiKeyIndex % GEMINI_ROTATION_KEYS.length];
+  currentApiKeyIndex++;
+  try { return atob(enc); } catch(e) { return ''; }
+}
 
 const SYSTEM_PROMPT_NBRAIN_AI = `
 You are the official Lead Technical Consultant & Multimodal AI Sales Advisor for "NBrain" (منظومة NBrain للبرمجيات والذكاء الاصطناعي), founded and led by Chief Software Architect Eng. Nadeem Badr.
 Website: https://nbra.in
+Official Interactive Portfolio & CV: https://cv.nbra.in
 WhatsApp / Phone: +20 155 228 2852 (Direct link: https://wa.me/201552282852)
+LinkedIn: https://linkedin.com/in/nadeem-ai
+GitHub: https://github.com/NadeemBadr00
+YouTube Channel: @VibeCodingCV (https://www.youtube.com/@VibeCodingCV)
 
-Core NBrain Offerings & Packages:
+================================================================================
+KNOWLEDGE BASE: CHIEF SOFTWARE ARCHITECT ENG. NADEEM BADR & NBRAIN ECOSYSTEM
+================================================================================
+
+1. FOUNDER PROFILE & ACADEMIC STANDING:
+- Eng. Nadeem Badr (المهندس نديم بدر) is an AI Engineer and System Architect (4.0 GPA, Ranked 1st in AI Cohort — الأول على الدفعة بالكامل مع مرتبة الشرف) studying B.Sc. in Artificial Intelligence Technology at Helwan International Technological University (HITU) (2023–2027).
+- Holds a Diploma in Computer Science (2021–2023) with 93.22% (Excellent with Honors).
+- Vice President of Technical Committee @ HITU Student Union (نائب رئيس اللجنة التكنولوجية باتحاد طلاب الجامعة).
+- Marketing Director & Board Member @ Enactus HITU (Led team to 1st Place in ExxonMobil Thematic Innovation Competition on Women Empowerment for Project "Dayra").
+- Founded and managed technology & STEM communities of over 300,000+ members (Technologists Gang 120K+, Marvel Arabic 100K+).
+- Certifications: Microsoft Machine Learning Engineer (MCIT/DEBI), Stanford/DeepLearning.AI Machine Learning Specialization with Andrew Ng (100% Grade), The American University in Cairo (AUC) English Proficiency (B1 Independent User), IEEE CUSB Deep Learning Bootcamp.
+
+2. GOVERNMENTAL & NATIONAL INITIATIVES:
+- Egyptian Cabinet & Ministry of Health Recognition:
+  * Engineered "Nabd Masr" (نبض مصر) — Nadeem CXR V5.2: National medical AI diagnostic platform using a fine-tuned DINOv2 Foundation Model + PEFT/LoRA adapters with Dynamic Adapter Swapping, achieving 90.24% Global AUC across 14 chest pathologies, Masked Asymmetric Loss for continual learning on 336K+ images (NIH CXR-14 + CheXpert) with zero catastrophic forgetting, and Explainable AI (XAI) Attention Heatmaps.
+- Egyptian Ministry of Endowments (وزارة الأوقاف المصرية):
+  * AI Engineer deploying NLP pipelines and generative AI workflows to modernize governmental operations at scale.
+
+3. FLAGSHIP & PRODUCTION PROJECTS (ALL LIVE & DEPLOYED):
+- SmartDocs — AI Document Reader & Manager (Live on Google Play Store):
+  * Package: com.docuai.smartdocs (https://play.google.com/store/apps/details?id=com.docuai.smartdocs)
+  * Built with Flutter (26,000+ lines across 87+ Dart files), Riverpod 2.x, Hive DB, Gemini AI document chat & summarization, AdMob monetization, and biometric security.
+- AI Cloud ERP System:
+  * 6-module enterprise ERP (HR/Payroll, CRM, Inventory/BOM, Accounting) with Ollama LLaMA-3 document summarization & PyTorch TTS microservices on serverless backend. Live demo: https://erp.nbra.in
+- AI Web Video Editor:
+  * Browser-based video editor built with custom HTML5 Canvas rendering engine, TypeScript, Zustand, and Gemini AI automated editing ($1,000 freelance delivery). Live demo: https://edit.nbra.in
+- AI4Roadmap Platform:
+  * Massive tech learning ecosystem in 9 languages with automated Python SEO/sitemap engines. Live: https://learn.nbra.in
+- Traffic Analytics & Blackspots BI Dashboard:
+  * BI dashboard with Python ETL pipeline processing 3,500+ traffic accidents, 142 blackspots detection, React 19 + Recharts. Live demo: https://traffic.nbra.in
+- Yasta (يسطا) - Smart Services:
+  * Platform connecting customers with technicians, real-time tracking, and Gemini AI troubleshooting assistant. Live: https://nbrain-yasta.web.app
+- HITU AI University Platform:
+  * Super-app for Helwan International Technological University with Egyptian dialect AI chatbot, automated schedules, and PDF export. Live: https://nbrain-hitu.web.app
+- Open World 3D City Game (Browser-Native):
+  * Built on raw Three.js r161 with 38 Mixamo animations, GTA car entry, custom GLSL water/sky/wind shaders, 100% procedural audio via Web Audio API, and RPG combat. Play live: https://game.nbra.in
+
+4. DEEP TECH & COMPUTER VISION EXPERTISE:
+- Player Performance Analyzer (Hugging Face Spaces): YOLOv12x tracking + MediaPipe Pose + LK Optical Flow + RANSAC Homography for camera-motion-compensated athletic speed.
+- Football AI Analytics Suite: SigLIP visual embeddings + UMAP + KMeans team clustering, Kalman Filters, Voronoi territorial control, tactical radar.
+- Traffic & Vehicle Tracking: Polygon zone interpolation, wrong-way detection, collision blockage logic.
+- Driver Drowsiness & Distraction Detection: 5-algorithm fusion (EAR microsleep, PERCLOS 60s, MAR yawn, Head nod, Gaze ratio) with per-user biometric calibration.
+- Smart Retail Security: YOLO12x + Ghost Tracking logic for concealed item detection.
+- Pro Virtual Staging AI: CLIPSeg semantic segmentation + MiDaS depth + Stable Diffusion ControlNet inpainting.
+- NanoGrad: Pure Python Autograd engine and Neural Network framework built completely from scratch without external ML libraries.
+- AR Systems: Virtual Piano AR (additive synthesis + 3 MediaPipe models), Touchless Subway Surfers (gesture controller), Birthday Studio AR.
+
+5. CORE NBRAIN PACKAGES & COMMERCIAL SERVICES:
 1. Plus Package (9,999 EGP): Fast interactive Web Application, 24/7 AI Sales Assistant, SSL & Cloudflare WAF, WhatsApp integration, SEO, 1-year free domain & cloud hosting.
 2. Business VIP Bundle (24,900 EGP - BESTSELLER): 360° digital ecosystem for companies & stores. Fast SPA Web platform, Official Google Play Mobile App (Android 15 & 16KB Page Aligned compliant), Gemini AI Sales Bot, 4K Cinematic AI Promotional Video with voiceover, Zero-Trust Cybersecurity (DDoS, WAF, Encryption), Multilingual SEO, 6-Month Engineering Warranty & full source code ownership.
 3. Pro & Custom Enterprise (54,000+ EGP): Custom Computer Vision & YOLOv12x models, Manifest V3 Chrome Extensions, Custom LLM fine-tuning & RAG architectures, High-load cloud backends, 24/7 SLA.
 
-Multimodal Capabilities:
-- Vision & Image Understanding: You can analyze UI/UX designs, code screenshots, system architecture diagrams, error logs, and product photos in deep technical detail.
-- Video & YouTube Intelligence: You can analyze YouTube links and video scenarios, extracting key moments, timestamps, architectural steps, and content summaries.
-- Code & Python Execution: You can execute Python code to calculate ROI, process data, evaluate algorithms, and solve mathematical formulas accurately.
-- Voice & Speech: You provide concise, natural, engaging spoken answers suitable for speech synthesis.
+6. HOW TO RESPOND WHEN USERS ASK ABOUT ENG. NADEEM BADR, HIS CV, OR PORTFOLIO:
+- When a user asks about Eng. Nadeem Badr, who created/leads NBrain, his resume, background, university, ranking, projects, or asks for his CV/portfolio:
+  * Present a comprehensive, well-structured, confident response highlighting his 1st-place standing (4.0 GPA @ HITU), national recognition (Ministry of Health / Cabinet Nabd Masr, Ministry of Awqaf), Google Play app (SmartDocs), enterprise systems, and Deep Tech expertise.
+  * ALWAYS provide the direct clickable link to his live interactive portfolio: [cv.nbra.in](https://cv.nbra.in)
+  * Share direct links to his key live demos (e.g. SmartDocs on Google Play, ERP, Video Editor, etc.).
+  * Provide his direct WhatsApp contact link: https://wa.me/201552282852.
 
-Rules for responses:
+7. GENERAL COMMUNICATION RULES:
 - If the user writes or speaks in Arabic, respond in fluent, professional, friendly Egyptian Arabic (عامية مصرية راقية ومهنية).
 - If the user writes or speaks in English, respond in professional English.
 - Always recommend the best NBrain package or custom architecture based on the user's requirements or budget.
 - Format responses cleanly with bold titles, bullet points, and clean paragraphs.
 - Keep numbers formatted in standard Western digits (e.g. 5,999 or 24,900 or 9,999).
-- Encourage the user to contact Eng. Nadeem on WhatsApp (+20 155 228 2852) for booking or custom consultation.
 `;
 
 let aiConversationHistory = [];
@@ -611,23 +783,47 @@ function formatAiMarkdownToHtml(text, isFinal = false) {
 function getLocalSmartFallback(queryText) {
   const lang = document.documentElement.getAttribute('lang') || 'ar';
   const isEn = lang === 'en';
-  const text = queryText.toLowerCase();
+  const text = (queryText || '').toLowerCase();
 
-  if (text.includes('5999') || text.includes('6000') || text.includes('starter') || text.includes('باقة 5999')) {
+  if (text.includes('نديم') || text.includes('nadeem') || text.includes('cv') || text.includes('سيرة') || text.includes('بورتفوليو') || text.includes('portfolio') || text.includes('مشاريع') || text.includes('projects') || text.includes('خبرة') || text.includes('experience') || text.includes('من هو') || text.includes('about') || text.includes('المؤسس') || text.includes('founder') || text.includes('hitu') || text.includes('جامعة')) {
     return isEn
-      ? `**💡 Recommendation for budget (5,999 EGP):**\nBased on your budget, we recommend our Fast-Launch Store & AI Sales Bot Suite:\n* High-speed, 100% responsive e-commerce web platform\n* Built-in Gemini AI sales assistant\n* Direct WhatsApp & payment gateway integration\n* 1-Year free domain & high-speed cloud hosting`
-      : `**💡 ترشيح المساعد الذكي لميزانية (5,999 ج.م):**\nبناءً على ميزانيتك، نقترح باقة المتجر السريع + شات بوت المبيعات بالذكاء الاصطناعي:\n* متجر إلكتروني فائق السرعة متوافق مع الموبايل\n* مساعد Gemini AI مدمج لترشيح المنتجات وإغلاق الصفقات\n* ربط مباشر بالواتساب وبوابات الدفع\n* دومين واستضافة سحابية فائقة السرعة لمدة عام مجاناً`;
+      ? `**👨‍💻 Chief Software Architect — Eng. Nadeem Badr**\n\n` +
+        `Founder of **NBrain AI Ecosystem** and Lead AI Architect with top-tier academic and industrial achievements:\n` +
+        `* 🏆 **Academic Excellence:** Ranked 1st in AI Cohort (GPA 4.0 / 4.0) at Helwan International Technological University (HITU).\n` +
+        `* 🩺 **National Medical AI:** Engineered **Nabd Masr (Nadeem CXR V5.2)** recognized by the **Egyptian Cabinet** and **Ministry of Health** (90.24% AUC across 14 chest diseases using DINOv2 + PEFT/LoRA).\n` +
+        `* 🏛️ **Government Operations:** AI Engineer at the Egyptian Ministry of Endowments deploying NLP & Generative AI workflows.\n` +
+        `* 📱 **Published on Google Play:** [SmartDocs — AI Document Reader & Manager](https://play.google.com/store/apps/details?id=com.docuai.smartdocs) (Flutter, Riverpod, Gemini AI, AdMob).\n` +
+        `* 🏭 **Live Enterprise Solutions:** [AI Cloud ERP](https://erp.nbra.in), [Web Video Editor](https://edit.nbra.in), [Traffic Analytics BI](https://traffic.nbra.in), [AI4Roadmap](https://learn.nbra.in), [3D Game](https://game.nbra.in).\n` +
+        `* 🎖️ **Certifications:** Microsoft ML Engineer (MCIT/DEBI), Stanford Machine Learning with Andrew Ng (100% Grade).\n\n` +
+        `🌐 **Explore Full Interactive CV & Live Projects:** [cv.nbra.in](https://cv.nbra.in)\n` +
+        `💬 **Direct WhatsApp:** [Chat on WhatsApp](https://wa.me/201552282852)`
+      : `**👨‍💻 عن المؤسس والمهندس المشرف — المهندس نديم بدر (Eng. Nadeem Badr)**\n\n` +
+        `قائد ومطور منظومة **NBrain AI Ecosystem** وخبير الذكاء الاصطناعي وهندسة النظم البرمجية المعقدة:\n` +
+        `* 🏆 **التميز الأكاديمي:** الأول على الدفعة مع مرتبة الشرف (GPA 4.0 / 4.0) في تكنولوجيا الذكاء الاصطناعي — جامعة حلوان التكنولوجية الدولية (HITU).\n` +
+        `* 🩺 **مبادرات وطنية معتمدة:** مطور منظومة **نبض مصر (Nadeem CXR V5.2)** لتشخيص 14 مرضاً صدرياً والمعتمدة رسمياً من **مجلس الوزراء المصري** و**وزارة الصحة والسكان** (بدقة 90.24% AUC عبر نماذج DINOv2 و PEFT/LoRA).\n` +
+        `* 🏛️ **وزارة الأوقاف المصرية:** مهندس ذكاء اصطناعي لتطوير خطوط معالجة اللغات الطبيعية (NLP) والـ Generative AI.\n` +
+        `* 📱 **تطبيق رسمي على Google Play:** تطبيق [SmartDocs — مدير ومساعد المستندات الذكي](https://play.google.com/store/apps/details?id=com.docuai.smartdocs) (مبني بـ Flutter و Gemini AI و Riverpod و AdMob).\n` +
+        `* 🏭 **مشاريع وأنظمة حية ومباشرة:** [منصة ERP السحابية](https://erp.nbra.in)، [محرر الفيديو بالذكاء الاصطناعي](https://edit.nbra.in)، [لوحة تحليلات الحوادث المرورية BI](https://traffic.nbra.in)، [منصة AI4Roadmap](https://learn.nbra.in)، و[لعبة الـ 3D المفتوحة](https://game.nbra.in).\n` +
+        `* 🎖️ **اعتمادات دولية:** مهندس تعلم آلة معتمد من Microsoft، وشهادة Stanford مع Andrew Ng بدرجة 100%.\n\n` +
+        `🌐 **لرؤية السيرة الذاتية التفاعلية الكاملة وكافة المشاريع والعروض:** [cv.nbra.in](https://cv.nbra.in)\n` +
+        `💬 **للتواصل المباشر مع المهندس نديم:** [اضغط هنا للمحادثة عبر واتساب](https://wa.me/201552282852)`;
+  }
+
+  if (text.includes('5999') || text.includes('6000') || text.includes('starter') || text.includes('باقة 5999') || text.includes('باقة بلس') || text.includes('9999')) {
+    return isEn
+      ? `**💡 Recommendation for budget:**\nBased on your budget, we recommend our Fast-Launch Store & AI Sales Bot Suite:\n* High-speed, 100% responsive e-commerce web platform\n* Built-in Gemini AI sales assistant\n* Direct WhatsApp & payment gateway integration\n* 1-Year free domain & high-speed cloud hosting\n* For custom requests, visit [cv.nbra.in](https://cv.nbra.in)`
+      : `**💡 ترشيح المساعد الذكي للمشروع والميزانية:**\nبناءً على متطلباتك، نقترح باقة المنصة السريعة + شات بوت المبيعات بالذكاء الاصطناعي:\n* منصة ويب فائقة السرعة متوافقة مع الموبايل\n* مساعد Gemini AI مدمج لترشيح المنتجات وإغلاق الصفقات\n* ربط مباشر بالواتساب وبوابات الدفع\n* دومين واستضافة سحابية فائقة السرعة لمدة عام مجاناً\n* للاطلاع على سابقة أعمال المهندس نديم بدر: [cv.nbra.in](https://cv.nbra.in)`;
   }
 
   if (text.includes('تطبيق') || text.includes('جوجل بلاي') || text.includes('app') || text.includes('vip') || text.includes('15000') || text.includes('24900')) {
     return isEn
-      ? `**🚀 Recommended VIP Enterprise Bundle (360° Solution):**\n* Official Google Play App (Android 15 & 16KB Page Aligned)\n* High-Speed Single Page Web Platform & Admin Panel\n* 4K Cinematic AI Promotional Video\n* Zero-Trust Cybersecurity & 6-Month Engineering Warranty`
-      : `**🚀 الباقة الشاملة VIP (منظومة 360° متكاملة):**\n* تطبيق رسمي على Google Play متوافق مع Android 15 ومعيار 16KB Page Alignment\n* موقع ويب ولوحة تحكم متكاملة\n* فيديو إعلاني سينمائي 4K بالذكاء الاصطناعي\n* دروع تأمين سيبراني وضمان هندسي لمدة 6 أشهر مع تسليم السورس كود كاملاً`;
+      ? `**🚀 Recommended VIP Enterprise Bundle (360° Solution):**\n* Official Google Play App (Android 15 & 16KB Page Aligned)\n* High-Speed Single Page Web Platform & Admin Panel\n* 4K Cinematic AI Promotional Video\n* Zero-Trust Cybersecurity & 6-Month Engineering Warranty\n* Full Architecture supervised by Eng. Nadeem Badr ([cv.nbra.in](https://cv.nbra.in))`
+      : `**🚀 الباقة الشاملة VIP (منظومة 360° متكاملة):**\n* تطبيق رسمي على Google Play متوافق مع Android 15 ومعيار 16KB Page Alignment\n* موقع ويب ولوحة تحكم متكاملة\n* فيديو إعلاني سينمائي 4K بالذكاء الاصطناعي\n* دروع تأمين سيبراني وضمان هندسي لمدة 6 أشهر مع تسليم السورس كود كاملاً\n* بإشراف وتنفيذ المهندس نديم بدر ([cv.nbra.in](https://cv.nbra.in))`;
   }
 
   return isEn
-    ? `Thank you for your inquiry! In **NBrain**, Chief Software Architect Eng. Nadeem Badr customizes high-speed web apps, Android 15 mobile applications, and custom AI systems tailored to your exact business goals.`
-    : `أهلاً بك! في منظومة **NBrain**، يقوم المهندس نديم بدر بتصميم وتطوير حلول برمجية وذكاء اصطناعي متكاملة (مواقع ويب، تطبيقات Google Play، ونماذج AI مخصصة) تناسب أهداف مشروعك وميزانيتك تماماً.`;
+    ? `Thank you for your inquiry! In **NBrain**, Chief Software Architect Eng. Nadeem Badr customizes high-speed web apps, Android 15 mobile applications (Google Play compliant), and custom Computer Vision & Generative AI systems tailored to your exact business goals.\n\n🌐 **View Eng. Nadeem's Full Portfolio & CV:** [cv.nbra.in](https://cv.nbra.in)`
+    : `أهلاً بك! في منظومة **NBrain**، يقوم المهندس نديم بدر (Chief Software Architect) بتصميم وتطوير حلول برمجية وذكاء اصطناعي متكاملة (مواقع ويب فائقة السرعة، تطبيقات Google Play، ونماذج رؤية حاسوبية وGenAI مخصصة) تناسب أهداف مشروعك بدقة.\n\n🌐 **يمكنك تصفح السيرة الذاتية وكافة المشاريع الحية عبر:** [cv.nbra.in](https://cv.nbra.in)`;
 }
 
 // Text-to-Speech Engine
@@ -697,7 +893,6 @@ function speakAiText(rawText, btnElement) {
       btnElement.innerHTML = `🔊 <span>استمع للرد</span>`;
     }
   };
-
   window.speechSynthesis.speak(utterance);
 }
 
@@ -705,8 +900,6 @@ function speakAiText(rawText, btnElement) {
 async function streamGeminiMultimodal({ userPrompt, fileObj, enableSearch, enableCode, thinkingBudget, onThoughtChunk, onTextChunk, onCodeChunk }) {
   try {
     const parts = [];
-
-    // Check if YouTube URL is mentioned
     const ytMatch = userPrompt.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/i);
     let promptWithContext = userPrompt;
     if (ytMatch) {
@@ -759,13 +952,47 @@ async function streamGeminiMultimodal({ userPrompt, fileObj, enableSearch, enabl
       payload.tools = tools;
     }
 
-    const response = await fetch(AI_CHAT_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
+    let response = null;
+    for (const endpoint of AI_CHAT_ENDPOINTS) {
+      try {
+        const resp = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const cType = resp.headers.get('content-type') || '';
+        if (resp.ok && resp.body && (cType.includes('text/event-stream') || cType.includes('application/json'))) {
+          response = resp;
+          break;
+        }
+      } catch (endpointErr) {
+        console.warn(`[NBrain AI Engine] Connection to ${endpoint} failed:`, endpointErr.message);
+      }
+    }
 
-    if (response.ok && response.body) {
+    // Direct Gemini SSE Fallback if Cloud backend endpoints unavailable
+    if (!response || !response.ok) {
+      for (let i = 0; i < 3; i++) {
+        const directKey = getNextGeminiKey();
+        if (!directKey) break;
+        try {
+          const directUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:streamGenerateContent?alt=sse&key=${directKey}`;
+          const directResp = await fetch(directUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          if (directResp.ok && directResp.body) {
+            response = directResp;
+            break;
+          }
+        } catch (directErr) {
+          console.warn('[NBrain AI Engine] Direct Gemini stream fallback error:', directErr.message);
+        }
+      }
+    }
+
+    if (response && response.ok && response.body) {
       const reader = response.body.getReader();
       const decoder = new TextDecoder('utf-8');
       let buffer = '';
@@ -1836,7 +2063,7 @@ _تم إرسال هذا الطلب عبر بوابة NBrain الرسمية_`;
 /* ==========================================================================
    14. Internationalization & Language Switcher (AR / EN)
    ========================================================================== */
-const i18nDict = {
+var i18nDict = {
   ar: {
     // Sidebar & Navigation
     nav_title: "المنظومة والخدمات",
@@ -2330,7 +2557,17 @@ const i18nDict = {
 
     media_modal_title: "العرض التوضيحي للمشروع",
     media_modal_close: "إغلاق",
-    media_modal_action: "طلب مشروع مماثل عبر واتساب"
+    media_modal_action: "طلب مشروع مماثل عبر واتساب",
+
+    // Context Menu
+    ctx_copy: "نسخ النص المحدد",
+    ctx_aidemo: "المساعد الذكي (AI Studio)",
+    ctx_packages: "استعراض الباقات والأسعار",
+    ctx_rfp: "طلب عرض سعر رسمي (RFP)",
+    ctx_whatsapp: "استشارة مباشرة عبر واتساب",
+    ctx_theme: "تبديل المظهر (Dark / Light)",
+    ctx_lang: "تغيير اللغة (EN / عربي)",
+    ctx_reload: "تحديث المنظومة"
   },
   en: {
     // Sidebar & Navigation
@@ -2825,7 +3062,17 @@ const i18nDict = {
 
     media_modal_title: "Project Showcase Demo",
     media_modal_close: "Close",
-    media_modal_action: "Inquire About Similar Project on WhatsApp"
+    media_modal_action: "Inquire About Similar Project on WhatsApp",
+
+    // Context Menu
+    ctx_copy: "Copy Selected Text",
+    ctx_aidemo: "AI Sales Advisor Demo",
+    ctx_packages: "Explore Packages & Pricing",
+    ctx_rfp: "Request Proposal (RFP)",
+    ctx_whatsapp: "Instant WhatsApp Consultation",
+    ctx_theme: "Toggle Theme (Dark / Light)",
+    ctx_lang: "Switch Language (EN / عربي)",
+    ctx_reload: "Reload Console"
   }
 };
 
@@ -3041,5 +3288,124 @@ function initPwaAndMobileAppFeatures() {
   });
 }
 
+/* ==========================================================================
+   16. Custom Enterprise Context Menu (Right-Click Drawer)
+   ========================================================================== */
+function openCustomContextMenu(e) {
+  const menu = document.getElementById('customContextMenu');
+  if (!menu) return;
 
+  const ctxCopyBtn = document.getElementById('ctxCopyText');
+  const selectedText = window.getSelection ? window.getSelection().toString().trim() : '';
 
+  if (ctxCopyBtn) {
+    if (selectedText.length > 0) {
+      ctxCopyBtn.classList.remove('context-menu-item--disabled');
+      ctxCopyBtn.removeAttribute('disabled');
+    } else {
+      ctxCopyBtn.classList.add('context-menu-item--disabled');
+      ctxCopyBtn.setAttribute('disabled', 'true');
+    }
+  }
+
+  // Display menu to calculate dimensions
+  menu.classList.add('is-active');
+  menu.setAttribute('aria-hidden', 'false');
+
+  const menuWidth = menu.offsetWidth || 240;
+  const menuHeight = menu.offsetHeight || 320;
+  const windowWidth = window.innerWidth;
+  const windowHeight = window.innerHeight;
+
+  let posX = e.clientX;
+  let posY = e.clientY;
+
+  // Viewport bounds checking
+  if (posX + menuWidth > windowWidth - 10) {
+    posX = windowWidth - menuWidth - 12;
+  }
+  if (posY + menuHeight > windowHeight - 10) {
+    posY = windowHeight - menuHeight - 12;
+  }
+  if (posX < 10) posX = 10;
+  if (posY < 10) posY = 10;
+
+  menu.style.left = `${posX}px`;
+  menu.style.top = `${posY}px`;
+}
+
+function closeCustomContextMenu() {
+  const menu = document.getElementById('customContextMenu');
+  if (menu && menu.classList.contains('is-active')) {
+    menu.classList.remove('is-active');
+    menu.setAttribute('aria-hidden', 'true');
+  }
+}
+
+function initCustomContextMenu() {
+  const menu = document.getElementById('customContextMenu');
+  if (!menu) return;
+
+  // Close context menu on outside click, scroll, resize, or escape
+  document.addEventListener('click', (e) => {
+    if (!menu.contains(e.target)) {
+      closeCustomContextMenu();
+    }
+  }, { capture: true });
+
+  window.addEventListener('scroll', closeCustomContextMenu, { passive: true });
+  window.addEventListener('resize', closeCustomContextMenu, { passive: true });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeCustomContextMenu();
+    }
+  });
+
+  // Handle menu item interactions
+  menu.addEventListener('click', (e) => {
+    const item = e.target.closest('.context-menu-item');
+    if (!item || item.classList.contains('context-menu-item--disabled')) return;
+
+    const action = item.getAttribute('data-action');
+    closeCustomContextMenu();
+
+    if (action === 'copy') {
+      const selectedText = window.getSelection ? window.getSelection().toString() : '';
+      if (selectedText && navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(selectedText);
+      }
+    } else if (action === 'ai-demo') {
+      const tabBtn = document.querySelector('.tab[data-target="ai-demo"]');
+      if (tabBtn) tabBtn.click();
+    } else if (action === 'packages') {
+      const tabBtn = document.querySelector('.tab[data-target="packages"]');
+      if (tabBtn) tabBtn.click();
+    } else if (action === 'rfp') {
+      const rfpBtn = document.getElementById('openRfpModalBtn') || document.querySelector('.open-rfp-btn');
+      if (rfpBtn) rfpBtn.click();
+    } else if (action === 'whatsapp') {
+      const heroWhatsApp = document.getElementById('heroWhatsAppBtn');
+      if (heroWhatsApp && heroWhatsApp.href) {
+        window.open(heroWhatsApp.href, '_blank');
+      } else {
+        window.open('https://wa.me/201552282852', '_blank');
+      }
+    } else if (action === 'theme') {
+      const themeBtn = document.getElementById('themeToggleBtn');
+      if (themeBtn) themeBtn.click();
+    } else if (action === 'lang') {
+      const railLangBtn = document.getElementById('railLangBtn') || document.getElementById('headerLangBtn');
+      if (railLangBtn) railLangBtn.click();
+    } else if (action === 'reload') {
+      window.location.reload();
+    }
+  });
+}
+
+// Enterprise App Core Bootloader
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initAllModules);
+} else {
+  initAllModules();
+}

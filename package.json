@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "javascript-obfuscator": "^5.5.0"
+  }
+}

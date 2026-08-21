@@ -108,6 +108,152 @@ body {
   overflow-x: hidden;
   width: 100%;
   max-width: 100vw;
+  -webkit-touch-callout: none;
+}
+
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
+
+/* ==========================================================================
+   Custom Enterprise Context Menu (Right-Click Custom Drawer)
+   ========================================================================== */
+.custom-context-menu {
+  position: fixed;
+  z-index: 999999;
+  min-width: 240px;
+  background: hsla(0, 0%, 11%, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--console-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 16px 36px hsla(0, 0%, 0%, 0.45), 0 0 0 1px hsla(218, 89%, 73%, 0.12);
+  padding: 6px;
+  display: none;
+  opacity: 0;
+  transform: scale(0.96) translateY(-4px);
+  transform-origin: top left;
+  transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1), transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+[data-theme="light"] .custom-context-menu {
+  background: hsla(0, 0%, 100%, 0.96);
+  border-color: var(--console-border);
+  box-shadow: 0 14px 32px hsla(215, 14%, 40%, 0.18), 0 0 0 1px hsla(214, 90%, 43%, 0.12);
+}
+
+.custom-context-menu.is-active {
+  display: block;
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.context-menu-header {
+  padding: 6px 10px 8px 10px;
+  border-bottom: 1px solid var(--console-divider);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.context-menu-logo {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  object-fit: contain;
+}
+
+.context-menu-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--console-primary);
+  letter-spacing: 0.3px;
+}
+
+.context-menu-badge {
+  font-size: 0.65rem;
+  padding: 2px 6px;
+  background: var(--console-primary-container);
+  color: var(--console-primary);
+  border-radius: var(--radius-sm);
+  margin-inline-start: auto;
+  font-weight: 600;
+  font-family: var(--font-mono);
+}
+
+.context-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 0.83rem;
+  font-weight: 500;
+  color: var(--console-text);
+  border-radius: var(--radius-sm);
+  text-align: start;
+  transition: background var(--transition-fast), color var(--transition-fast);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+
+.context-menu-item:hover {
+  background: var(--console-hover);
+  color: var(--console-primary);
+}
+
+.context-menu-item svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--console-text-muted);
+  transition: color var(--transition-fast);
+}
+
+.context-menu-item:hover svg {
+  color: var(--console-primary);
+}
+
+.context-menu-shortcut {
+  font-size: 0.7rem;
+  color: var(--console-text-dim);
+  margin-inline-start: auto;
+  font-family: var(--font-mono);
+  background: var(--console-surface);
+  padding: 2px 5px;
+  border-radius: 3px;
+  border: 1px solid var(--console-divider);
+}
+
+.context-menu-divider {
+  height: 1px;
+  background: var(--console-divider);
+  margin: 4px 0;
+}
+
+.context-menu-item--highlight {
+  background: hsla(218, 89%, 73%, 0.08);
+  color: var(--console-primary);
+}
+.context-menu-item--highlight:hover {
+  background: hsla(218, 89%, 73%, 0.16);
+}
+.context-menu-item--highlight svg {
+  color: var(--console-primary);
+}
+
+.context-menu-item--disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 svg {
@@ -3639,10 +3785,16 @@ button {
   justify-content: space-between;
   align-items: center;
   padding: 12px 0;
-  z-index: 50;
+  z-index: 1000 !important;
   position: sticky;
   top: 0;
   height: 100vh;
+  overflow: visible !important;
+}
+
+[dir="rtl"] .utility-rail {
+  border-right: none;
+  border-left: 1px solid var(--console-divider);
 }
 
 .rail-top, .rail-bottom {
@@ -3651,6 +3803,7 @@ button {
   align-items: center;
   gap: 12px;
   width: 100%;
+  overflow: visible !important;
 }
 
 .rail-btn {
@@ -3663,6 +3816,7 @@ button {
   color: var(--console-text-muted);
   position: relative;
   transition: all 0.2s;
+  overflow: visible !important;
 }
 
 .rail-btn:hover {
@@ -3697,17 +3851,7 @@ button {
 }
 
 .status-dot {
-  position: absolute;
-  bottom: 2px;
-  right: 2px;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  border: 2px solid var(--console-surface);
-}
-
-.status-dot.online {
-  background-color: var(--console-success);
+  display: none !important;
 }
 
 .icon-wrapper {
@@ -3740,35 +3884,65 @@ button {
   margin: 4px 0;
 }
 
-/* Tooltips */
+/* Floating Clean Tooltips (Zero Clipping & Full Visibility) */
 .tooltip-anchor {
   position: relative;
+  overflow: visible !important;
 }
 
 .tooltip-anchor::after {
   content: attr(data-tooltip);
   position: absolute;
-  left: calc(100% + 10px);
   top: 50%;
-  transform: translateY(-50%) translateX(6px);
-  background-color: var(--console-surface-raised);
-  color: var(--console-text);
-  border: 1px solid var(--console-border);
-  padding: 4px 10px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  white-space: nowrap;
-  border-radius: var(--radius-sm);
-  pointer-events: none;
+  background-color: hsla(220, 25%, 10%, 0.98) !important;
+  color: hsl(0, 0%, 100%) !important;
+  border: 1px solid var(--console-border-focus) !important;
+  padding: 6px 14px !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  font-family: var(--font-primary) !important;
+  white-space: nowrap !important;
+  border-radius: var(--radius-md) !important;
+  pointer-events: none !important;
   opacity: 0;
-  transition: all 0.2s;
-  box-shadow: 0 4px 12px hsla(0, 0%, 0%, 0.4);
-  z-index: 100;
+  visibility: hidden;
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+  box-shadow: 0 8px 28px hsla(0, 0%, 0%, 0.8) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  z-index: 999999 !important;
 }
 
-.tooltip-anchor:hover::after {
-  opacity: 1;
-  transform: translateY(-50%) translateX(0);
+/* RTL: Utility Rail on the Left -> Tooltip floats to the RIGHT into the workspace */
+[dir="rtl"] .utility-rail .tooltip-anchor::after,
+[dir="rtl"] .tooltip-anchor::after {
+  left: calc(100% + 14px) !important;
+  right: auto !important;
+  transform: translateY(-50%) !important;
+  transform-origin: left center !important;
+}
+
+[dir="rtl"] .utility-rail .tooltip-anchor:hover::after,
+[dir="rtl"] .tooltip-anchor:hover::after {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(-50%) !important;
+}
+
+/* LTR: Utility Rail on the Right -> Tooltip floats to the LEFT into the workspace */
+[dir="ltr"] .utility-rail .tooltip-anchor::after,
+[dir="ltr"] .tooltip-anchor::after {
+  right: calc(100% + 14px) !important;
+  left: auto !important;
+  transform: translateY(-50%) !important;
+  transform-origin: right center !important;
+}
+
+[dir="ltr"] .tooltip-anchor:hover::after,
+[dir="ltr"] .tooltip-anchor:hover::after {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(-50%) !important;
 }
 
 [data-theme="dark"] .moon-icon { display: none; }

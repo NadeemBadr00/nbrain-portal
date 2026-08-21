@@ -9,4 +9,5 @@ test_*.js
 !logo-emblem.png
 !favicon.png
 !nadeem-avatar.png
+node_modules/
 

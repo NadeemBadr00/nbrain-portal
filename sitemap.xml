@@ -1,42 +1,157 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- 1. Main Homepage (Arabic & English Multilingual) -->
   <url>
     <loc>https://nbra.in/</loc>
-    <lastmod>2026-08-20</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://nbra.in/?lang=ar"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://nbra.in/?lang=en"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://nbra.in/"/>
+    <image:image>
+      <image:loc>https://nbra.in/nadeem-avatar.png</image:loc>
+      <image:title>المهندس نديم بدر — المؤسس وقائد منظومة NBrain</image:title>
+      <image:caption>Chief Software Architect Eng. Nadeem Badr</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://nbra.in/logo-emblem.png</image:loc>
+      <image:title>شعار منظومة NBrain للبرمجيات والذكاء الاصطناعي</image:title>
+      <image:caption>NBrain Software &amp; AI Ecosystem Logo</image:caption>
+    </image:image>
   </url>
+
+  <!-- 2. Packages & VIP Bundles -->
   <url>
-    <loc>https://nbra.in/#section-bundles</loc>
-    <lastmod>2026-08-20</lastmod>
+    <loc>https://nbra.in/#packages</loc>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://nbra.in/?lang=ar#packages"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nbra.in/?lang=en#packages"/>
   </url>
+
+  <!-- 3. Industry Solutions Matrix -->
   <url>
-    <loc>https://nbra.in/#section-demos</loc>
-    <lastmod>2026-08-20</lastmod>
+    <loc>https://nbra.in/#industries</loc>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.90</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://nbra.in/?lang=ar#industries"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nbra.in/?lang=en#industries"/>
   </url>
+
+  <!-- 4. Engagement Models -->
   <url>
-    <loc>https://nbra.in/#section-portfolio</loc>
-    <lastmod>2026-08-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://nbra.in/#section-customizer</loc>
-    <lastmod>2026-08-20</lastmod>
+    <loc>https://nbra.in/#models</loc>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://nbra.in/?lang=ar#models"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nbra.in/?lang=en#models"/>
   </url>
+
+  <!-- 5. Engineering Workflow -->
   <url>
-    <loc>https://nbra.in/#section-faq</loc>
-    <lastmod>2026-08-20</lastmod>
+    <loc>https://nbra.in/#workflow</loc>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://nbra.in/?lang=ar#workflow"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nbra.in/?lang=en#workflow"/>
   </url>
+
+  <!-- 6. 2026 Tech Stack Radar -->
+  <url>
+    <loc>https://nbra.in/#techstack</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://nbra.in/?lang=ar#techstack"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nbra.in/?lang=en#techstack"/>
+  </url>
+
+  <!-- 7. Video Demos Showcase (28 Projects) -->
+  <url>
+    <loc>https://nbra.in/#demos</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://nbra.in/?lang=ar#demos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nbra.in/?lang=en#demos"/>
+  </url>
+
+  <!-- 8. Multimodal AI Studio & Sales Bot -->
+  <url>
+    <loc>https://nbra.in/#ai-demo</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://nbra.in/?lang=ar#ai-demo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nbra.in/?lang=en#ai-demo"/>
+  </url>
+
+  <!-- 9. ROI & Savings Calculator -->
+  <url>
+    <loc>https://nbra.in/#roi-calc</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://nbra.in/?lang=ar#roi-calc"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nbra.in/?lang=en#roi-calc"/>
+  </url>
+
+  <!-- 10. Package Customizer -->
+  <url>
+    <loc>https://nbra.in/#customizer</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://nbra.in/?lang=ar#customizer"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nbra.in/?lang=en#customizer"/>
+  </url>
+
+  <!-- 11. Production Portfolio & Inventions -->
+  <url>
+    <loc>https://nbra.in/#portfolio</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://nbra.in/?lang=ar#portfolio"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nbra.in/?lang=en#portfolio"/>
+  </url>
+
+  <!-- 12. Engineering Guarantees & SLAs -->
+  <url>
+    <loc>https://nbra.in/#guarantees</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://nbra.in/?lang=ar#guarantees"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nbra.in/?lang=en#guarantees"/>
+  </url>
+
+  <!-- 13. Frequently Asked Questions (FAQ) -->
+  <url>
+    <loc>https://nbra.in/#faq</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://nbra.in/?lang=ar#faq"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nbra.in/?lang=en#faq"/>
+  </url>
+
+  <!-- 14. Founder & Leadership Profile -->
+  <url>
+    <loc>https://nbra.in/#founder</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.90</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://nbra.in/?lang=ar#founder"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nbra.in/?lang=en#founder"/>
+  </url>
+
 </urlset>

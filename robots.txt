@@ -1,4 +1,35 @@
+# NBrain Robots Exclusion Standard (https://nbra.in)
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /functions/
+Disallow: /.*
 
+User-agent: Googlebot
+Allow: /
+Allow: /*.js
+Allow: /*.css
+Allow: /*.png
+Allow: /*.jpg
+Allow: /*.svg
+Disallow: /api/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /api/
+
+User-agent: Applebot
+Allow: /
+Disallow: /api/
+
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /api/
+
+User-agent: YandexBot
+Allow: /
+Disallow: /api/
+
+# Host & Sitemap Declarations
+Host: https://nbra.in
 Sitemap: https://nbra.in/sitemap.xml

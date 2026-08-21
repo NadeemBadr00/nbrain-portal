@@ -1,0 +1,10 @@
+# NBrain Enterprise Security & Vulnerability Disclosure Policy
+# RFC 9116 Standard (https://nbra.in/.well-known/security.txt)
+
+Contact: https://wa.me/201552282852
+Contact: mailto:contact@nbra.in
+Expires: 2027-12-31T23:59:59.000Z
+Preferred-Languages: ar, en
+Canonical: https://nbra.in/.well-known/security.txt
+Policy: https://nbra.in/#guarantees
+Hiring: https://nbra.in/#founder

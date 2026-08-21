@@ -1,0 +1,14 @@
+{
+  "name": "nbrain-functions",
+  "description": "NBrain Enterprise Cloud Functions for Secure Multimodal AI Services",
+  "version": "1.0.0",
+  "main": "index.js",
+  "engines": {
+    "node": "22"
+  },
+  "dependencies": {
+    "firebase-admin": "^13.0.0",
+    "firebase-functions": "^6.3.2"
+  },
+  "private": true
+}
