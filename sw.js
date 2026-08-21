@@ -1,10 +1,10 @@
 // NBrain Progressive Web App (PWA) Service Worker — High-Performance & Secure Architecture
-const CACHE_NAME = 'nbrain-cache-2026-v6-fresh';
+const CACHE_NAME = 'nbrain-cache-2026-v8-scrollfix';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
-  '/style.min.css?v=20260821_1520',
-  '/app.min.js?v=20260821_1520',
+  '/style.min.css?v=20260821_1556',
+  '/app.min.js?v=20260821_1556',
   '/manifest.json',
   '/logo.png',
   '/logo-emblem.png',

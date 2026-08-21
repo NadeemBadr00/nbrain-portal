@@ -1090,25 +1090,42 @@ button {
   margin-top: 6px;
 }
 
-/* Tabs */
+/* Tabs with Sleek Modern Horizontal Scrollbar */
 .tabs {
   display: flex;
   gap: 18px;
-  overflow-x: auto;
+  overflow-x: auto !important;
   overflow-y: hidden !important;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--console-border) transparent;
   -webkit-overflow-scrolling: touch;
+  padding-bottom: 8px;
+  margin-bottom: 2px;
 }
 
 .tabs::-webkit-scrollbar {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
+  height: 6px !important;
+  display: block !important;
+}
+
+.tabs::-webkit-scrollbar-track {
+  background: hsla(220, 20%, 12%, 0.6);
+  border-radius: var(--radius-full);
+}
+
+.tabs::-webkit-scrollbar-thumb {
+  background: var(--console-border-focus);
+  border-radius: var(--radius-full);
+  border: 1px solid hsla(220, 20%, 15%, 0.8);
+  transition: background 0.2s ease;
+}
+
+.tabs::-webkit-scrollbar-thumb:hover {
+  background: var(--console-primary);
 }
 
 .tab {
-  padding: 12px 4px 10px;
+  padding: 10px 6px 8px;
   color: var(--console-text-muted);
   font-weight: 600;
   font-size: 0.88rem;
@@ -4539,18 +4556,27 @@ button {
 
   .tabs {
     gap: 10px;
-    padding: 6px 2px 4px;
-    overflow-x: auto;
+    padding: 6px 2px 8px;
+    overflow-x: auto !important;
     overflow-y: hidden !important;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    scrollbar-width: thin;
+    scrollbar-color: var(--console-border-focus) transparent;
   }
 
   .tabs::-webkit-scrollbar {
-    display: none !important;
-    width: 0 !important;
-    height: 0 !important;
+    height: 4px !important;
+    display: block !important;
+  }
+
+  .tabs::-webkit-scrollbar-track {
+    background: hsla(220, 20%, 12%, 0.6);
+    border-radius: var(--radius-full);
+  }
+
+  .tabs::-webkit-scrollbar-thumb {
+    background: var(--console-border-focus);
+    border-radius: var(--radius-full);
   }
 
   .tab {

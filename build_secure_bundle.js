@@ -109,7 +109,7 @@ const rawDecryptor = `
     
     // Load main application bundle
     const script = document.createElement('script');
-    script.src = 'app.min.js?v=20260821_1520';
+    script.src = 'app.min.js?v=20260821_1556';
     document.body.appendChild(script);
   } catch(e) {
     document.body.innerHTML = '<div style="color:white;text-align:center;padding:50px;">Failed to initialize secure environment.</div>';
