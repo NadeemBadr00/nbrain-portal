@@ -712,10 +712,10 @@ KNOWLEDGE BASE: CHIEF SOFTWARE ARCHITECT ENG. NADEEM BADR & NBRAIN ECOSYSTEM
 - NanoGrad: Pure Python Autograd engine and Neural Network framework built completely from scratch without external ML libraries.
 - AR Systems: Virtual Piano AR (additive synthesis + 3 MediaPipe models), Touchless Subway Surfers (gesture controller), Birthday Studio AR.
 
-5. CORE NBRAIN PACKAGES & COMMERCIAL SERVICES:
-1. Plus Package (9,999 EGP): Fast interactive Web Application, 24/7 AI Sales Assistant, SSL & Cloudflare WAF, WhatsApp integration, SEO, 1-year free domain & cloud hosting.
-2. Business VIP Bundle (24,900 EGP - BESTSELLER): 360° digital ecosystem for companies & stores. Fast SPA Web platform, Official Google Play Mobile App (Android 15 & 16KB Page Aligned compliant), Gemini AI Sales Bot, 4K Cinematic AI Promotional Video with voiceover, Zero-Trust Cybersecurity (DDoS, WAF, Encryption), Multilingual SEO, 6-Month Engineering Warranty & full source code ownership.
-3. Pro & Custom Enterprise (54,000+ EGP): Custom Computer Vision & YOLOv12x models, Manifest V3 Chrome Extensions, Custom LLM fine-tuning & RAG architectures, High-load cloud backends, 24/7 SLA.
+5. CORE NBRAIN PACKAGES & COMMERCIAL SERVICES (SPECIAL END OF AUGUST 50% PROMOTION):
+1. Plus Package: Discounted to 7,500 EGP (originally 15,000 EGP, 50% discount until August 31st). Fast interactive Web Application, 24/7 AI Sales Assistant, SSL & Cloudflare WAF, WhatsApp integration, SEO, 1-year free domain & cloud hosting.
+2. Business VIP Bundle (18,700 EGP - BESTSELLER): Discounted to 18,700 EGP (originally 37,400 EGP, 50% discount until August 31st). Full 360° digital suite: Modern SPA Web Platform + Official Google Play App (Android 15 / 16KB Aligned) + Gemini AI Sales Bot + 4K AI Video + Zero-Trust Cybersecurity + 6-month warranty + full source code ownership.
+3. Pro & Custom Enterprise (40,500+ EGP): Discounted starting from 40,500+ EGP (originally 81,000+ EGP, 50% discount until August 31st). Custom Computer Vision, YOLOv12x, Manifest V3 Chrome extensions, private LLMs & high-concurrency cloud.
 
 6. HOW TO RESPOND WHEN USERS ASK ABOUT ENG. NADEEM BADR, HIS CV, OR PORTFOLIO:
 - When a user asks about Eng. Nadeem Badr, who created/leads NBrain, his resume, background, university, ranking, projects, or asks for his CV/portfolio:
@@ -727,7 +727,10 @@ KNOWLEDGE BASE: CHIEF SOFTWARE ARCHITECT ENG. NADEEM BADR & NBRAIN ECOSYSTEM
 7. GENERAL COMMUNICATION RULES:
 - If the user writes or speaks in Arabic, respond in fluent, professional, friendly Egyptian Arabic (عامية مصرية راقية ومهنية).
 - If the user writes or speaks in English, respond in professional English.
+- Always highlight the 50% End-of-August promotion when users ask about prices or packages.
 - Always recommend the best NBrain package or custom architecture based on the user's requirements or budget.
+- Format responses cleanly with bold titles, bullet points, and clean paragraphs.
+- Keep numbers formatted in standard Western digits (e.g. 7,500 or 18,700 or 40,500).
 - Format responses cleanly with bold titles, bullet points, and clean paragraphs.
 - Keep numbers formatted in standard Western digits (e.g. 5,999 or 24,900 or 9,999).
 `;
@@ -831,13 +834,13 @@ function getLocalSmartFallback(queryText) {
         `💬 **للتواصل المباشر مع المهندس نديم:** [اضغط هنا للمحادثة عبر واتساب](https://wa.me/201552282852)`;
   }
 
-  if (text.includes('5999') || text.includes('6000') || text.includes('starter') || text.includes('باقة 5999') || text.includes('باقة بلس') || text.includes('9999')) {
+  if (text.includes('5999') || text.includes('6000') || text.includes('7500') || text.includes('starter') || text.includes('باقة بلس') || text.includes('9999') || text.includes('15000')) {
     return isEn
       ? `**💡 Recommendation for budget:**\nBased on your budget, we recommend our Fast-Launch Store & AI Sales Bot Suite:\n* High-speed, 100% responsive e-commerce web platform\n* Built-in Gemini AI sales assistant\n* Direct WhatsApp & payment gateway integration\n* 1-Year free domain & high-speed cloud hosting\n* For custom requests, visit [cv.nbra.in](https://cv.nbra.in)`
       : `**💡 ترشيح المساعد الذكي للمشروع والميزانية:**\nبناءً على متطلباتك، نقترح باقة المنصة السريعة + شات بوت المبيعات بالذكاء الاصطناعي:\n* منصة ويب فائقة السرعة متوافقة مع الموبايل\n* مساعد Gemini AI مدمج لترشيح المنتجات وإغلاق الصفقات\n* ربط مباشر بالواتساب وبوابات الدفع\n* دومين واستضافة سحابية فائقة السرعة لمدة عام مجاناً\n* للاطلاع على سابقة أعمال المهندس نديم بدر: [cv.nbra.in](https://cv.nbra.in)`;
   }
 
-  if (text.includes('تطبيق') || text.includes('جوجل بلاي') || text.includes('app') || text.includes('vip') || text.includes('15000') || text.includes('24900')) {
+  if (text.includes('تطبيق') || text.includes('جوجل بلاي') || text.includes('app') || text.includes('vip') || text.includes('18700') || text.includes('24900') || text.includes('37400')) {
     return isEn
       ? `**🚀 Recommended VIP Enterprise Bundle (360° Solution):**\n* Official Google Play App (Android 15 & 16KB Page Aligned)\n* High-Speed Single Page Web Platform & Admin Panel\n* 4K Cinematic AI Promotional Video\n* Zero-Trust Cybersecurity & 6-Month Engineering Warranty\n* Full Architecture supervised by Eng. Nadeem Badr ([cv.nbra.in](https://cv.nbra.in))`
       : `**🚀 الباقة الشاملة VIP (منظومة 360° متكاملة):**\n* تطبيق رسمي على Google Play متوافق مع Android 15 ومعيار 16KB Page Alignment\n* موقع ويب ولوحة تحكم متكاملة\n* فيديو إعلاني سينمائي 4K بالذكاء الاصطناعي\n* دروع تأمين سيبراني وضمان هندسي لمدة 6 أشهر مع تسليم السورس كود كاملاً\n* بإشراف وتنفيذ المهندس نديم بدر ([cv.nbra.in](https://cv.nbra.in))`;
@@ -2290,7 +2293,7 @@ var i18nDict = {
     
     // Plus Plan
     plan_plus_name: "Plus",
-    plan_plus_price: "9,999",
+    plan_plus_price: "7,500",
     plan_plus_period: "EGP / مشروع شامل السورس كود",
     plan_plus_tagline: "إطلاق فوري وتجربة كاملة أساسية للشركات والمشاريع الواعدة",
     plan_plus_btn: "تخصيص باقة Plus",
@@ -2304,7 +2307,7 @@ var i18nDict = {
 
     // Business Plan (Recommended) - 10 Features from Freelance QR Banner
     plan_business_name: "Business (VIP 360°)",
-    plan_biz_price: "24,900",
+    plan_biz_price: "18,700",
     plan_biz_period: "EGP / منظومة شاملة من الألف للياء",
     plan_biz_tagline: "الحل الأقوى لتحويل فكرتك إلى منصة متكاملة: ويب وموبايل ولوحة تحكم وتسويق في مكان واحد",
     plan_biz_btn: "احجز باقة Business VIP الآن 🚀",
@@ -2322,7 +2325,7 @@ var i18nDict = {
 
     // Pro Plan
     plan_pro_name: "Pro",
-    plan_pro_price: "54,000+",
+    plan_pro_price: "40,500+",
     plan_pro_period: "EGP / حلول مؤسسية و Vision مخصصة",
     plan_pro_tagline: "حلول برمجية وذكاء اصطناعي عميق ونماذج رؤية حاسوبية مصممة لاحتياجاتك",
     plan_pro_btn: "طلب استشارة وتخصيص Pro",
@@ -2797,7 +2800,7 @@ var i18nDict = {
 
     // Plus Plan
     plan_plus_name: "Plus",
-    plan_plus_price: "9,999",
+    plan_plus_price: "7,500",
     plan_plus_period: "EGP / turnkey project (inclusive of source code)",
     plan_plus_tagline: "Unlock the full essential experience for growing startups & businesses",
     plan_plus_btn: "Customize Plus Plan",
@@ -2811,7 +2814,7 @@ var i18nDict = {
 
     // Business Plan (Recommended) - 10 Features from Freelance QR Banner
     plan_business_name: "Business (VIP 360°)",
-    plan_biz_price: "24,900",
+    plan_biz_price: "18,700",
     plan_biz_period: "EGP / complete ecosystem (inclusive of VAT & source code)",
     plan_biz_tagline: "The ultimate solution: Web, Mobile, Dashboard, AI & Marketing all in one unified platform",
     plan_biz_btn: "Add Business VIP Workspace 🚀",
@@ -2829,7 +2832,7 @@ var i18nDict = {
 
     // Pro Plan
     plan_pro_name: "Pro",
-    plan_pro_price: "54,000+",
+    plan_pro_price: "40,500+",
     plan_pro_period: "EGP / tailored systems & computer vision",
     plan_pro_tagline: "Maximize your productivity & automate operations with bespoke vision & AI models",
     plan_pro_btn: "Upgrade to Pro Architecture",
