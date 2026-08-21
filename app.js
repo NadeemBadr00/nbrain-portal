@@ -1460,6 +1460,7 @@ function initAiSimulator() {
 
     // Append user message with thumbnail/file if present
     const displayText = cleanQuery || (userFileToSend ? `📎 [مرفق للتحليل: ${userFileToSend.name}]` : '');
+    userScrolledUpInChat = false;
     appendMessage('user', escapeHtml(displayText), false, userFileToSend);
 
     // Clear input and attachments
