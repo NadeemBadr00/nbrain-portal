@@ -510,23 +510,8 @@ function initMediaModal() {
    7. Multimodal AI Studio (Powered by Gemini 3.7 Flash Engine)
    ========================================================================== */
 
-const GEMINI_API_KEYS = [
-  "QVEuQWI4Uk42TC1XNGVLQjZKM2o4cTQ2czV6NERrZ0k5N1k0YlNXcXl5Q3JfOUNRZk5pY0E=",
-  "QVEuQWI4Uk42THpNSWF5Wmh3RmZYd2RldFlyMkpRLTNuUjJWVmlZbkpqT1J1OTI3Ukp0QXc=",
-  "QVEuQWI4Uk42STlWWXg1a2pyR29HSnlNSldlWHNYM0FlOGlFcmo4WVpZOUZ6Q0g5OWxycHc=",
-  "QVEuQWI4Uk42S1daUVpXb2RKc0RpTnpGMjNqZ0Z3VElhSmE3N1RDcjBib0FDRHhRZ1puRUE=",
-  "QVEuQWI4Uk42S3dRcWFqNDA3U0p5Szk3aHl6a0x5ZC0wVlVSV0Ytb1NxMnI1Tnl3N0dia1E=",
-  "QVEuQWI4Uk42SVNQNkhnZEQwc1B5ZkNvbEd3cDkzOXFmbVVsRmlrczlxMkdKbm9QVFZuR2c=",
-  "QVEuQWI4Uk42TGIzaWRFZXFNc0d4ckJwS3RUR1hTcHlpVVFLRDY4NXl5bzFTbUpadGhQSUE=",
-  "QVEuQWI4Uk42S2QzaFZJdzJjdWZPakRqRVJSamVmUHVCeHlPZjdobjk5clR1WGJ6NnNvdkE="
-].map((t) => (typeof atob === 'function' ? atob(t) : Buffer.from(t, 'base64').toString('utf8')));
-
-let currentGeminiKeyIdx = 0;
-function getNextGeminiKey() {
-  const key = GEMINI_API_KEYS[currentGeminiKeyIdx];
-  currentGeminiKeyIdx = (currentGeminiKeyIdx + 1) % GEMINI_API_KEYS.length;
-  return key;
-}
+// Secure AI Studio Backend Endpoint (Firebase Cloud Function)
+const AI_CHAT_ENDPOINT = '/api/chat';
 
 const SYSTEM_PROMPT_NBRAIN_AI = `
 You are the official Lead Technical Consultant & Multimodal AI Sales Advisor for "NBrain" (منظومة NBrain للبرمجيات والذكاء الاصطناعي), founded and led by Chief Software Architect Eng. Nadeem Badr.
@@ -716,135 +701,131 @@ function speakAiText(rawText, btnElement) {
   window.speechSynthesis.speak(utterance);
 }
 
-// Real-time Streaming Multimodal Request to Gemini 3.7 Flash API (SSE)
+// Real-time Streaming Multimodal Request to Secure Backend Cloud Function (SSE)
 async function streamGeminiMultimodal({ userPrompt, fileObj, enableSearch, enableCode, thinkingBudget, onThoughtChunk, onTextChunk, onCodeChunk }) {
-  const models = ['gemini-3.7-flash', 'gemini-2.5-flash'];
-  const maxKeyTries = 4;
+  try {
+    const parts = [];
 
-  for (let k = 0; k < maxKeyTries; k++) {
-    const apiKey = getNextGeminiKey();
-    for (const model of models) {
-      try {
-        const parts = [];
+    // Check if YouTube URL is mentioned
+    const ytMatch = userPrompt.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/i);
+    let promptWithContext = userPrompt;
+    if (ytMatch) {
+      promptWithContext = `[YouTube Video Analysis Mode]: The user provided this video link: ${ytMatch[0]}. Analyze the topic, structure, key moments, timestamps, and deliver actionable technical insights:\n${userPrompt}`;
+    }
 
-        // Check if YouTube URL is mentioned
-        const ytMatch = userPrompt.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/i);
-        let promptWithContext = userPrompt;
-        if (ytMatch) {
-          promptWithContext = `[YouTube Video Analysis Mode]: The user provided this video link: ${ytMatch[0]}. Analyze the topic, structure, key moments, timestamps, and deliver actionable technical insights:\n${userPrompt}`;
+    parts.push({ text: promptWithContext });
+
+    // If file / image / PDF attached
+    if (fileObj && fileObj.base64 && fileObj.mimeType) {
+      parts.push({
+        inline_data: {
+          mime_type: fileObj.mimeType,
+          data: fileObj.base64
         }
+      });
+    }
 
-        parts.push({ text: promptWithContext });
+    const contents = [
+      ...aiConversationHistory,
+      { role: 'user', parts: parts }
+    ];
 
-        // If file / image / PDF attached
-        if (fileObj && fileObj.base64 && fileObj.mimeType) {
-          parts.push({
-            inline_data: {
-              mime_type: fileObj.mimeType,
-              data: fileObj.base64
+    const payload = {
+      contents: contents,
+      systemInstruction: {
+        parts: [{ text: SYSTEM_PROMPT_NBRAIN_AI }]
+      }
+    };
+
+    // Thinking Budget (Gemini 3.7 Flash Reasoning)
+    const budgetNum = parseInt(thinkingBudget || 0);
+    if (budgetNum > 0) {
+      payload.generationConfig = {
+        thinkingConfig: {
+          thinkingBudget: budgetNum
+        }
+      };
+    }
+
+    // Add tools if enabled
+    const tools = [];
+    if (enableSearch) {
+      tools.push({ google_search: {} });
+    }
+    if (enableCode) {
+      tools.push({ code_execution: {} });
+    }
+    if (tools.length > 0) {
+      payload.tools = tools;
+    }
+
+    const response = await fetch(AI_CHAT_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (response.ok && response.body) {
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder('utf-8');
+      let buffer = '';
+      let fullText = '';
+      let fullThought = '';
+      let receivedValidChunk = false;
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop() || '';
+
+        for (const line of lines) {
+          const trimmed = line.trim();
+          if (!trimmed || !trimmed.startsWith('data: ')) continue;
+          const jsonStr = trimmed.slice(6);
+          try {
+            const parsed = JSON.parse(jsonStr);
+            if (parsed.error) {
+              console.warn('[NBrain AI Engine] Server stream error:', parsed.error);
+              continue;
             }
-          });
-        }
-
-        const contents = [
-          ...aiConversationHistory,
-          { role: 'user', parts: parts }
-        ];
-
-        const payload = {
-          contents: contents,
-          systemInstruction: {
-            parts: [{ text: SYSTEM_PROMPT_NBRAIN_AI }]
-          }
-        };
-
-        // Thinking Budget (Gemini 3.7 Flash Reasoning)
-        const budgetNum = parseInt(thinkingBudget || 0);
-        if (budgetNum > 0 && model.includes('3.7')) {
-          payload.generationConfig = {
-            thinkingConfig: {
-              thinkingBudget: budgetNum
-            }
-          };
-        }
-
-        // Add tools if enabled
-        const tools = [];
-        if (enableSearch) {
-          tools.push({ google_search: {} });
-        }
-        if (enableCode) {
-          tools.push({ code_execution: {} });
-        }
-        if (tools.length > 0) {
-          payload.tools = tools;
-        }
-
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:streamGenerateContent?key=${apiKey}&alt=sse`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-
-        if (response.ok && response.body) {
-          const reader = response.body.getReader();
-          const decoder = new TextDecoder('utf-8');
-          let buffer = '';
-          let fullText = '';
-          let fullThought = '';
-          let receivedValidChunk = false;
-
-          while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-
-            buffer += decoder.decode(value, { stream: true });
-            const lines = buffer.split('\n');
-            buffer = lines.pop() || '';
-
-            for (const line of lines) {
-              const trimmed = line.trim();
-              if (!trimmed || !trimmed.startsWith('data: ')) continue;
-              const jsonStr = trimmed.slice(6);
-              try {
-                const parsed = JSON.parse(jsonStr);
-                const candidateParts = parsed.candidates?.[0]?.content?.parts || [];
-                for (const part of candidateParts) {
-                  if (part.thought) {
-                    receivedValidChunk = true;
-                    fullThought += (part.text || '');
-                    if (onThoughtChunk) onThoughtChunk(part.text || '', fullThought);
-                  } else if (part.text) {
-                    receivedValidChunk = true;
-                    fullText += part.text;
-                    if (onTextChunk) onTextChunk(part.text, fullText);
-                  }
-                  if (part.executableCode && onCodeChunk) {
-                    onCodeChunk({ type: 'code', code: part.executableCode.code, lang: part.executableCode.language });
-                  }
-                  if (part.codeExecutionResult && onCodeChunk) {
-                    onCodeChunk({ type: 'output', output: part.codeExecutionResult.output });
-                  }
-                }
-              } catch (parseErr) {
-                // Ignore chunk parse error and continue
+            const candidateParts = parsed.candidates?.[0]?.content?.parts || [];
+            for (const part of candidateParts) {
+              if (part.thought) {
+                receivedValidChunk = true;
+                fullThought += (part.text || '');
+                if (onThoughtChunk) onThoughtChunk(part.text || '', fullThought);
+              } else if (part.text) {
+                receivedValidChunk = true;
+                fullText += part.text;
+                if (onTextChunk) onTextChunk(part.text, fullText);
+              }
+              if (part.executableCode && onCodeChunk) {
+                onCodeChunk({ type: 'code', code: part.executableCode.code, lang: part.executableCode.language });
+              }
+              if (part.codeExecutionResult && onCodeChunk) {
+                onCodeChunk({ type: 'output', output: part.codeExecutionResult.output });
               }
             }
-          }
-
-          if (receivedValidChunk && (fullText.trim() || fullThought.trim())) {
-            aiConversationHistory.push({ role: 'user', parts: parts });
-            aiConversationHistory.push({ role: 'model', parts: [{ text: fullText }] });
-            if (aiConversationHistory.length > 10) {
-              aiConversationHistory = aiConversationHistory.slice(-10);
-            }
-            return { ok: true, text: fullText.trim(), thought: fullThought.trim() };
+          } catch (parseErr) {
+            // Ignore chunk parse error and continue
           }
         }
-      } catch (err) {
-        // Continue to next key / model
+      }
+
+      if (receivedValidChunk && (fullText.trim() || fullThought.trim())) {
+        aiConversationHistory.push({ role: 'user', parts: parts });
+        aiConversationHistory.push({ role: 'model', parts: [{ text: fullText }] });
+        if (aiConversationHistory.length > 10) {
+          aiConversationHistory = aiConversationHistory.slice(-10);
+        }
+        return { ok: true, text: fullText.trim(), thought: fullThought.trim() };
       }
     }
+  } catch (err) {
+    console.error('[NBrain AI Engine] Stream connection error:', err);
   }
 
   return { ok: false, text: getLocalSmartFallback(userPrompt), thought: '' };
@@ -2317,12 +2298,12 @@ const i18nDict = {
     // Section 14: Founder
     sec_founder_tag: "القيادة الهندسية لمنظومة NBrain",
     founder_role_badge: "Chief Software Architect",
-    founder_name: "المهندس نديم بدر (Nadeem Badr)",
+    founder_name: "المهندس نديم بدر",
     founder_title: "مهندس برمجيات وذكاء اصطناعي — جامعة حلوان التكنولوجية الدولية (HITU IT & AI)",
-    founder_bio: "قائد منظومة **NBrain AI Ecosystem** ومطور حلول الذكاء الاصطناعي وتطبيقات الويب والموبايل عالية الأداء. متخصص في هندسة النظم العميقة، نماذج الرؤية الحاسوبية (YOLO & MediaPipe)، نماذج الـ Generative AI، ومعمارية أندرويد الحديثة (16KB Page Alignment).",
-    founder_linkedin_btn: "💼 حساب LinkedIn (nadeem-ai)",
-    founder_facebook_btn: "👤 صفحة Facebook الرسمية",
-    founder_github_btn: "🐙 حساب GitHub الرسمي",
+    founder_bio: "قائد منظومة NBrain AI Ecosystem ومطور حلول الذكاء الاصطناعي وتطبيقات الويب والموبايل عالية الأداء. متخصص في هندسة النظم العميقة، نماذج الرؤية الحاسوبية (YOLO & MediaPipe)، نماذج الـ Generative AI، ومعمارية أندرويد الحديثة (16KB Page Alignment).",
+    founder_linkedin_btn: "LinkedIn",
+    founder_facebook_btn: "Facebook",
+    founder_github_btn: "GitHub",
     founder_whatsapp_btn: "💬 تواصل مباشر عبر واتساب",
 
     // Modals
@@ -2814,10 +2795,10 @@ const i18nDict = {
     founder_role_badge: "Chief Software Architect",
     founder_name: "Eng. Nadeem Badr",
     founder_title: "Software & AI Engineer — Helwan International Technological University (HITU IT & AI)",
-    founder_bio: "Founder of **NBrain AI Ecosystem** and architect of production-grade AI solutions, high-performance web, and mobile platforms. Specialized in Deep Tech systems, Computer Vision (YOLO & MediaPipe), Generative AI pipelines, and modern Android architecture (16KB Page Alignment).",
-    founder_linkedin_btn: "💼 Official LinkedIn (nadeem-ai)",
-    founder_facebook_btn: "👤 Official Facebook Page",
-    founder_github_btn: "🐙 Official GitHub Profile",
+    founder_bio: "Founder of NBrain AI Ecosystem and architect of production-grade AI solutions, high-performance web, and mobile platforms. Specialized in Deep Tech systems, Computer Vision (YOLO & MediaPipe), Generative AI pipelines, and modern Android architecture (16KB Page Alignment).",
+    founder_linkedin_btn: "LinkedIn",
+    founder_facebook_btn: "Facebook",
+    founder_github_btn: "GitHub",
     founder_whatsapp_btn: "💬 Direct WhatsApp Chat",
 
     // Modals

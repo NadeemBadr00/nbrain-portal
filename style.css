@@ -2142,25 +2142,28 @@ button {
    ========================================================================== */
 
 .founder-card {
-  background: linear-gradient(135deg, var(--console-surface), hsla(214, 53%, 26%, 0.2));
+  background: linear-gradient(135deg, var(--console-surface), hsla(214, 53%, 26%, 0.18));
   border: 1px solid var(--console-border);
   border-radius: var(--radius-xl);
-  padding: 36px 32px;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 32px;
-  align-items: center;
-}
-
-.founder-avatar-col {
+  padding: 36px;
   display: flex;
   flex-direction: column;
+  gap: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.founder-header {
+  display: flex;
   align-items: center;
+  gap: 24px;
+  border-bottom: 1px solid var(--console-divider);
+  padding-bottom: 20px;
 }
 
 .founder-avatar-wrapper {
-  width: 115px;
-  height: 115px;
+  width: 96px;
+  height: 96px;
   border-radius: 50%;
   background: var(--console-surface-raised);
   border: 3px solid var(--console-primary);
@@ -2179,53 +2182,77 @@ button {
   border-radius: 50%;
 }
 
-.founder-info-col {
+.founder-header-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.founder-tag {
+  width: fit-content;
+}
+
+.founder-name {
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.founder-badge {
+  width: fit-content;
+  font-size: 0.8rem;
+  padding: 4px 10px;
+}
+
+.founder-body {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.founder-name {
-  font-size: 1.45rem;
-  font-weight: 900;
-}
-
 .founder-title {
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   color: var(--console-primary);
   font-weight: 700;
+  line-height: 1.5;
+  margin: 0;
 }
 
 .founder-bio {
-  font-size: 0.92rem;
+  font-size: 0.94rem;
   color: var(--console-text-muted);
-  line-height: 1.65;
-  margin: 6px 0 14px;
+  line-height: 1.7;
+  margin: 0;
 }
 
 .founder-links {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  width: 100%;
+  padding-top: 6px;
 }
 
 .founder-social-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  padding: 8px 16px;
-  border-radius: var(--radius-full);
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
   font-weight: 700;
   font-size: 0.84rem;
   text-decoration: none;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 2px 8px hsla(0, 0%, 0%, 0.2);
+  white-space: nowrap;
 }
 
 .founder-social-btn svg {
-  width: 16px;
-  height: 16px;
+  width: 17px;
+  height: 17px;
   flex-shrink: 0;
 }
 
@@ -4018,8 +4045,8 @@ button {
     top: 0;
     bottom: 0;
     right: 0;
-    width: 300px;
-    max-width: 85vw;
+    width: 300px !important;
+    max-width: 85vw !important;
     height: 100vh;
     z-index: 1100;
     box-shadow: -8px 0 32px hsla(0, 0%, 0%, 0.7);
@@ -4029,7 +4056,7 @@ button {
   }
 
   .sidebar.is-mobile-open {
-    display: flex;
+    display: flex !important;
     animation: drawerSlideIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
@@ -4037,6 +4064,51 @@ button {
     right: auto;
     left: 0;
     box-shadow: 8px 0 32px hsla(0, 0%, 0%, 0.7);
+  }
+
+  /* Force all mobile drawer elements to be fully visible (never collapsed) */
+  .sidebar .logo-text,
+  .console-shell.is-sidebar-collapsed .sidebar .logo-text,
+  .sidebar .sidebar-search,
+  .console-shell.is-sidebar-collapsed .sidebar .sidebar-search,
+  .sidebar .nav-section-title,
+  .console-shell.is-sidebar-collapsed .sidebar .nav-section-title,
+  .sidebar .nav-link span,
+  .console-shell.is-sidebar-collapsed .sidebar .nav-link span,
+  .sidebar .plan-badge,
+  .console-shell.is-sidebar-collapsed .sidebar .plan-badge,
+  .sidebar .quick-contact-header,
+  .console-shell.is-sidebar-collapsed .sidebar .quick-contact-header,
+  .sidebar .whatsapp-btn-info,
+  .console-shell.is-sidebar-collapsed .sidebar .whatsapp-btn-info {
+    display: flex !important;
+  }
+
+  .sidebar .sidebar-header,
+  .console-shell.is-sidebar-collapsed .sidebar .sidebar-header {
+    padding: 0 14px 0 18px !important;
+    flex-direction: row !important;
+    height: 68px !important;
+    justify-content: space-between !important;
+  }
+
+  .sidebar .nav-link,
+  .console-shell.is-sidebar-collapsed .sidebar .nav-link {
+    padding: 10px 14px !important;
+    justify-content: flex-start !important;
+    margin: 2px 8px !important;
+  }
+
+  .sidebar .sidebar-footer,
+  .console-shell.is-sidebar-collapsed .sidebar .sidebar-footer {
+    padding: 14px 16px !important;
+    justify-content: flex-start !important;
+  }
+
+  .sidebar .sidebar-whatsapp-btn,
+  .console-shell.is-sidebar-collapsed .sidebar .sidebar-whatsapp-btn {
+    padding: 10px 12px !important;
+    justify-content: flex-start !important;
   }
 
   @keyframes drawerSlideIn {
@@ -4562,25 +4634,54 @@ button {
 
   .customizer-items {
     display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: nowrap !important;
-    overflow-x: auto !important;
-    overflow-y: hidden !important;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    gap: 12px !important;
-    padding: 4px 10px 14px !important;
-    margin: 0 -10px !important;
-    scrollbar-width: thin;
+    flex-direction: column !important;
+    gap: 10px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   .custom-card {
-    flex: 0 0 82% !important;
-    max-width: 300px !important;
-    min-width: 255px !important;
-    scroll-snap-align: start;
-    padding: 14px 12px !important;
-    border-radius: var(--radius-lg);
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    flex: none !important;
+    padding: 14px 14px !important;
+    border-radius: var(--radius-lg) !important;
+    box-sizing: border-box !important;
+    background-color: var(--console-surface) !important;
+    border: 1px solid var(--console-border) !important;
+  }
+
+  .custom-card:hover,
+  .custom-card:active {
+    border-color: var(--console-primary) !important;
+    background-color: var(--console-surface-raised) !important;
+  }
+
+  .custom-card__header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .custom-card__title {
+    font-size: 0.92rem !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+  }
+
+  .custom-card__desc {
+    font-size: 0.82rem !important;
+    line-height: 1.4 !important;
+    color: var(--console-text-muted) !important;
   }
 
   /* 9. Verified Portfolio & Innovations Side-by-Side */
@@ -4658,70 +4759,114 @@ button {
     padding: 12px 16px 16px !important;
   }
 
-  /* 12. Founder & Leadership Spotlight Side-by-Side */
-  .founder-card {
-    display: grid !important;
-    grid-template-columns: 80px 1fr !important;
-    gap: 12px !important;
-    padding: 16px 14px !important;
-    align-items: start !important;
-    border-radius: var(--radius-lg);
+  /* 12. Founder & Leadership Spotlight (Mobile) */
+  #section-founder {
+    padding-bottom: 85px !important;
   }
 
-  .founder-avatar-col {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .founder-card {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 18px 16px !important;
+    gap: 16px !important;
+    border-radius: var(--radius-lg) !important;
+    box-sizing: border-box !important;
+  }
+
+  .founder-header {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 14px !important;
+    border-bottom: 1px solid var(--console-divider) !important;
+    padding-bottom: 14px !important;
+    width: 100% !important;
   }
 
   .founder-avatar-wrapper {
-    width: 76px !important;
-    height: 76px !important;
+    width: 70px !important;
+    height: 70px !important;
+    flex-shrink: 0 !important;
+    border-width: 2.5px !important;
   }
 
-  .founder-avatar-col .badge-pill {
-    font-size: 0.65rem !important;
-    padding: 2px 6px !important;
-    margin-top: 6px !important;
-    white-space: nowrap;
+  .founder-header-meta {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+    min-width: 0 !important;
+    flex: 1 !important;
   }
 
-  .founder-info-col {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    min-width: 0;
+  .founder-tag {
+    font-size: 0.66rem !important;
+    padding: 2px 7px !important;
+    margin-bottom: 2px !important;
+    width: fit-content !important;
   }
 
   .founder-name {
     font-size: 1.15rem !important;
-    line-height: 1.3;
+    line-height: 1.35 !important;
+    margin: 0 !important;
+    unicode-bidi: plaintext !important;
+    word-break: normal !important;
+  }
+
+  .founder-badge {
+    font-size: 0.68rem !important;
+    padding: 2px 8px !important;
+    width: fit-content !important;
+  }
+
+  .founder-body {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
   }
 
   .founder-title {
-    font-size: 0.78rem !important;
-    line-height: 1.35;
+    font-size: 0.86rem !important;
+    line-height: 1.45 !important;
+    width: 100% !important;
+    color: var(--console-primary) !important;
+    margin: 0 !important;
   }
 
   .founder-bio {
-    font-size: 0.8rem !important;
-    line-height: 1.5;
-    margin: 4px 0 8px !important;
+    font-size: 0.82rem !important;
+    line-height: 1.6 !important;
+    width: 100% !important;
+    color: var(--console-text-muted) !important;
+    margin: 0 !important;
   }
 
   .founder-links {
-    grid-column: 1 / -1;
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: wrap !important;
-    gap: 6px !important;
-    margin-top: 6px;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+    width: 100% !important;
+    margin-top: 4px !important;
+    padding-top: 0 !important;
   }
 
   .founder-social-btn {
-    padding: 6px 10px !important;
-    font-size: 0.74rem !important;
-    gap: 5px !important;
+    width: 100% !important;
+    padding: 10px 8px !important;
+    font-size: 0.76rem !important;
+    justify-content: center !important;
+    text-align: center !important;
+    border-radius: var(--radius-md) !important;
+    gap: 6px !important;
+    box-sizing: border-box !important;
+  }
+
+  .founder-social-btn--whatsapp {
+    grid-column: 1 / -1 !important;
+    padding: 12px 14px !important;
+    font-size: 0.88rem !important;
+    font-weight: 800 !important;
   }
 
   .rfp-checkboxes-grid {
