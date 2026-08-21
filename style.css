@@ -2949,6 +2949,53 @@ button {
   color: var(--console-text);
 }
 
+.voice-select-wrap,
+.emotion-select-wrap {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: hsla(210, 35%, 12%, 0.85);
+  border: 1px solid hsla(210, 60%, 45%, 0.45);
+  border-radius: var(--radius-full);
+  padding: 3px 10px;
+  box-shadow: 0 0 10px hsla(210, 70%, 50%, 0.12);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.voice-select-wrap:hover,
+.emotion-select-wrap:hover {
+  border-color: hsla(210, 90%, 60%, 0.75);
+  box-shadow: 0 0 14px hsla(210, 80%, 50%, 0.25);
+}
+
+.voice-select-label,
+.emotion-select-label {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: hsl(210, 100%, 82%);
+  white-space: nowrap;
+}
+
+.voice-select-dropdown,
+.emotion-select-dropdown {
+  background: transparent;
+  border: none;
+  color: hsl(210, 100%, 90%);
+  font-family: inherit;
+  font-size: 0.76rem;
+  font-weight: 700;
+  outline: none;
+  cursor: pointer;
+  max-width: 145px;
+}
+
+.voice-select-dropdown option,
+.emotion-select-dropdown option {
+  background-color: var(--console-surface-raised);
+  color: var(--console-text);
+  font-size: 0.85rem;
+}
+
 .ai-btn-icon {
   background: var(--console-surface);
   border: 1px solid var(--console-border);

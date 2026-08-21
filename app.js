@@ -617,14 +617,14 @@ const AI_CHAT_ENDPOINTS = [
 ];
 
 const GEMINI_ROTATION_KEYS = [
-  'QUl6YVN5RHVqM1M0a1E3Z213VHpNY04ycEZxMVRrZzcxN1M0VG9B',
-  'QUl6YVN5Q01hcklsRFl2eU5wX3JjZUR3M29VdmV4VjNvaFl3bVFN',
-  'QUl6YVN5QWZ3MmZySFljUjJ2Mm4wb01XNFlxckpQZlVjT3h0Y3pB',
-  'QUl6YVN5Q1A5cjlrb1N5SGp6RUpjU3R0M2t4N09NUXBvdG44T1FB',
-  'QUl6YVN5QTl0Z2s2TG9FMW93eTN2YjA0SFpvc2Nlc0ZqUjRFT3dF',
-  'QUl6YVN5REcxY3F5b25xQnBwUHFYd2QzXzZwWWdOOGN6Z2Z6VDRN',
-  'QUl6YVN5QzZJcmZtZ2p1XzcxT3V6aVp2dWhnTVVpOGJtZXB2MWhN',
-  'QUl6YVN5REtZc1d4XzBqa210cnhzZDFjT1ZJNmUxdW5aRWhuS1M4'
+  "QVEuQWI4Uk42TC1XNGVLQjZKM2o4cTQ2czV6NERrZ0k5N1k0YlNXcXl5Q3JfOUNRZk5pY0E=",
+  "QVEuQWI4Uk42THpNSWF5Wmh3RmZYd2RldFZyMkpRLTNuUjJWVmlZbkpqT1J1OTI3Ukp0QXc=",
+  "QVEuQWI4Uk42STlWWXg1a2pyR29HSnlNSldlWHNYM0FlOGlFcmo4WVpZOUZ6Q0g5OWxycHc=",
+  "QVEuQWI4Uk42S1daUVpXb2RKc0RpTnpGMjNqZ0Z3VElhSmE3N1RDcjBib0FDRHhRZ1puRUE=",
+  "QVEuQWI4Uk42S3dRcWFqNDA3U0p5Szk3aHl6a0x5ZC0wVlVSV0Ytb1NxMnI1Tnl3N0dia1E=",
+  "QVEuQWI4Uk42SVNQNmhnZEQwc1B5ZkNvbEd3cDkzOXFmbVVsRmlrczlxMkdKbm9QVlZuR2c=",
+  "QVEuQWI4Uk42TGIzaWRFRXFNc0d4ckJwS3RUR1hTcHlpVVFLRDY4NXl5bzFTbUpadGhQSUE=",
+  "QVEuQWI4Uk42S2QzaFZJdzJjdWRPakRqRVJSamVmUHVCeHlPZjdonTk5clR1WGJ6NnNvdkE="
 ];
 
 let currentApiKeyIndex = Math.floor(Math.random() * GEMINI_ROTATION_KEYS.length);
@@ -826,14 +826,78 @@ function getLocalSmartFallback(queryText) {
     : `أهلاً بك! في منظومة **NBrain**، يقوم المهندس نديم بدر (Chief Software Architect) بتصميم وتطوير حلول برمجية وذكاء اصطناعي متكاملة (مواقع ويب فائقة السرعة، تطبيقات Google Play، ونماذج رؤية حاسوبية وGenAI مخصصة) تناسب أهداف مشروعك بدقة.\n\n🌐 **يمكنك تصفح السيرة الذاتية وكافة المشاريع الحية عبر:** [cv.nbra.in](https://cv.nbra.in)`;
 }
 
-// Text-to-Speech Engine
-function speakAiText(rawText, btnElement) {
-  if (!('speechSynthesis' in window)) {
-    alert('متصفحك لا يدعم تحويل النص لصوت (Speech Synthesis).');
-    return;
+// Global Active Audio Context & Source for Google Gemini TTS
+let currentAudioSource = null;
+let currentTtsBtn = null;
+
+async function playPcmBase64Audio(base64Data, sampleRate = 24000) {
+  try {
+    const binaryString = window.atob(base64Data);
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!window._nbrainAudioCtx || window._nbrainAudioCtx.state === 'closed') {
+      window._nbrainAudioCtx = new AudioCtx({ sampleRate });
+    }
+    const ctx = window._nbrainAudioCtx;
+    if (ctx.state === 'suspended') {
+      await ctx.resume();
+    }
+
+    // If audio is in standard WAV container
+    if (binaryString.startsWith('RIFF')) {
+      const audioBuffer = await ctx.decodeAudioData(bytes.buffer.slice(0));
+      const source = ctx.createBufferSource();
+      source.buffer = audioBuffer;
+      source.connect(ctx.destination);
+      source.start(0);
+      return source;
+    }
+
+    // Raw 16-bit Linear PCM Mono audio (from Gemini TTS API)
+    const int16Array = new Int16Array(bytes.buffer, bytes.byteOffset, Math.floor(bytes.byteLength / 2));
+    const float32Array = new Float32Array(int16Array.length);
+    for (let i = 0; i < int16Array.length; i++) {
+      float32Array[i] = int16Array[i] / 32768.0;
+    }
+
+    const audioBuffer = ctx.createBuffer(1, float32Array.length, sampleRate);
+    audioBuffer.getChannelData(0).set(float32Array);
+
+    const source = ctx.createBufferSource();
+    source.buffer = audioBuffer;
+    source.connect(ctx.destination);
+    source.start(0);
+    return source;
+  } catch (err) {
+    console.warn('[NBrain TTS] WebAudio decoding error:', err);
+    throw err;
+  }
+}
+
+// Google Gemini Cloud Text-to-Speech (TTS) Engine with Voice Selection & Expressive Emotions
+async function speakAiText(rawText, btnElement) {
+  // 1. If audio is currently playing, stop it immediately
+  if (currentAudioSource) {
+    try {
+      currentAudioSource.stop();
+    } catch (e) {}
+    currentAudioSource = null;
+    if (currentTtsBtn) {
+      currentTtsBtn.classList.remove('is-speaking');
+      currentTtsBtn.innerHTML = `🔊 <span>استمع للرد</span>`;
+    }
+    if (btnElement === currentTtsBtn) {
+      currentTtsBtn = null;
+      return;
+    }
   }
 
-  if (window.speechSynthesis.speaking) {
+  if (window.speechSynthesis && window.speechSynthesis.speaking) {
     window.speechSynthesis.cancel();
     if (btnElement && btnElement.classList.contains('is-speaking')) {
       btnElement.classList.remove('is-speaking');
@@ -842,7 +906,7 @@ function speakAiText(rawText, btnElement) {
     }
   }
 
-  // Strip markdown & buttons for clean natural voice reading
+  // 2. Strip Markdown, URLs, and WhatsApp buttons for crystal-clear natural speech
   const cleanSpeechText = rawText
     .replace(/\*\*(.*?)\*\*/g, '$1')
     .replace(/\*(.*?)\*/g, '$1')
@@ -855,46 +919,155 @@ function speakAiText(rawText, btnElement) {
 
   if (!cleanSpeechText) return;
 
-  const utterance = new SpeechSynthesisUtterance(cleanSpeechText);
-  const lang = document.documentElement.getAttribute('lang') || 'ar';
-  
-  // Set voice & language
-  const voices = window.speechSynthesis.getVoices();
-  const isArabic = /[\u0600-\u06FF]/.test(cleanSpeechText);
+  // 3. Read Selected Voice & Emotion from Studio Controls
+  const voiceSelect = document.getElementById('aiVoiceSelect');
+  const selectedVoice = voiceSelect ? voiceSelect.value : 'Puck';
 
-  if (isArabic) {
-    utterance.lang = 'ar-EG';
-    const arVoice = voices.find(v => v.lang.startsWith('ar'));
-    if (arVoice) utterance.voice = arVoice;
-  } else {
-    utterance.lang = 'en-US';
-    const enVoice = voices.find(v => v.lang.startsWith('en'));
-    if (enVoice) utterance.voice = enVoice;
+  const emotionSelect = document.getElementById('aiEmotionSelect');
+  const selectedEmotion = emotionSelect ? emotionSelect.value : 'interactive';
+
+  let stylePrompt = '';
+  switch (selectedEmotion) {
+    case 'interactive':
+      stylePrompt = 'You are a warm, witty, and emotionally expressive voice actor speaking in Egyptian Arabic (عامية مصرية) and English. Speak naturally with vocal smiles, light laughter [laughs], friendly chuckles, lively pacing, and genuine human expressiveness.';
+      break;
+    case 'enthusiastic':
+      stylePrompt = 'You are an energetic, inspiring, and enthusiastic speaker! Speak with high passion, dynamic cadence, and exciting delivery!';
+      break;
+    case 'professional':
+      stylePrompt = 'You are a calm, authoritative, and articulate Chief Technical Advisor. Speak in a confident, professional, and clear tone.';
+      break;
+    case 'whisper':
+      stylePrompt = 'Speak in a gentle, warm, and soothing whisper with a relaxed and peaceful pace.';
+      break;
+    default:
+      stylePrompt = 'You are a friendly and helpful AI voice assistant speaking in natural Egyptian Arabic and English.';
   }
-
-  utterance.rate = 1.05;
-  utterance.pitch = 1.0;
 
   if (btnElement) {
     btnElement.classList.add('is-speaking');
-    btnElement.innerHTML = `⏸️ <span>إيقاف الصوت</span>`;
+    btnElement.innerHTML = `⏳ <span>جاري توليد الصوت (${selectedVoice})...</span>`;
+    currentTtsBtn = btnElement;
   }
 
-  utterance.onend = () => {
-    if (btnElement) {
-      btnElement.classList.remove('is-speaking');
-      btnElement.innerHTML = `🔊 <span>استمع للرد</span>`;
-    }
-  };
+  // 4. Request Audio from Google Gemini TTS API
+  let audioPlayed = false;
+  const ttsModels = ['gemini-2.5-flash-preview-tts', 'gemini-3.1-flash-tts-preview'];
 
-  utterance.onerror = () => {
-    if (btnElement) {
-      btnElement.classList.remove('is-speaking');
-      btnElement.innerHTML = `🔊 <span>استمع للرد</span>`;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const key = getNextGeminiKey();
+    if (!key) break;
+
+    for (const model of ttsModels) {
+      try {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`;
+        const resp = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [
+              {
+                parts: [
+                  {
+                    text: `${stylePrompt}\n\nSay the following text clearly in natural spoken dialect:\n${cleanSpeechText}`
+                  }
+                ]
+              }
+            ],
+            generationConfig: {
+              responseModalities: ['AUDIO'],
+              speechConfig: {
+                voiceConfig: {
+                  prebuiltVoiceConfig: {
+                    voiceName: selectedVoice
+                  }
+                }
+              }
+            }
+          })
+        });
+
+        if (resp.ok) {
+          const data = await resp.json();
+          const base64Audio = data.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
+          if (base64Audio) {
+            const source = await playPcmBase64Audio(base64Audio, 24000);
+            currentAudioSource = source;
+            audioPlayed = true;
+
+            if (btnElement) {
+              btnElement.classList.add('is-speaking');
+              btnElement.innerHTML = `⏸️ <span>إيقاف الصوت (${selectedVoice})</span>`;
+            }
+
+            source.onended = () => {
+              if (currentAudioSource === source) {
+                currentAudioSource = null;
+                if (btnElement) {
+                  btnElement.classList.remove('is-speaking');
+                  btnElement.innerHTML = `🔊 <span>استمع للرد</span>`;
+                }
+              }
+            };
+            break;
+          }
+        }
+      } catch (ttsErr) {
+        console.warn(`[NBrain TTS] Error on ${model}:`, ttsErr.message);
+      }
     }
-  };
-  window.speechSynthesis.speak(utterance);
+    if (audioPlayed) break;
+  }
+
+  // 5. Native Fallback to Web Speech API if Google TTS is offline
+  if (!audioPlayed) {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(cleanSpeechText);
+      const isArabic = /[\u0600-\u06FF]/.test(cleanSpeechText);
+      const voices = window.speechSynthesis.getVoices();
+
+      if (isArabic) {
+        utterance.lang = 'ar-EG';
+        const arVoice = voices.find(v => v.lang.startsWith('ar'));
+        if (arVoice) utterance.voice = arVoice;
+      } else {
+        utterance.lang = 'en-US';
+        const enVoice = voices.find(v => v.lang.startsWith('en'));
+        if (enVoice) utterance.voice = enVoice;
+      }
+
+      utterance.rate = 1.05;
+      utterance.pitch = 1.0;
+
+      if (btnElement) {
+        btnElement.classList.add('is-speaking');
+        btnElement.innerHTML = `⏸️ <span>إيقاف الصوت</span>`;
+      }
+
+      utterance.onend = () => {
+        if (btnElement) {
+          btnElement.classList.remove('is-speaking');
+          btnElement.innerHTML = `🔊 <span>استمع للرد</span>`;
+        }
+      };
+
+      utterance.onerror = () => {
+        if (btnElement) {
+          btnElement.classList.remove('is-speaking');
+          btnElement.innerHTML = `🔊 <span>استمع للرد</span>`;
+        }
+      };
+
+      window.speechSynthesis.speak(utterance);
+    } else {
+      if (btnElement) {
+        btnElement.classList.remove('is-speaking');
+        btnElement.innerHTML = `🔊 <span>استمع للرد</span>`;
+      }
+    }
+  }
 }
+
 
 // Real-time Streaming Multimodal Request to Secure Backend Cloud Function (SSE)
 async function streamGeminiMultimodal({ userPrompt, fileObj, enableSearch, enableCode, thinkingBudget, onThoughtChunk, onTextChunk, onCodeChunk }) {
@@ -2417,6 +2590,8 @@ var i18nDict = {
     ai_tab_mentor: "المرشد البرمجي (LearnLM)",
     ai_sim_name: "NBrain Multimodal AI Studio",
     ai_sim_engine_badge: "مدعوم بمحرك Gemini 3.7 Flash",
+    ai_voice_label: "🎙️ الصوت:",
+    ai_emotion_label: "🎭 النبرة:",
     ai_sim_welcome_html: "أهلاً بك! 👋 أنا المساعد الذكي الخارق لمنظومة <strong>NBrain</strong> مدعوماً بـ <strong>Gemini 3.7 Flash</strong>.<br><br>يمكنني الآن مساعدتك في:<br><ul><li>💬 <strong>ترشيح وتخصيص الباقات البرمجية</strong> فوراً حسب ميزانيتك.</li><li>📷 <strong>فحص وتحليل الصور والتصاميم والمستندات</strong> بمجرد رفعها.</li><li>🎬 <strong>تلخيص وتحليل فيديوهات يوتيوب</strong> بمجرد وضع الرابط.</li><li>🎙️ <strong>التحدث الصوتي المباشر</strong> بالمايك وقراءة الردود صوتياً (TTS).</li><li>🐍 <strong>تشغيل كود بايثون وحساب المعادلات والأرقام بدقة.</strong></li></ul><strong>جرب إرسال سؤالك، رفع صورة، أو استخدام الأزرار السريعة بالأسفل!</strong>",
     ai_sim_presets_label: "أمثلة سريعة للتجربة:",
     ai_sim_input_placeholder: "اكتب سؤالك، أو الصق رابط يوتيوب، أو اضغط على المايك/الصور...",
@@ -2922,6 +3097,8 @@ var i18nDict = {
     ai_tab_mentor: "Software Mentor (LearnLM)",
     ai_sim_name: "NBrain Multimodal AI Studio",
     ai_sim_engine_badge: "Powered by Gemini 3.7 Flash Engine",
+    ai_voice_label: "🎙️ Voice:",
+    ai_emotion_label: "🎭 Tone/Emotion:",
     ai_sim_welcome_html: "Hello! 👋 I am NBrain's Supercharged AI Assistant, powered by <strong>Gemini 3.7 Flash</strong>.<br><br>I can now help you with:<br><ul><li>💬 <strong>Software Package Recommendations</strong> tailored to your budget.</li><li>📷 <strong>Vision & Image Audits</strong> for UI mockups, architecture diagrams, and documents.</li><li>🎬 <strong>YouTube Video Summarization & Timestamps</strong> from any link.</li><li>🎙️ <strong>Two-Way Voice Chat</strong> with mic input & read-aloud TTS.</li><li>🐍 <strong>Python Code Execution & Accurate Mathematical Modeling.</strong></li></ul><strong>Try sending a query, attaching an image, or clicking any preset below!</strong>",
     ai_sim_presets_label: "Quick Try Presets:",
     ai_sim_input_placeholder: "Type your query, paste YouTube link, or use mic/image tools...",

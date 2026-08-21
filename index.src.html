@@ -274,7 +274,7 @@
 
   <!-- Fonts: Cairo (Arabic) + Inter (UI) + JetBrains Mono (Code/Tech) -->
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.min.css?v=20260821_1458">
+  <link rel="stylesheet" href="style.min.css?v=20260821_1520">
 </head>
 <body>
   <div class="console-shell" id="consoleShell">
@@ -1830,6 +1830,35 @@
                     <option value="8192">🧠 عميق (8K Tokens)</option>
                   </select>
                 </div>
+
+                <!-- Google Gemini Cloud TTS Voice Selector -->
+                <div class="voice-select-wrap">
+                  <label for="aiVoiceSelect" class="voice-select-label" data-i18n="ai_voice_label">🎙️ الصوت:</label>
+                  <select id="aiVoiceSelect" class="voice-select-dropdown" title="اختر صوت الذكاء الاصطناعي من Google Gemini TTS">
+                    <option value="Puck" selected>🎙️ Puck (مرح وحماسي)</option>
+                    <option value="Charon">🎙️ Charon (وقور وإخباري)</option>
+                    <option value="Kore">🎙️ Kore (واثق وقوي)</option>
+                    <option value="Zephyr">🎙️ Zephyr (مشرق ومبهج)</option>
+                    <option value="Fenrir">🎙️ Fenrir (حيوي ومتحمس)</option>
+                    <option value="Leda">🎙️ Leda (شبابي وعفوي)</option>
+                    <option value="Aoede">🎙️ Aoede (سلس وهادئ)</option>
+                    <option value="Callirrhoe">🎙️ Callirrhoe (طبيعي ومرن)</option>
+                    <option value="Enceladus">🎙️ Enceladus (معبر ومتفاعل)</option>
+                    <option value="Sulafat">🎙️ Sulafat (دافئ ومرحب)</option>
+                  </select>
+                </div>
+
+                <!-- Speech Emotion & Tone Selector -->
+                <div class="emotion-select-wrap">
+                  <label for="aiEmotionSelect" class="emotion-select-label" data-i18n="ai_emotion_label">🎭 النبرة:</label>
+                  <select id="aiEmotionSelect" class="emotion-select-dropdown" title="اختر نبرة الصوت والمشاعر (ضحك، حماس، رسمية، همس)">
+                    <option value="interactive" selected>🎭 تفاعلي (ضحك ومرح)</option>
+                    <option value="enthusiastic">🔥 حماسي وتشويقي</option>
+                    <option value="professional">💼 مهني ورسمي</option>
+                    <option value="whisper">🤫 همس هادئ</option>
+                  </select>
+                </div>
+
                 <div class="badge-pill badge-pill--primary" data-i18n="ai_sim_engine_badge">Gemini 3.7 Flash Engine</div>
                 <button type="button" class="ai-btn-icon" id="aiClearHistoryBtn" title="مسح المحادثة وبدء جلسة جديدة">
                   <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
@@ -1852,7 +1881,7 @@
                     <li>🔬 <strong>إجراء بحث تقني وسوقي عميق (Deep Research Report).</strong></li>
                     <li>🎬 <strong>تلخيص فيديوهات يوتيوب واستخراج الـ Timestamps والخطوات.</strong></li>
                     <li>🐍 <strong>تشغيل كود بايثون وحساب المعادلات والـ ROI بدقة رياضية.</strong></li>
-                    <li>🎙️ <strong>التحدث الصوتي المباشر بالمايك وقراءة الردود (TTS).</strong></li>
+                    <li>🎙️ <strong>التحدث الصوتي المباشر بالمايك وقراءة الردود بأصوات Google TTS التفاعلية.</strong></li>
                   </ul>
                   <strong>جرب إرسال سؤالك، رفع صورة أو ملف PDF، أو استخدام الأزرار السريعة بالأسفل!</strong>
                 </div>
@@ -1862,6 +1891,9 @@
             <!-- Presets Bar -->
             <div class="ai-sim-presets" id="aiSimPresets">
               <span class="presets-label" data-i18n="ai_sim_presets_label">أمثلة سريعة للتجربة:</span>
+              <button type="button" class="preset-btn" data-query="مين هو المهندس نديم بدر مؤسس منظومة NBrain وما هي سابقة أعماله والـ CV؟">
+                👨‍💻 من هو المهندس نديم بدر؟ (السيرة الذاتية والأعمال)
+              </button>
               <button type="button" class="preset-btn" data-query="معايا 5999 جنيه وعايز أشتري تشكيلة ممتازة، ترشحلي إيه؟">
                 💡 ميزانية 5,999 ج.م (متجر ذكي)
               </button>
